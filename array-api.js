@@ -34,6 +34,8 @@ const students = [
   new Student("E", 18, true, 88),
 ];
 
+console.log(students[4]);
+
 // Q5. find a student with the score 90
 {
 }
