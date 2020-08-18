@@ -33,7 +33,6 @@ console.log(json);
 
 // 2. JSON to Object
 // parse(json)
-console.clear();
 json = JSON.stringify(rabbit);
 console.log(json);
 const obj = JSON.parse(json, (key, value) => {

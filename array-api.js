@@ -1,3 +1,5 @@
+"use strict";
+
 // Q1. make a string out of an array
 {
   const fruits = ["apple", "banana", "orange"];
@@ -8,7 +10,7 @@
 // Q2. make an array out of a string
 {
   const fruits = "🍎, 🥝, 🍌, 🍒";
-  const result = fruits.split();
+  const result = fruits.split(",");
   console.log(result);
 }
 

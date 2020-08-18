@@ -1,3 +1,5 @@
+"use strict";
+
 // Objects
 // one of the JavaScript's data types.
 // a collection of related data and/or functionality.
@@ -62,27 +64,25 @@ console.log(ellie.random);
 
 // 6. for..in vs for..of
 // for (key in obj)
-console.clear();
-for (key in ellie) {
+for (let key in ellie) {
   console.log(key);
 }
 
 // for (value of iterable)
 const array = [1, 2, 4, 5];
-for (value of array) {
+for (let value of array) {
   console.log(value);
 }
 
 // 7. Fun cloning
 // Object.assign(dets, [obj1, obj2, obj3...])
-console.clear();
 const user = { name: "ellie", age: "20" };
 const user2 = user;
 console.log(user);
 
 // old way
 const user3 = {};
-for (key in user) {
+for (let key in user) {
   user3[key] = user[key];
 }
 console.log(user3);
