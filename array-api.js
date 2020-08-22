@@ -44,6 +44,8 @@ const students = [
   new Student("E", 18, true, 88),
 ];
 
+console.log(students);
+
 // Q5. find a student with the score 90
 {
   const result = students.find((student) => student.score === 90);
