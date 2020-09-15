@@ -18,7 +18,6 @@ console.log(fruits[fruits.length - 1]);
 // 3. Looping over an array
 // print all fruits
 
-console.clear();
 // 3-1
 fruits.forEach((fruit) => console.log(fruit));
 // 3-2
@@ -49,7 +48,6 @@ fruits.shift();
 console.log(fruits);
 
 // note!! shift, unshift are slower than pop, push
-console.clear();
 
 // splice: remove an item by index position
 fruits.push("🍉", "🍇");
@@ -66,7 +64,7 @@ console.log(newFruits);
 
 // 5. Searching
 // indexOf: find the index
-console.clear();
+
 console.log(fruits);
 console.log(fruits.indexOf("🥝"));
 console.log(fruits.indexOf("🍌"));
