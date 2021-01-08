@@ -36,6 +36,7 @@ class Student {
     this.score = score;
   }
 }
+// 클래스를 이용해서 오브젝트를 생성
 const students = [
   new Student("A", 29, true, 45),
   new Student("B", 28, false, 80),

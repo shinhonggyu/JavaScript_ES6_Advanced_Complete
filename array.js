@@ -50,6 +50,7 @@ console.log(fruits);
 // note!! shift, unshift are slower than pop, push
 
 // splice: remove an item by index position
+
 fruits.push("🍉", "🍇");
 console.log(fruits);
 fruits.splice(1, 1);
