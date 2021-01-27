@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 // Object-oriented programming
 // class: template
 // object: instance of a class
@@ -18,7 +18,7 @@ class Person {
   }
 }
 
-const ellie = new Person("ellie", 20); // ellie 라는 객체생성
+const ellie = new Person('ellie', 20); // ellie 라는 객체생성
 console.log(ellie.name);
 console.log(ellie.age);
 ellie.speak();
@@ -40,7 +40,7 @@ class User {
   }
 }
 
-const user1 = new User("Steve", "job", -1);
+const user1 = new User('Steve', 'job', -1);
 console.log(user1.age);
 
 // 3. Fields (public, private)
@@ -56,7 +56,7 @@ console.log(experiment.privateField);
 // 4. Static properties and methods
 // Too soon!
 class Article {
-  static publisher = "Dream Conding";
+  static publisher = 'Dream Conding';
   constructor(articleNumber) {
     this.articleNumber = articleNumber;
   }
@@ -93,7 +93,7 @@ class Rectangle extends Shape {}
 class Triangle extends Shape {
   draw() {
     super.draw();
-    console.log("🔺");
+    console.log('🔺');
   }
   getArea() {
     return (this.width * this.height) / 2;
@@ -104,10 +104,10 @@ class Triangle extends Shape {
   }
 }
 
-const rectangle = new Rectangle(20, 20, "red");
+const rectangle = new Rectangle(20, 20, 'red');
 rectangle.draw();
 console.log(rectangle.getArea());
-const triangle = new Triangle(20, 20, "blue");
+const triangle = new Triangle(20, 20, 'blue');
 triangle.draw();
 console.log(triangle.getArea());
 
@@ -121,6 +121,32 @@ console.log(triangle.toString());
 
 console.clear();
 
+// m);class Counter {
+//   constructor(runEveryFiveTimes) {
+//     this.counter = 0;
+//     this.callback = runEveryFiveTimes;
+//   }
+
+//   increase() {
+//     this.counter++;
+//     console.log(this.counter);
+//     if (this.counter % 5 === 0) {
+//       this.callback && this.callback(this.counter);
+//     }
+//   }
+// }
+
+// function printSomething(num) {
+//   console.log(`yo! ${num}`);
+// }
+// function alertNum(num) {
+//   alert(`WoW! ${num}`);
+// }
+
+// const printCounter = new Counter(printSomething);
+// const alertCounter = new Counter(alertNu
+
+// 보충수업
 class Counter {
   constructor(runEveryFiveTimes) {
     this.counter = 0;
@@ -132,6 +158,9 @@ class Counter {
     console.log(this.counter);
     if (this.counter % 5 === 0) {
       this.callback && this.callback(this.counter);
+      // if (this.callback) {
+      //   this.callback(this.counter)
+      // }
     }
   }
 }
@@ -143,5 +172,6 @@ function alertNum(num) {
   alert(`WoW! ${num}`);
 }
 
+// 클래스는 서로다른 기능을 하는 다양한 오브젝트를 만들기위한 청사진이다
 const printCounter = new Counter(printSomething);
 const alertCounter = new Counter(alertNum);

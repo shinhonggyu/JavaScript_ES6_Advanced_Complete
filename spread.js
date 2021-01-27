@@ -12,7 +12,7 @@
   // array copy
   const arrayCopy = [...array, { key: 'key3' }];
   obj1.key = 'newKey';
-  // console.log(arrayCopy);
+  // console.log(arrayCopy); [{key: "newKey"}, {key: "key2"}, {key: "key3"}]
 }
 
 {
@@ -54,16 +54,18 @@
   const array = [habit, habit2];
 
   const arrayCopy = [...array];
-  // console.log(array, arrayCopy);
 
   habit.name = 'Eating';
+
+  // console.log(arrayCopy); [{ id: 1, name: 'Reading', count: 0 },
+  //                          { id: 2, name: 'coding', count: 0 }]
 }
 
 // card-maker
 {
   const card = { name: 'shin', age: 30 };
   const card2 = { ...card, ['name']: 'ggyu', ['sex']: 'male' };
-  console.log(card2);
+  // console.log(card2); {name: "ggyu", age: 30, sex: "male"}
 }
 
 {
@@ -72,6 +74,6 @@
   const c = b; // 234
   const d = { ...b }; // x456
   b.count = 1;
-  //   console.log(c);
-  //   console.log(d);
+  // console.log(c); {id: "2", count: 1}
+  //  console.log(d); {id: "2", count: 0}
 }
