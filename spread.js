@@ -18,7 +18,7 @@
 {
   const obj1 = { key: 'key1' };
   const obj2 = { ...obj1, ['key']: 'key2' };
-  // console.log(obj2);
+  // console.log(obj2); { key: 'key2' };
 }
 
 {
