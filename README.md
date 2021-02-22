@@ -17,3 +17,11 @@
 #### OOP, FP, composition vs inheritance
 #### Asyn
 •••
+#### Http, Https, Web APIs, 브라우저좌표
+#### defer, DOMContentLoaded, load, unload
+#### HTMLrequest->DOM,CSSOM->RenderTree->layout->paint(레이어단위로 페인트를준비)->composition
+#### Bubbling & (capturing) event.stop(Immediate)Propagation ❌ , 
+#### 이벤트위임
+#### 프로세스와 쓰레드
+#### JS 런타임(엔진 & 스택)
+#### 브라우저 런타임
