@@ -13,13 +13,14 @@
 #### 호이스팅
 #### THIS와Bind
 #### 타입
-#### 클로저
+#### 클로저활용
 #### 프로토타입
 #### Object Oriented Programming
 #### Functional Programming
 #### Asyn
 #### 모듈
 #### Error Handling
+#### 자료구조 in JS
 •••
 
 #### Http, Https, Web APIs, 브라우저좌표
@@ -52,3 +53,6 @@
 #### THIS🧡
 #### JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.
 #### JS는 THIS라는 정보를담은 함수를 다른곳으로 할당하는순간 잃어버릴수있기때문에 Bind 또는 Class안에서 Arrow함수로 선언해줌에따라 선언될당시 스코프의 This Context를 유지한다
+
+#### Modules💘이란 파일안에 코드를 모듈화해서 작성하는것/ 한 모듈 = 한 파일안에 작성되어있는 코드/ 모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌스코프로 측정된다/ export, import 활용 
+
