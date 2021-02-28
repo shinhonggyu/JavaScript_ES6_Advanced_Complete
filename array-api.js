@@ -73,6 +73,7 @@ console.log(students);
 }
 
 // Q9. compute students' average score
+// reduce() 메서드는 배열의 각 요소에 대해 주어진 리듀서(reducer) 함수를 실행하고, 하나의 결과값을 반환합니다.
 {
   const result = students.reduce((prev, curr) => prev + curr.score, 0);
   console.log(result / students.length);
