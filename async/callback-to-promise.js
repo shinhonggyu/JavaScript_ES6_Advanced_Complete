@@ -1,3 +1,5 @@
+// A callback function is a function passed into another function as an argument,
+// which is then invoked inside the outer function to complete some kind of routine or action.
 // 콜백은 다른 함수에 인수로 전달되는 함수⭐❗
 class UserStorage {
   loginUser(id, password) {
