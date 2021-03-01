@@ -29,29 +29,17 @@
 
 // -----------------
 
-// function IF() {
-//   const val = null;
-
-//   if (!val) {
-//     console.log(true);
-//   }
-
-//   console.log('null💖');
-// }
-
-// IF();
-
-// result: true
-//         null💖
-
 function IF() {
-  const userRef = null;
+  const val = null;
 
-  if (!userRef) {
-    console.log('test');
+  if (!val) {
+    console.log(true);
   }
 
-  console.log('test2');
+  console.log('null💖');
 }
 
 IF();
+
+// result: true
+//         null💖
