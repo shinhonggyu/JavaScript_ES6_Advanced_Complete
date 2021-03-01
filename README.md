@@ -12,8 +12,6 @@
 
 #### 콜스택과 메모리힙
 
-=======
-
 #### 인터프리터와 컴파일
 
 #### 메모리힙과 콜스택(LIFO)⭐
@@ -50,15 +48,9 @@ global excution context
 
 #### THIS와Bind
 
-<<<<<<< HEAD
-
 #### 타입(JS런타임때 결정)
 
-=======
-
 #### 타입
-
-> > > > > > > 1055442... callstack
 
 #### 클로저활용
 
@@ -75,8 +67,6 @@ global excution context
 #### Error Handling
 
 #### 자료구조 in JS
-
-•••
 
 #### Http, Https, Web APIs, 브라우저좌표
 
