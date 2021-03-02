@@ -19,13 +19,20 @@
 // console.log(obj1);
 
 // ⭐callstack
-function subtractTwo(num) {
-  return num - 2;
+// function subtractTwo(num) {
+//   return num - 2;
+// }
+
+// function calculate() {
+//   const sumTotal = 4 + 5;
+//   return subtractTwo(sumTotal);
+// }
+
+// calculate();
+
+function garbage() {
+  const name = 'shin';
+  return console.log('hi');
 }
 
-function calculate() {
-  const sumTotal = 4 + 5;
-  return subtractTwo(sumTotal);
-}
-
-calculate();
+garbage;
