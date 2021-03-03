@@ -170,9 +170,252 @@ console.log('3');
 
 ---
 
-### Node.js ⭐
+#### Node.js ⭐
 
 JS를 브라우저밖에서 무언가를 빌드할수있게 실행시켜주는 실행프로그램
+
+---
+
+#### 3 Ways to Promise
+
+There are 3 ways you could want promises to resolve,  
+병렬 (all together), 순차적 (1 after another), or 경쟁 (doesn't matter who wins).
+
+```js
+// when new Promise is created, the excutor runs automatically.
+const promisify = (item, delay) =>
+  new Promise((resolve) => setTimeout(() => resolve(item), delay));
+
+const a = () => promisify('a', 100);
+const b = () => promisify('b', 5000);
+const c = () => promisify('c', 3000);
+
+async function parallel() {
+  const promises = [a(), b(), c()];
+  const [output1, output2, output3] = await Promise.all(promises);
+  return `parallel is done: ${output1} ${output2} ${output3}`;
+}
+
+async function sequence() {
+  const output1 = await a();
+  const output2 = await b();
+  const output3 = await c();
+  return `sequence is done: ${output1} ${output2} ${output3}`;
+}
+
+async function race() {
+  const promises = [a(), b(), c()];
+  const output1 = await Promise.race(promises);
+  return `race is done: ${output1}`;
+}
+
+sequence().then(console.log);
+parallel().then(console.log);
+race().then(console.log);
+
+// race is done: a
+// parallel is done: a b c
+// sequence is done: a b c
+```
+
+---
+
+#### EXECUTION CONTEXT
+
+실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는 환경입니다  
+JavaScript에는 Global 또는 Function의 두 가지 유형의 실행 컨텍스트가 있습니다  
+각 컨텍스트에는 생성(creation) 및 실행 단계(executing phase)의 두 단계가 있습니다  
+JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.
+
+> Global Execution Context (this === window :true)
+
+- Creation Phase
+
+  1. global object(window) created
+  2. initializes this keyword to global
+
+- Executing Phase (actually run your code)
+
+  3. Variable Environment created - memory space for var variables and functions created
+  4. initializes all variables to undefined (also known as hoisting) and places them with any functions into memory
+
+  ```js
+  this;
+  window;
+  this === window;
+
+  // Window {...}
+  // Window {...}
+  // true
+  ```
+
+> Function Execution Context 함수가 호출 될 때만 함수 실행 컨텍스트가 생성됩니다.
+
+- Creation Phase
+
+  1. argument object created with any arguments
+  2. initializes this keyword to point called or to the global object if not specified
+
+- Executing Phase
+
+  3. Variable Environment created - memory space for variable and functions created
+  4. initializes all variables to undefined and places them into memory with any new functions
+
+  ```js
+  // Function Execution Context creates arguments object and points 'this' to the function
+  function showArgs(arg1, arg2) {
+    console.log('arguments: ', arguments);
+    return `argument 1 is: ${arg1} and argument 2 is: ${arg2}`;
+  }
+
+  showArgs('hello', 'world');
+
+  // arguments: { 0: 'hello', 1: 'world' }
+  // argument 1 is hello and argument 2 is world
+
+  function noArgs() {
+    console.log('arguments: ', arguments);
+  }
+
+  noArgs();
+
+  // arguments: {}
+  // even though there are no arguments, the object is still created
+  ```
+
+  The keyword arguments can be dangerous to use in your code as is. In ES6, a few methods were introduced that can help better use arguments.
+
+  ```js
+  function showArgs(arg1, arg2) {
+    console.log('arguments: ', arguments);
+    console.log(Array.from(arguments));
+  }
+
+  showArgs('hello', 'world');
+
+  // arguments: { 0: 'hello', 1: 'world' }
+  // [ 'hello', 'world' ]
+
+  function showArgs2(...args) {
+    console.log(console.log('arguments: ', args));
+    console.log(Array.from(arguments));
+    return `${args[0]} ${args[1]}`;
+  }
+
+  showArgs2('hello', 'world');
+
+  // arguments: [ 'hello', 'world' ]
+  // [ 'hello', 'world' ]
+  // hello world
+  ```
+
+---
+
+#### Arrow Functions..💖
+
+어떤 사람들은 화살표 함수를 일반 함수에 대한 syntactic sugar라고 생각하지만 화살표 함수는 일반 함수와 약간 다르게 작동합니다.  
+일반 함수에 대한 간결한 대안이지만 this, arguments, super 또는 new.target 키워드에 대한 자체 바인딩이 없습니다.  
+화살표 함수는 생성자로 사용할 수 없으며 메서드에 대한 best option이 아닙니다.
+
+````js
+var obj = {
+  // does not create a new scope
+  i: 10,
+  b: () => console.log(this.i, this),
+  c: function () {
+    console.log(this.i, this);
+  },
+};
+
+obj.b(); // prints undefined, Window {...} (or the global object)
+obj.c(); // prints 10, Object {...}```
+````
+
+---
+
+#### HOISTING
+
+var hoisting (move declaration from bottom to top)
+
+```js
+// var (don't ever use this!)
+console.log(age); // 값을 할당하기전에 출력 undefined
+age = 4; // 선언도 하기전에 값을할당
+console.log(age); // 4
+var age;
+
+name = 4; // ReferenceError 선언전에 값을할당
+let name;
+```
+
+```js
+{
+  age = 4;
+  var age; // var는 Block scope도 무시
+}
+console.log(age); // 4
+```
+
+> Avoid hoisting when possible. It can cause memory leaks and hard to catch bugs in your code. Use let and const as your go to variables.
+
+---
+
+#### LEXICAL ENVIRONMENT
+
+lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 범위 또는 환경입니다.  
+A new lexical environment is created when curly brackets {} are used, even nested brackets {{...}} create a new lexical environment.  
+The execution context tells the engine which lexical environment it is currently working in and the lexical scope determines the available variables.
+
+```js
+function one() {
+  var isValid = true; // local env
+  two(); // new execution context
+}
+
+function two() {
+  var isValid; // undefined
+}
+
+var isValid = false; // global
+one();
+
+/* 
+   two() isValid = undefined
+   one() isValid = true
+   global() isValid = false
+   ------------------------
+   call stack
+*/
+```
+
+---
+
+#### SCOPE CHAIN
+
+![Image Description](https://images.ctfassets.net/aq13lwl6616q/orTo9ia4TX3L5lXsW66rQ/575a4a80639a05791175fbfbd6af5826/scope_graph.png)
+
+Each environment context that is created has a link outside of its lexical environment called the scope chain.  
+The scope chain gives us access to variables in the parent environment.
+
+---
+
+#### Function And Block scope
+
+```js
+let globalName = 'global name'; // Global scope
+{
+  // Block scope
+  let name = 'ellie';
+  console.log(name);
+  name = 'hello';
+  console.log(name);
+  console.log(globalName); // global name
+}
+console.log(name); // 아무것도 안나옴.
+console.log(globalName); // global name
+```
+
+---
 
 #### 중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져
 
@@ -181,8 +424,6 @@ JS를 브라우저밖에서 무언가를 빌드할수있게 실행시켜주는 �
 #### 렉시컬스코프, 글로벌스코프, 스코프체인, Function scope 와 Block scope
 
 #### 렉시컬환경
-
-#### 호이스팅
 
 #### THIS와Bind
 
@@ -197,14 +438,6 @@ JS를 브라우저밖에서 무언가를 빌드할수있게 실행시켜주는 �
 #### Functional Programming
 
 #### Asyn
-
-```js
-setTimeout(() => {
-  console.log('1');
-}, 0);
-Promise.resolve().then(() => console.log('2'));
-console.log('3');
-```
 
 #### 모듈
 
