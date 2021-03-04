@@ -5,17 +5,32 @@
 
 ![Image description](https://images.ctfassets.net/aq13lwl6616q/3o7Q3edCrVJG9Zzj6VMZ1K/28136a643636dfa04090f3fb5c5467ff/javascript_engine.png)
 
+`Google이 Chrome V8 엔진을 만든 2008년은 JavaScript의 중요한 순간이었습니다.`  
+`V8 엔진은 C ++로 작성되고 Chrome 브라우저에서 사용되며 Node JS를 지원하는 오픈 소스 고성능 JavaScript 엔진입니다`  
+`성능은 주로 엔진의 두 부분 인 인터프리터와 컴파일러를 결합하기 때문에 이전에 나온 엔진을 능가했습니다.`  
+`오늘날 모든 주요 엔진은이 동일한 기술을 사용합니다.`
+
 ---
+
+파싱은 소스 코드를 분석하고 오류를 확인한 다음 부분으로 나누는 프로세스입니다.  
+파서는 Abstrack Syntax Tree(추상 구문 트리) or AST라 불리는 자료구조를 생성합니다  
+AST는 원본 구문의 모든 세부 사항을 표시하지는 않지만 구조적 또는 콘텐츠 관련 세부 사항을 포함하는 소스 코드의 트리 그래프
 
 #### 인터프리터와 컴파일❗
 
 - 인터프리터는 기계 언어 프로그램으로 컴파일 할 필요없이 코드의 각 줄을 한 줄씩 직접 실행합니다.
+- Interpreters can use different strategies to increase performance.
+- 그들은 소스 코드를 파싱하고 즉시 실행할 수 있으며,이를보다 효율적인 기계 코드로 변환하거나, 컴파일러로 만든 미리 컴파일 된 코드를 실행하거나, 이들의 일부 조합을 실행할 수 있습니다.
 - 컴파일러는 컴퓨터에서 읽고 실행할 수 있도록 미리 명령을 기계 코드 또는 하위 수준 형식으로 변환합니다.
-- JS가 처음나왔을때(스파이더몽키엔진) 인터프리터언어였지만 구현에따라 컴파일러(Babel, TS)를 이용해 코드최적화가 가능하도록 진화함.
-- JIT Compiler: 최신 엔진에서 인터프리터는 코드를 한 줄씩 읽기 시작하고 프로파일 러는 자주 사용되는 코드와 플래그를 감시 한 다음 최적화를 위해 컴파일러에 전달합니다.
-  결국 JavaScript 엔진은 인터프리터가 출력하는 바이트 코드를 가져와 컴파일러가 출력하는 최적화 된 코드를 혼합 한 다음이를 컴퓨터에 제공
+- 모든 코드를 실행하고 코드의 기능을 파악한 다음 컴퓨터가 읽기 쉬운 다른 언어로 컴파일합니다.(Babel, TS)
+- 현대 엔진에서 인터프리터는 코드를 한 줄씩 읽기 시작하고 프로파일 러는 자주 사용되는 코드와 플래그를 감시 한 다음 최적화를 위해 컴파일러에 전달합니다.
+- 결국 JavaScript 엔진은 인터프리터가 출력하는 바이트 코드를 가져와 컴파일러가 출력하는 최적화 된 코드를 혼합 한 다음이를 컴퓨터에 제공합니다. 이를 "Just in Time"또는 JIT 컴파일러라고합니다.
 
-#### Memoization❗ 컴파일러가 최적화하는데 도움이되는 코드 작성하기
+---
+
+#### 컴파일러가 최적화하는데 도움이되는 코드 작성하기❗
+
+> Memoization
 
 ```js
 // Bad Way
@@ -61,11 +76,76 @@ console.log('4.', memoized(10))
 // 4. 90
 ```
 
+> Inline Caching
+
+```js
+function findUser(user) {
+  return `found ${user.firstName} ${user.lastName}`
+}
+
+const userData = {
+  firstName: 'Brittney',
+  lastName: 'Postma
+}
+
+findUser(userData)
+
+// if this findUser(userData) is called multiple times,
+// then it will be optimized (inline cached) to just be found Brittney Postma
+```
+
+이 코드가 하나의 이름 만 반환하도록 최적화되면 다른 사용자를 반환해야하는 경우 컴퓨터에서 더 많은 작업을 수행해야합니다.
+
+> Hidden Classes
+
+```js
+function Animal(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+const obj1 = new Animal(1, 2);
+const obj2 = new Animal(3, 4);
+
+obj1.a = 30;
+obj1.b = 100;
+obj2.b = 30;
+obj2.a = 100;
+
+delete obj1.x = 30;
+```
+
+이러한 값을 인스턴스화 된 것과 다른 순서로 설정함으로써
+Hidden Classes로 인해 컴파일러 속도가 느려집니다.  
+값이 설정된 순서와 다른 순서로 도입되면 컴파일러는 혼란스러워하고 공유 된 Hidden Classes가 없다고 생각할 수 있으며 두 가지 다른 것이므로 계산 속도가 느려집니다.  
+또한 delete 키워드를 사용하지 않는 이유는 히든 클래스를 변경하기 때문입니다.
+
+```js
+// This is the more optimized version of the code.
+function Animal(x, y) {
+  // instantiating a and b in the constructor
+  this.a = x;
+  this.b = y;
+}
+
+const obj1 = new Animal(1, 2);
+const obj2 = new Animal(3, 4);
+
+// and setting the values in order
+obj1.a = 30;
+obj1.b = 100;
+obj2.a = 30;
+obj2.b = 100;
+```
+
 ---
 
 #### 메모리힙과 콜스택(LIFO)⭐
 
-- 메모리힙(필요에 따라 메모리를 할당, 사용 및 제거하는 장소)
+JavaScript 엔진은 우리를 위해 많은 일을하지만 가장 큰 작업 중 2 개는 그것을 읽고 실행하는 것입니다.  
+데이터를 저장하고 쓸 장소와 실행중인 항목을 한 줄씩 추적 할 장소가 필요합니다. 이것이 `콜스택`과 `메모리 힙`이 들어오는 곳입니다.
+
+> 메모리힙(필요에 따라 메모리를 할당, 사용 및 제거하는 장소)
 
 ```js
 // tell the memory heap to allocate memory for a number
@@ -79,7 +159,7 @@ const person = {
 };
 ```
 
-- 콜스택(LIFO)(실행중인 함수를 한줄한줄씩 추적)
+> 콜스택(LIFO)(콜스택은 코드에서 우리가 어디에 있는지 추적하므로 프로그램을 순서대로 실행할 수 있습니다.)
 
 ```js
 function subtractTwo(num) {
@@ -93,6 +173,24 @@ function calculate() {
 
 debugger;
 calculate();
+```
+
+---
+
+#### STACK OVERFLOW
+
+그렇다면 서로 중첩 된 함수를 계속 호출하면 어떻게 될까요? 이런 일이 발생하면이를 STACK OVERFLOW라고합니다.
+
+```js
+// When a function calls itself,
+// it is called RECURSION
+function inception() {
+  inception();
+}
+
+inception();
+// returns Uncaught RangeError:
+// Maximum call stack size exceeded
 ```
 
 ---
@@ -114,11 +212,24 @@ person = 'Brittney Postma';
 #### 메모리누수
 
 위의 예에서는 메모리 누수가 발생합니다. 변수 person을 객체에서 문자열로 변경하면 first와 last의 값을 메모리 힙에 남겨두고 제거하지 않습니다  
-변수를 전역 네임 스페이스에서 제외하고 가능한 경우 함수 내부에서만 변수를 인스턴스화하여이를 방지 할 수 있습니다.
+변수를 전역 네임 스페이스에서 제외하고 가능한 경우 함수 내부에서만 변수를 인스턴스화하여이를 방지 할 수 있습니다.  
+`JavaScript is a single threaded language, meaning only one thing can be executed at a time.`  
+`It only has one call stack and therefore it is a synchronous language`
+
+#### Synchronous
+
+`So, what is the issue with being a single threaded language❓`  
+Lets's start from the beginning.
+When you visit a web page, you run a browser to do so (Chrome, Firefox, Safari, Edge).  
+Each browser has its own version of JavaScript Runtime with a set of Web API's, methods that developers can access from the window object.  
+In a synchronous language, only one thing can be done at a time.  
+Imagine an alert on the page, blocking the user from accessing any part of the page until the OK button is clicked.  
+If everything in JavaScript that took a significant amount of time, blocked the browser, then we would have a pretty bad user experience  
+`this is where concurrency and the event loop come in.`
 
 ---
 
-#### 이벤트루프 ⭐
+#### Event Loop and Callback Queue ⭐
 
 - 프로세스(운영체제위에서 독립적으로 메모리에서 실행되고있는 프로그램, 코드-스택-힙-데이터로 구성)
 - 쓰레드(프로그램 안에서 동시에 여러개가수행될수있는 작은 일꾼단위,각각 고유스택을 가지고있고 프로세스의 코드-힙-데이터에 공통적으로 접근)
@@ -311,7 +422,7 @@ JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라�
 
 ---
 
-#### Arrow Functions..💖
+#### Arrow Functions 💖
 
 어떤 사람들은 화살표 함수를 일반 함수에 대한 syntactic sugar라고 생각하지만 화살표 함수는 일반 함수와 약간 다르게 작동합니다.  
 일반 함수에 대한 간결한 대안이지만 this, arguments, super 또는 new.target 키워드에 대한 자체 바인딩이 없습니다.  
@@ -335,17 +446,67 @@ obj.c(); // prints 10, Object {...}```
 
 #### HOISTING
 
-var hoisting (move declaration from bottom to top)
+var hoisting (move declaration from bottom to top)  
+JavaScript에서 함수는 완전히 호이스트되고, var 변수는 호이스트되고 undefined로 초기화된다  
+let 및 const 변수는 호이스트되지만 값을 초기화하지는 않습니다.  
+따라서 초기화되기 전에 코드에서 var 변수를 사용하면 undefined를 반환합니다.  
+그러나 함수는 완전히 호이스트되어 있기 때문에 코드베이스의 어느 곳에서나 호출 할 수 있습니다.
 
 ```js
 // var (don't ever use this!)
 console.log(age); // 값을 할당하기전에 출력 undefined
-age = 4; // 선언도 하기전에 값을할당
+age = 4; // 선언도 하기전에 값을할당가능
 console.log(age); // 4
 var age;
 
+// let 및 const가 선언되기 전에 사용되면 아직 초기화되지 않았기 때문에 참조 오류가 발생합니다.
 name = 4; // ReferenceError 선언전에 값을할당
 let name;
+```
+
+```js
+// function expression gets hoisted as undefined
+var sing = function () {
+  console.log('uhhhh la la la');
+};
+
+// function declaration gets fully hoisted
+function sing2() {
+  console.log('ohhhh la la la');
+}
+```
+
+```js
+// function declaration gets hoisted
+function a() {
+  console.log('hi');
+}
+
+// function declaration get rewritten in memory
+function a() {
+  console.log('bye');
+}
+
+console.log(a());
+// bye
+```
+
+```js
+// variable declaration gets hoisted as undefined
+var favoriteFood = 'grapes';
+
+// function expression gets hoisted as undefined
+var foodThoughts = function () {
+  // new execution context created favoriteFood = undefined
+  console.log(`Original favorite food: ${favoriteFood}`);
+
+  // variable declaration gets hoisted as undefined
+  var favoriteFood = 'sushi';
+
+  console.log(`New favorite food: ${favoriteFood}`);
+};
+
+foodThoughts();
 ```
 
 ```js
@@ -360,11 +521,14 @@ console.log(age); // 4
 
 ---
 
-#### LEXICAL ENVIRONMENT
+#### LEXICAL ENVIRONMENT ❓
 
-lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 범위 또는 환경입니다.  
-A new lexical environment is created when curly brackets {} are used, even nested brackets {{...}} create a new lexical environment.  
-The execution context tells the engine which lexical environment it is currently working in and the lexical scope determines the available variables.
+- lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 scope(범위) 또는 environment(환경)입니다.
+- A new lexical environment is created when curly brackets {} are used, even nested brackets {{...}} create a new lexical environment.
+- 그러므로 들여쓰기 없는함수의 lexical environment는 global scope
+- The execution context tells the engine which lexical environment it is currently working in and the lexical scope determines the available variables.
+- in Javascript our lexical scope (available data + variables where the function was defined) determines our available variables.
+- Not where the function is called (dynamic scope), So it doesn't matter where we call our function.
 
 ```js
 function one() {
@@ -397,6 +561,44 @@ one();
 Each environment context that is created has a link outside of its lexical environment called the scope chain.  
 The scope chain gives us access to variables in the parent environment.
 
+이 예에서 모든 함수는 전역 변수 x에 액세스 할 수 있습니다.  
+그러나 다른 함수에서 변수에 액세스하려고하면 오류가 반환됩니다.
+
+```js
+var x = 'x';
+
+function findName() {
+  console.log(x);
+  var b = 'b';
+  return printName();
+}
+
+function printName() {
+  var c = 'c';
+  return 'Brittney Postma';
+}
+
+function sayMyName() {
+  var a = 'a';
+  return findName();
+}
+
+sayMyName();
+
+// sayMyName runs a = 'a'
+// findName runs
+// x
+// b = 'b'
+// printName runs c = 'c'
+// Brittney Postma
+```
+
+⭐ The example below will show how the scope chain links each function.
+
+```js
+
+```
+
 ---
 
 #### Function And Block scope
@@ -422,8 +624,6 @@ console.log(globalName); // global name
 #### 스코프는 변수를찾는 규칙의집합
 
 #### 렉시컬스코프, 글로벌스코프, 스코프체인, Function scope 와 Block scope
-
-#### 렉시컬환경
 
 #### THIS와Bind
 
