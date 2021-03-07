@@ -353,10 +353,11 @@ race().then(console.log);
 
 ---
 
-#### EXECUTION CONTEXT
+#### 1. EXECUTION CONTEXT
 
+실행 컨텍스트(Execution Context)는 scope, hoisting, this, function, closure 등의 동작원리를 담고 있는 자바스크립트의 핵심원리  
 JavaScript의 코드는 항상 일종의 실행 컨텍스트 내에서 실행됩니다  
-실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는 환경입니다  
+실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는환경 입니다  
 JavaScript에는 Global 또는 Function의 두 가지 유형의 실행 컨텍스트가 있습니다  
 각 컨텍스트에는 생성단계(creation phase) 및 실행단계(executing phase)의 두 단계가 있습니다  
 JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.
@@ -418,7 +419,7 @@ JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라�
   ```
 
   키워드 arguments는 코드에서 그대로 사용하는 것이 위험 할 수 있습니다.  
-  ES6에서는 arguments를 더 잘 사용할 수있는 몇 가지 방법이 도입되었습니다.
+   ES6에서는 arguments를 더 잘 사용할 수있는 몇 가지 방법이 도입되었습니다.
 
   ```js
   function showArgs(arg1, arg2) {
@@ -444,6 +445,87 @@ JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라�
   // hello world
   ```
 
+실행 컨텍스트는 실행 가능한 코드가 실행되기 위해 필요한 환경  
+여기서 말하는 실행 가능한 코드는 아래와 같다
+
+- 전역 코드 : 전역 영역에 존재하는 코드
+- Eval 코드 : eval 함수로 실행되는 코드
+- 함수 코드 : 함수 내에 존재하는 코드
+
+일반적으로 실행 가능한 코드는 전역 코드와 함수 내 코드이다.
+
+자바스크립트 엔진은 코드를 실행하기 위하여 실행에 필요한 여러가지 정보를 알고 있어야 한다  
+ 실행에 필요한 여러가지 정보란 아래와 같은 것들이 있다.
+
+- 변수 : 전역변수, 지역변수, 매개변수, 객체의 프로퍼티
+- 함수 선언
+- 변수의 유효범위(Scope)
+- this
+
+이와 같이 실행에 필요한 정보를 형상화하고 구분하기 위해 자바스크립트 엔진은 실행 컨텍스트를 물리적 객체의 형태로 관리한다. 아래의 코드를 살펴보자.
+
+```js
+var x = 'xxx';
+
+function foo() {
+  var y = 'yyy';
+
+  function bar() {
+    var z = 'zzz';
+    console.log(x + y + z);
+    bar();
+}
+foo();
+
+```
+
+위 코드를 실행하면 아래와 같이 실행 컨텍스트 스택(Stack)이 생성하고 소멸한다  
+현재 실행 중인 컨텍스트에서 이 컨텍스트와 관련없는 코드(예를 들어 다른 함수)가 실행되면 새로운 컨텍스트가 생성된다  
+이 컨텍스트는 스택에 쌓이게 되고 컨트롤(제어권)이 이동한다.  
+<img src="https://poiemaweb.com/img/ec_1.png" width="600">
+
+1. 컨트롤이 실행 가능한 코드로 이동하면 논리적 스택 구조를 가지는 새로운 실행 컨텍스트 스택이 생성된다. 스택은 LIFO(Last In First Out, 후입 선출)의 구조를 가지는 나열 구조이다.
+2. 전역 코드(Global code)로 컨트롤이 진입하면 전역 실행 컨텍스트가 생성되고 실행 컨텍스트 스택에 쌓인다. 전역 실행 컨텍스트는 애플리케이션이 종료될 때(웹 페이지에서 나가거나 브라우저를 닫을 때)까지 유지된다.
+3. 함수를 호출하면 해당 함수의 실행 컨텍스트가 생성되며 직전에 실행된 코드 블록의 실행 컨텍스트 위에 쌓인다.
+4. 함수 실행이 끝나면 해당 함수의 실행 컨텍스트를 파기하고 직전의 실행 컨텍스트에 컨트롤을 반환한다.
+
+#### 2. 실행 컨텍스트의 3가지 객체
+
+실행 컨텍스트는 실행 가능한 코드를 형상화하고 구분하는 추상적인 개념이지만 물리적으로는 객체의 형태를 가지며 아래의 3가지 프로퍼티를 소유한다.  
+<img src="https://poiemaweb.com/img/excute_context_structure.png" width="300">
+
+#### 2-1. Variable Object (VO / 변수객체)
+
+실행 컨텍스트가 생성되면 자바스크립트 엔진은 실행에 필요한 여러 정보들을 담을 객체 Variable Object(VO / 변수 객체)를 생성한다.  
+Variable Object는 코드가 실행될 때 엔진에 의해 참조되며 코드에서는 접근할 수 없다. Variable Object는 아래의 정보를 담는 객체이다.
+
+- 변수
+- 매개변수(parameter)와 인수 정보(arguments)
+- 함수 선언(함수 표현식은 제외)
+
+Variable Object는 실행 컨텍스트의 프로퍼티이기 때문에 값을 갖는데 이 값은 다른 객체를 가리킨다.  
+그런데 전역 코드 실행시 생성되는 전역 컨텍스트의 경우와 함수를 실행할 때 생성되는 함수 컨텍스트의 경우, 가리키는 객체가 다르다.  
+이는 전역 코드와 함수의 내용이 다르기 때문이다. 예를 들어 전역 코드에는 매개변수가 없지만 함수에는 매개변수가 있다.
+
+Variable Object가 가리키는 객체는 아래와 같다.
+
+- 전역 컨텍스트의 경우  
+  Variable Object는 유일하며 최상위에 위치하고 모든 전역 변수, 전역 함수 등을 포함하는 전역 객체(Global Object / GO)를 가리킨다.  
+  전역 객체는 전역에 선언된 전역 변수와 전역 함수를 프로퍼티로 소유한다.
+
+- 함수 컨텍스트의 경우  
+  Variable Object는 Activation Object(AO / 활성 객체)를 가리키며 매개변수와 인수들의 정보를 배열의 형태로 담고 있는 객체인 arguments object가 추가된다.
+
+#### 2.2 Scope Chain
+
+현재 실행 컨텍스트의 활성 객체(AO)를 선두로 하여 순차적으로 상위 컨텍스트의 활성 객체(AO)를 가리키며 마지막 리스트는 전역 객체(GO)를 가리킨다.  
+함수가 중첩 상태일 때 하위함수 내에서 상위함수의 스코프와 전역 스코프까지 참조할 수 있는데 이것는 스코프 체인을 검색을 통해 가능하다  
+함수가 중첩되어 있으면 중첩될 때마다 부모 함수의 Scope가 자식 함수의 스코프 체인에 포함된다. 함수 실행중에 변수를 만나면 그 변수를 우선 현재 Scope, 즉 Activation Object에서 검색해보고, 만약 검색에 실패하면 스코프 체인에 담겨진 순서대로 그 검색을 이어가게 되는 것이다.
+
+#### 2.3 this value
+
+this에 할당되는 값은 함수 호출 패턴에 의해 결정된다.
+
 ---
 
 #### Arrow Functions 💖
@@ -456,21 +538,92 @@ JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라�
 var obj = {
   // does not create a new scope
   i: 10,
-  b: () => console.log(this.i, this),
+  b: () => console.log(this.i, this), // 화살표 함수로 메소드를 정의하는 것은 피해야 한다
   c: function () {
     console.log(this.i, this);
   },
 };
 
+// 위 예제의 경우, 메소드로 정의한 화살표 함수 내부의 this는 메소드를 소유한 객체, 즉 메소드를 호출한 객체를 가리키지 않고 상위 컨택스트인 전역 객체 window를 가리킨다.
 obj.b(); // prints undefined, Window {...} (or the global object)
 obj.c(); // prints 10, Object {...}```
 ````
+
+1.화살표 함수의 선언
+
+```js
+// 매개변수 지정 방법
+    () => { ... } // 매개변수가 없을 경우
+     x => { ... } // 매개변수가 한 개인 경우, 소괄호를 생략할 수 있다.
+(x, y) => { ... } // 매개변수가 여러 개인 경우, 소괄호를 생략할 수 없다.
+
+// 함수 몸체 지정 방법
+x => { return x * x }  // single line block
+x => x * x             // 함수 몸체가 한줄의 구문이라면 중괄호를 생략할 수 있으며 암묵적으로 return된다. 위 표현과 동일하다.
+
+() => { return { a: 1 }; }
+() => ({ a: 1 })  // 위 표현과 동일하다. 객체 반환시 소괄호를 사용한다.
+
+() => {           // multi line block.
+  const x = 10;
+  return x * x;
+};
+```
+
+2.화살표 함수의 호출
+
+```js
+// ES5
+var pow = function (x) {
+  return x * x;
+};
+console.log(pow(10)); // 100
+
+// ES6
+const pow = (x) => x * x;
+console.log(pow(10)); // 100
+```
+
+또는 콜백 함수로 사용할 수 있다. 이 경우 일반적인 함수 표현식보다 표현이 간결하다.
+
+```js
+// ES5
+var arr = [1, 2, 3];
+var pow = arr.map(function (x) {
+  // x는 요소값
+  return x * x;
+});
+
+console.log(pow); // [ 1, 4, 9 ]
+
+// ES6
+const arr = [1, 2, 3];
+const pow = arr.map((x) => x * x);
+
+console.log(pow); // [ 1, 4, 9 ]
+```
+
+3.화살표 함수의 this⭐
+function 키워드로 생성한 일반 함수와 화살표 함수의 가장 큰 차이점은 this이다.  
+일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
+
+- 화살표 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정된다.
+- 동적으로 결정되는 일반 함수와는 달리 *화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 이를 Lexical this*라한다.
+- 화살표 함수의 this 바인딩 객체 결정 방식은 *함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프*와 유사하다.
+
+  4.화살표 함수를 사용해서는 안되는 경우
+
+1. 메소드
+2. prototype
+3. 생성자 함수
+4. addEventListener 함수의 콜백 함수
+   addEventListener 함수의 콜백 함수를 화살표 함수로 정의하면 this가 상위 컨택스트인 전역 객체 window를 가리킨다.  
+   따라서 addEventListener 함수의 콜백 함수 내에서 this를 사용하는 경우, function 키워드로 정의한 일반 함수를 사용하여야 한다.
 
 ---
 
 #### HOISTING
 
-var hoisting (move declaration from bottom to top)  
 JavaScript에서 함수는 완전히 호이스트되고, var 변수는 호이스트되고 undefined로 초기화된다  
 let 및 const 변수는 호이스트되지만 값을 초기화하지는 않습니다.  
 따라서 초기화되기 전에 코드에서 var 변수를 사용하면 undefined를 반환합니다.  
@@ -541,18 +694,30 @@ foodThoughts();
 console.log(age); // 4
 ```
 
+```js
+let foo = 1; // 전역 변수
+
+{
+  console.log(foo); // ReferenceError: foo is not defined
+  let foo = 2; // 지역 변수
+}
+```
+
+위 예제의 경우, 전역 변수 foo의 값이 출력될 것처럼 보인다. 하지만 ES6의 선언문도 여전히 호이스팅이 발생하기 때문에 참조 에러(ReferenceError)가 발생한다.  
+ES6의 let으로 선언된 변수는 블록 레벨 스코프를 가지므로 코드 블록 내에서 선언된 변수 foo는 지역 변수이다. 따라서 지역 변수 foo도 해당 스코프에서 호이스팅되고 코드 블록의 선두부터 초기화가 이루어지는 지점까지 일시적 사각지대(TDZ)에 빠진다. 따라서 전역 변수 foo의 값이 출력되지 않고 참조 에러(ReferenceError)가 발생한다.
+
 > Avoid hoisting when possible. It can cause memory leaks and hard to catch bugs in your code. Use let and const as your go to variables.
 
 ---
 
 #### LEXICAL ENVIRONMENT ❓
 
-- lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 scope(범위) 또는 environment(환경)입니다.
-- 중괄호 {}를 사용하면 new lexical environment이 생성되며 중첩 된 괄호 {{...}}도 new lexical environment을 생성합니다.
-- 그러므로 들여쓰기 없는함수의 lexical environment는 global scope
-- 실행 컨텍스트(EXECUTION CONTEXT)는 엔진에게 현재 작업중인 lexical environment을 알려주고 lexical scope는 사용 가능한 변수를 결정합니다.
-- in Javascript our lexical scope (available data + variables where the function was defined) determines our available variables.
-- Not where the function is called (dynamic scope), So it doesn't matter where we call our function.
+- _lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 scope(범위) 또는 environment(환경)입니다._
+- _중괄호 {}를 사용하면 new lexical environment이 생성되며 중첩 된 괄호 {{...}}도 new lexical environment을 생성합니다._
+- _그러므로 들여쓰기 없는함수의 lexical environment는 global scope_
+- _실행 컨텍스트(EXECUTION CONTEXT)는 엔진에게 현재 작업중인 lexical environment을 알려주고 lexical scope는 사용 가능한 변수를 결정합니다._
+- _in Javascript our lexical scope (available data + variables where the function was defined) determines our available variables._
+- _Not where the function is called (dynamic scope), So it doesn't matter where we call our function._
 
 ```js
 function one() {
@@ -582,8 +747,10 @@ one();
 
 <Img src="https://images.ctfassets.net/aq13lwl6616q/orTo9ia4TX3L5lXsW66rQ/575a4a80639a05791175fbfbd6af5826/scope_graph.png" width="600">
 
-Each environment context that is created has a link outside of its lexical environment called the scope chain.  
-The scope chain gives us access to variables in the parent environment.
+\*ach environment context that is created has a link outside of its lexical environment called the scope chain.  
+The scope chain gives us access to variables in the parent environment.  
+생성된 각 환경컨택스트에는 자신의 렉시컬환경의 외부에 스코프체인이라 불리는 링크를 가지고있습니다.  
+스코프체인은 부모환경의 변수에 접근할수있게해줍니다.
 
 ```js
 var x = 'x';
@@ -668,14 +835,92 @@ doodle(); // Error! because it is enclosed in its own scope.
 
 #### Function And Block scope 💖
 
-- scope는 우리가 접근할수있는 변수입니다.
-- 함수를 생성 할 때마다 자체 변수 환경을 가진 새로운 실행 컨텍스트를 생성합니다.
-- 대부분의 프로그래밍 언어는 block scope이므로 새로운 { } 를 볼 때마다 new lexical environment이 됩니다.
-- 그러나 JS는 function scope이므로 global scope에서 function키워드를 사용할경우에만 new scope, new lexical environment를 만듭니다.
+ES5까지 변수를 선언할 수 있는 유일한 방법은 var 키워드를 사용하는 것이었다.  
+var 키워드로 선언된 변수는 아래와 같은 특징이 있다. 이는 다른 언어와는 다른 특징으로 주의를 기울이지 않으면 심각한 문제를 일으킨다.
+
+1. `함수 레벨 스코프(Function-level scope)`
+
+   - `함수의 코드 블록만을 스코프(우리가 접근할수있는 변수) 로 인정한다. === Block scope를 무시한다`  
+     따라서 전역 함수 외부에서 생성한 변수는 모두 전역 변수이다. 이는 전역 변수를 남발할 가능성을 높인다
+   - for 문의 변수 선언문에서 선언한 변수를 for 문의 코드 블록 외부에서 참조할 수 있다.
+
+2. var 키워드 생략 허용
+
+   - 암묵적 전역 변수를 양산할 가능성이 크다.
+
+   ```js
+   'use strict';
+
+   age = 4;
+   console.log(age); // error
+   ```
+
+3. 변수 중복 선언 허용
+
+   - 의도하지 않은 변수값의 변경이 일어날 가능성이 크다.
+
+   ```js
+   var foo = 123; // 전역 변수
+
+   console.log(foo); // 123
+
+   {
+     var foo = 456; // 전역 변수, 블록 레벨 스코프를 따르지 않는 var 키워드
+   }
+
+   console.log(foo); // 456
+
+   // ES6는 블록 레벨 스코프를 따르는 변수를 선언하기 위해 let 키워드를 제공한다.
+   ```
+
+   ```js
+   let foo = 123; // 전역 변수
+
+   {
+     let foo = 456; // 지역 변수
+     let bar = 456; // 지역 변수
+   }
+
+   console.log(foo); // 123
+   console.log(bar); // ReferenceError: bar is not defined
+   ```
+
+   ```js
+   var foo = 123;
+   var foo = 456; // 중복 선언 허용
+
+   let bar = 123;
+   let bar = 456; // Uncaught SyntaxError: Identifier 'bar' has already been declared
+   ```
+
+4. `변수 호이스팅`
+
+   - 변수를 선언하기 이전에 참조할 수 있다
+
+   ```js
+   console.log(age); // undefined;
+   age = 4; // 전역 변수
+   console.log(age); // 4
+   var age;
+
+   name = 4;
+   let name; // ReferenceError
+   ```
+
+대부분의 프로그래밍 언어는 블록 레벨 스코프(Block-level scope)를 따르지만 자바스크립트는 함수 레벨 스코프(Function-level scope)를 따른다.
+
+ES6는 이러한 var 키워드의 단점을 보완하기 위해, block scope에 대한 액세스를 제공하기 위해 let과 const 키워드를 도입하였다.
+
+`함수 레벨 스코프(Function-level scope)`  
+`함수 내에서 선언된 변수는 함수 내에서만 유효하며 함수 외부에서는 참조할 수 없다.`  
+`즉, 함수 내부에서 선언한 변수는 지역 변수이며 함수 외부에서 선언한 변수는 모두 전역 변수이다.`
+
+`블록 레벨 스코프(Block-level scope)`  
+`모든 코드 블록(함수, if 문, for 문, while 문, try/catch 문 등) 내에서 선언된 변수는 코드 블록 내에서만 유효하며 코드 블록 외부에서는 참조할 수 없다. 즉, 코드 블록 내부에서 선언한 변수는 지역 변수이다.`
 
 ```js
 if (5 > 4) {
-  var secret = '12345';
+  var secret = '12345'; // var키워드는 블록레벨 스코프를 따르지않는다
 }
 
 console.log(secret); // 12345
@@ -689,22 +934,16 @@ function a() {
 }
 
 console.log(secret); // error
-```
 
-- block scope에 대한 액세스를 제공하기 위해 ES6에서 let 및 const가 언어에 추가되었습니다.
-
-```js
+// - block scope에 대한 액세스를 제공하기 위해 ES6에서 let 및 const가 언어에 추가되었습니다.
 if (5 > 4) {
   const secret = '12345';
   // you can only access it inside the block scope❗
 }
 // block scope 사용하게해준다 ⭐
 console.log(secret); // error
-```
 
-Exercise Block Scope
 
-```js
 //Function Scope
 function loop() {
   for (var i = 0; i < 5, i++) {
@@ -734,6 +973,9 @@ loop2();
 ```
 
 - block scoping은 함수 내부뿐만 아니라 if 문 또는 loof 같은 중괄호 주위에 변수를 선언하는 것을 의미합니다.
+- 함수를 생성 할 때마다 자체 변수 환경을 가진 새로운 실행 컨텍스트를 생성합니다.
+- 대부분의 프로그래밍 언어는 block scope이므로 새로운 { } 를 볼 때마다 new lexical environment이 됩니다.
+- 그러나 JS는 function scope이므로 global scope에서 function키워드를 사용할경우에만 new scope, new lexical environment를 만듭니다.
 
 ⭐{ }를 사용하면 lexical environment이 생성되고 lexical scope는 접근가능한변수를 결정한뒤 실행 컨텍스트가 생성되면  
  엔진은 해당 범위의 모든 var 변수에 메모리를 할당하고 undefined로 초기화합니다  
@@ -754,9 +996,48 @@ console.log(name); // 아무것도 안나옴.
 console.log(globalName); // global name
 ```
 
+전역 객체와 let  
+전역 객체(Global Object)는 모든 객체의 유일한 최상위 객체를 의미하며 일반적으로 Browser-side에서는 window 객체, Server-side(Node.js)에서는 global 객체를 의미한다.  
+var 키워드로 선언된 변수를 전역 변수로 사용하면 전역 객체의 프로퍼티가 된다.
+
+```js
+var foo = 123; // 전역변수
+
+console.log(window.foo); // 123
+```
+
+let 키워드로 선언된 변수를 전역 변수로 사용하는 경우, let 전역 변수는 전역 객체의 프로퍼티가 아니다.  
+즉, window.foo와 같이 접근할 수 없다. let 전역 변수는 보이지 않는 개념적인 블록 내에 존재하게 된다.
+
+```js
+let foo = 123; // 전역변수
+
+console.log(window.foo); // undefined
+```
+
+#### var vs. let vs. const
+
+let은 재할당이 자유로우나 const는 재할당이 금지된다.  
+주의할 점은 const는 반드시 선언과 동시에 할당이 이루어져야 한다는 것이다. 그렇지 않으면 다음처럼 문법 에러(SyntaxError)가 발생한다.  
+`const FOO; // SyntaxError: Missing initializer in const declaration`
+또한, const는 let과 마찬가지로 블록 레벨 스코프를 갖는다.
+
+변수 선언에는 기본적으로 const를 사용하고 let은 재할당이 필요한 경우에 한정해 사용하는 것이 좋다.  
+원시 값의 경우, 가급적 상수를 사용하는 편이 좋다. 그리고 객체를 재할당하는 경우는 생각보다 흔하지 않다. const 키워드를 사용하면 의도치 않은 재할당을 방지해 주기 때문에 보다 안전하다.
+
+var와 let, 그리고 const는 다음처럼 사용하는 것을 추천한다.
+
+- ES6를 사용한다면 var 키워드는 사용하지 않는다.
+- 재할당이 필요한 경우에 한정해 let 키워드를 사용한다. 이때 변수의 스코프는 최대한 좁게 만든다.
+- 변경이 발생하지 않는(재할당이 필요 없는 상수) 원시 값과 객체에는 const 키워드를 사용한다. const 키워드는 재할당을 금지하므로 var, let 보다 안전하다.
+
+변수를 선언하는 시점에는 재할당이 필요할지 잘 모르는 경우가 많다. 그리고 객체는 의외로 재할당을 하는 경우가 드물다. 따라서 변수를 선언할 때에는 일단 const 키워드를 사용하도록 하자. 반드시 재할당이 필요하다면(반드시 재할당이 필요한지 한번 생각해 볼 일이다.) 그때 const를 let 키워드로 변경해도 결코 늦지 않는다.
+
 ---
 
 #### IIFE - IMMEDIATELY INVOKED FUNCTION EXPRESSION (Self-Executing Anonymous Function)
+
+#### 즉시실행함수를 이용한 전역변수 사용 억제
 
 즉시 호출 된 함수 표현식 또는 간단히 IIFE는 정의되는 즉시 실행되는 JavaScript 함수입니다
 
@@ -768,11 +1049,57 @@ console.log(globalName); // global name
 // Immediately invokes the function with 2nd set of ()
 ```
 
-요점 : 가능한 경우 전역 네임 스페이스 또는 범위를 오염시키지 마십시오.
+요점 : 가능한 경우 전역 네임 스페이스 또는 범위를 오염시키지 마십시오.  
+전역변수 사용을 억제하기 위해, 즉시 실행 함수(IIFE, Immediately-Invoked Function Expression)를 사용할 수 있다.  
+이 방법을 사용하면 전역변수를 만들지 않으므로 라이브러리 등에 자주 사용된다. 즉시 실행 함수는 즉시 실행되고 그 후 전역에서 바로 사라진다.
 
 ---
 
-#### THIS 💖
+#### THIS - 1
+
+일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
+
+```js
+console.log(this); // window
+
+function simpleFunc() {
+  console.log(this);
+}
+
+window.simpleFunc(); // window
+```
+
+```js
+class Counter {
+  count = 0; // 멤버변수
+  increase = function () {
+    console.log(this);
+  };
+  decrease = () => {
+    console.log(this);
+  };
+}
+
+const counter = new Counter();
+counter.increase(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
+const caller = counter.increase; // this라는 정보를담은 함수를 다른곳으로 할당.
+const caller2 = counter.decrease;
+caller(); // undefined
+// ↑
+caller2(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
+// ↑ 화살표 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정된다.
+// 동적으로 결정되는 일반 함수와는 달리 *화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 이를 Lexical this*라한다.
+// 화살표 함수의 this 바인딩 객체 결정 방식은 *함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프*와 유사하다.
+
+class Bob {}
+const bob = new Bob();
+bob.run = counter.increase;
+bob.run2 = counter.decrease;
+bob.run(); // Bob {run: ƒ}
+bob.run2(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
+```
+
+#### THIS - 2
 
 `JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.`  
 `JS는 THIS라는 정보를담은 함수를 다른곳으로 할당하는순간 잃어버릴수있기때문에 Bind 또는 Class안에서 Arrow함수로 선언해줌에따라 선언될당시 스코프의 This Context를 유지한다`  
@@ -929,13 +1256,111 @@ person4.hi();
 
 ---
 
+#### 스코프(SCOPE)
+
+_스코프는 참조 대상 식별자(identifier, 변수, 함수의 이름과 같이 어떤 대상을 다른 대상과 구분하여 식별할 수 있는 유일한 이름)를 찾아내기 위한 규칙이다. 자바스크립트는 이 규칙대로 식별자를 찾는다._
+
+```js
+var x = 'global';
+
+function foo() {
+  var x = 'function scope';
+  console.log(x);
+}
+
+foo(); // ?
+console.log(x); // ?
+```
+
+식별자는 자신이 어디에서 선언됐는지에 의해 자신이 유효한(다른 코드가 자신을 참조할 수 있는) 범위를 갖는다.  
+위 예제에서 전역에 선언된 변수 x는 어디에든 참조할 수 있다. 하지만 함수 foo 내에서 선언된 변수 x는 함수 foo 내부에서만 참조할 수 있고 함수 외부에서는 참조할 수 없다. 이러한 규칙을 스코프라고 한다.
+
+#### 스코프 - 스코프의 구분
+
+전역 스코프 (Global scope) - 코드 어디에서든지 참조할 수 있다.  
+지역 스코프 (Local scope or Function-level scope)- 함수 코드 블록이 만든 스코프로 함수 자신과 하위 함수에서만 참조할 수 있다.  
+전역 변수 (Global variable) - 전역에서 선언된 변수이며 어디에든 참조할 수 있다.  
+지역 변수 (Local variable) - 지역(함수) 내에서 선언된 변수이며 그 지역과 그 지역의 하부 지역에서만 참조할 수 있다.
+
+변수는 선언 위치(전역 또는 지역)에 의해 스코프를 가지게 된다. 즉, 전역에서 선언된 변수는 전역 스코프를 갖는 전역 변수이고, 지역(자바스크립트의 경우 함수 내부)에서 선언된 변수는 지역 스코프를 갖는 지역 변수가 된다.
+
+전역 스코프를 갖는 전역 변수는 전역(코드 어디서든지)에서 참조할 수 있다. 지역(함수 내부)에서 선언된 지역 변수는 그 지역과 그 지역의 하부 지역에서만 참조할 수 있다.
+
+전역 변수의 사용은 변수 이름이 중복될 수 있고, 의도치 않은 재할당에 의한 상태 변화로 코드를 예측하기 어렵게 만드므로 사용을 억제하여야 한다.
+
+#### 스코프 - 자바스크립트 스코프의 특징
+
+자바스크립트는 다른언어와달리 함수 레벨 스코프(function-level scope)를 따른다.  
+함수 레벨 스코프란 함수 코드 블록 내에서 선언된 변수는 함수 코드 블록 내에서만 유효하고 함수 외부에서는 유효하지 않다(참조할 수 없다)는 것이다.
+
+단, ECMAScript 6에서 도입된 let keyword를 사용하면 블록 레벨 스코프를 사용할 수 있다.
+
+#### 스코프 - 렉시컬 스코프
+
+_렉시컬 스코프는 함수를 어디서 호출하는지가 아니라 어디에 선언하였는지에 따라 결정된다_
+
+```js
+var x = 1;
+
+function foo() {
+  var x = 10;
+  bar();
+}
+
+function bar() {
+  console.log(x);
+}
+
+foo(); // ?
+bar(); // ?
+```
+
+위 예제의 실행 결과는 함수 bar의 상위 스코프가 무엇인지에 따라 결정된다
+
+1. 함수를 어디서 호출하였는지에 따라 상위 스코프를 결정하는 것 = 동적 스코프(Dynamic scope)
+2. 함수를 어디서 선언하였는지에 따라 상위 스코프를 결정하는 것 = 렉시컬 스코프(Lexical scope) 또는 정적 스코프(Static scope)
+
+#### 스코프 - 암묵적 전역
+
+```js
+// 전역 변수 x는 호이스팅이 발생한다.
+console.log(x); // undefined
+// 전역 변수가 아니라 단지 전역 프로퍼티인 y는 호이스팅이 발생하지 않는다.
+console.log(y); // ReferenceError: y is not defined
+
+var x = 10; // 전역 변수
+
+function foo() {
+  // 선언하지 않은 식별자
+  y = 20;
+  console.log(x + y);
+}
+
+foo(); // 30
+
+console.log(window.x); // 10
+console.log(window.y); // 20
+
+delete x; // 전역 변수는 삭제되지 않는다.
+delete y; // 프로퍼티는 삭제된다.
+
+console.log(window.x); // 10
+console.log(window.y); // undefined
+```
+
+이는 선언하지 않은 식별자에 값을 할당하면 전역 객체의 프로퍼티가 되기 때문이다.
+
+1. foo 함수가 호출되면 자바스크립트 엔진은 변수 y에 값을 할당하기 위해 먼저 스코프 체인을 통해 선언된 변수인지 확인한다
+2. 이때 foo 함수의 스코프와 전역 스코프 어디에서도 변수 y의 선언을 찾을 수 없으므로 참조 에러가 발생해야 하지만 자바스크립트 엔진은 y = 20을 window.y = 20으로 해석하여 프로퍼티를 동적 생성한다.
+3. 결국 y는 전역 객체의 프로퍼티가 되어 마치 전역 변수처럼 동작한다. 이러한 현상을 암묵적 전역(implicit global)이라 한다.
+4. 하지만 y는 변수 선언없이 단지 전역 객체의 프로퍼티로 추가되었을 뿐이다. 따라서 y는 변수가 아니다. 따라서 변수가 아닌 y는 변수 호이스팅이 발생하지 않는다.
+5. 또한 변수가 아니라 단지 프로퍼티인 y는 delete 연산자로 삭제할 수 있다. 전역 변수는 프로퍼티이지만 delete 연산자로 삭제할 수 없다.
+
+---
+
+---
+
 #### 중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져
-
-#### 스코프는 변수를찾는 규칙의집합
-
-#### 렉시컬스코프, 글로벌스코프, 스코프체인, Function scope 와 Block scope
-
-#### THIS와Bind
 
 #### 타입(JS런타임때 결정)
 
