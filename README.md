@@ -571,6 +571,7 @@ x => x * x             // 함수 몸체가 한줄의 구문이라면 중괄호�
 ```
 
 2.화살표 함수의 호출
+화살표 함수는 익명 함수로만 사용할 수 있다❗ 따라서 화살표 함수를 호출하기 위해서는 함수 표현식을 사용한다❗
 
 ```js
 // ES5
@@ -1057,6 +1058,9 @@ var와 let, 그리고 const는 다음처럼 사용하는 것을 추천한다.
 
 #### THIS - 1
 
+JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.  
+JS는 THIS라는 정보를담은 함수를 다른곳으로 할당하는순간 잃어버릴수있기때문에 Bind 또는 Class안에서 Arrow함수⭐로 선언해줌에따라 선언될당시 this에 바인딩할 객체가 정적으로 결정!  
+*화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 이를 Lexical this*라한다.  
 일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
 
 ```js
@@ -1084,10 +1088,10 @@ const counter = new Counter();
 counter.increase(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
 const caller = counter.increase; // this라는 정보를담은 함수를 다른곳으로 할당.
 const caller2 = counter.decrease;
-caller(); // undefined
+caller(); // undefined ⭐ let과 const는 윈도우에등록되어있지않으므로 caller호출하는것은 window가아니다.❗
 // ↑
 caller2(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
-// ↑ 화살표 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정된다.
+// ↑ ⭐화살표 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정된다.
 // 동적으로 결정되는 일반 함수와는 달리 *화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 이를 Lexical this*라한다.
 // 화살표 함수의 this 바인딩 객체 결정 방식은 *함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프*와 유사하다.
 
@@ -1101,11 +1105,9 @@ bob.run2(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
 
 #### THIS - 2
 
-`JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.`  
-`JS는 THIS라는 정보를담은 함수를 다른곳으로 할당하는순간 잃어버릴수있기때문에 Bind 또는 Class안에서 Arrow함수로 선언해줌에따라 선언될당시 스코프의 This Context를 유지한다`  
 `This is the object that the function is a property of`
 
-Back in Execution Context,  
+Back in 실행 컨택스트(Execution Context),  
 JavaScript 엔진이 어떻게 global execution context를 생성하고 this를 global window object에 초기화하는지에대해 설명했습니다.
 
 ```js
@@ -1117,9 +1119,7 @@ function a() {
   console.log(this);
 }
 
-a();
-
-// Window {...}
+a(); // Window {...}
 ```
 
 window 오브젝트안에 메소드a 가있으므로  
@@ -1137,7 +1137,7 @@ obj.method();
 // I'm a property of obj.
 ```
 
-`this refers to whatever is on the left of the . (dot) when calling a method`
+_this refers to whatever is on the left of the . (dot) when calling a method_
 
 ```js
 // obj is to the left of the dot
@@ -1167,7 +1167,7 @@ obj1.whichName(); // Obj 1
 obj2.whichName(); // Obj 2
 ```
 
-`this를 보는 또 다른 방법은 어떤 객체가 그것을 호출했는지 확인하는 것입니다.`
+_this를 보는 또 다른 방법은 어떤 객체가 그것을 호출했는지 확인하는 것입니다._
 
 ```js
 const a = function () {
@@ -1195,11 +1195,12 @@ Here is `this` 4 ways:
 - new keyword binding: the new keyword바인딩은 this의 의미가 생성되는 객체가되도록 변경합니다.
 - implicit(암시적) binding: "this"는 이를 호출하는 객체를 나타냅니다. 아무 것도하지 않고 언어가 작동하는 방식을 암시합니다.
 - explicit(명시적) binding: "bind"키워드를 사용하여 "this"의 의미를 변경합니다.
-- arrow functions as methods: "this" is lexically scoped, refers to it's current surroundings and no further  
-  그러나 "this"가 메서드의 함수 내에 있으면 범위를 벗어나 window obj에 속합니다. 이를 수정하려면 고차 함수를 사용하여 "this"를 호출하는 화살표 함수를 반환 할 수 있습니다.
+- arrow functions as methods(화살표 함수로 메소드를 정의하는 것은 피해야 한다).  
+  "this" is lexically scoped, refers to it's current surroundings and no further  
+  그러나 "this"가 메서드의 함수 내에 있으면 범위를 벗어나 window obj에 속합니다. 이를 수정하려면 고차 함수를 사용하여 "this"를 호출하는 화살표 함수를 반환 할 수 있습니다. 아니면 ES6의 축약 메소드 표현
 
 ```js
-// new binding
+// new binding❗
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -1207,23 +1208,35 @@ function Person(name, age) {
 }
 
 const person1 = new Person('person1', 55);
+console.log(person1);
 // this = Person { name: 'person1', age: 55 }
 
-// implicit binding
+
+// implicit(암시적) binding❗
 const person = {
   name: 'person',
   age: 20,
-  hi() {
+  hi() { // === hi: function() {} 메소드를 위한 단축 표기법인 ES6의 축약 메소드 표현
     console.log(this);
   },
 };
 
 person.hi();
-
 // this = person { name: 'person', age: 20, hi(){...} }
 
-// explicit binding
-let name = 'Brittney';
+// 화살표 함수로 메소드를 정의하는 것은 피해야 한다. 화살표 함수로 메소드를 정의하여 보자.
+// Bad
+const person = {
+  name: 'Lee',
+  sayHi: () => console.log(`Hi ${this.name}`)
+};
+
+person.sayHi(); // Hi undefined
+// 메소드로 정의한 화살표 함수 내부의 this는 메소드를 소유한 객체, 즉 메소드를 호출한 객체를 가리키지 않고 상위 컨택스트인 전역 객체 window를 가리킨다
+
+
+// explicit binding(명시적 바인딩)❗
+let name = 'Brittney'; ❓
 
 const person3 = {
   name: 'person3',
@@ -1236,8 +1249,11 @@ const person3 = {
 person3.hi();
 // hi Brittney
 // this = window {...}
+// ⭐ let과 const는 window객체에 등록되지않으므로 undefined ⭐
+// ⭐ var는 등록된다. 그후에 지우고해도 윈도우에남아있다❗(메모리누수) ⭐
 
-// arrow functions inside objects
+
+// arrow functions inside objects❗
 const person4 = {
   name: 'person4',
   age: 40,
@@ -1295,7 +1311,7 @@ console.log(x); // ?
 
 단, ECMAScript 6에서 도입된 let keyword를 사용하면 블록 레벨 스코프를 사용할 수 있다.
 
-#### 스코프 - 렉시컬 스코프
+#### 스코프 - 렉시컬 스코프 vs 다이나믹 스코프
 
 _렉시컬 스코프는 함수를 어디서 호출하는지가 아니라 어디에 선언하였는지에 따라 결정된다_
 
@@ -1319,6 +1335,81 @@ bar(); // ?
 
 1. 함수를 어디서 호출하였는지에 따라 상위 스코프를 결정하는 것 = 동적 스코프(Dynamic scope)
 2. 함수를 어디서 선언하였는지에 따라 상위 스코프를 결정하는 것 = 렉시컬 스코프(Lexical scope) 또는 정적 스코프(Static scope)
+
+```js
+const obj = {
+  name: 'billy',
+  sing() {
+    // sing: function() {}
+    console.log('a', this);
+    var anotherFunc = function () {
+      console.log('b', this);
+    };
+    anotherFunc();
+  },
+};
+
+obj.sing();
+// a {name: "Billy", sing: ƒ}
+// b Window {…}
+```
+
+```js
+var x = 1;
+
+const obj = {
+  name: 'billy',
+  sing() {
+    // sing: function() {}
+    var x = 2;
+    console.log(x, this);
+    var anotherFunc = () => {
+      console.log(x, this);
+    };
+    anotherFunc();
+  },
+};
+
+obj.sing();
+// 2 {name: "Billy", sing: ƒ}
+// // 2 {name: "Billy", sing: ƒ}
+```
+
+```js
+var b = {
+  name: 'jay',
+  say() {
+    console.log(this);
+  },
+};
+
+var c = {
+  name: 'jay',
+  say() {
+    return function () {
+      console.log(this);
+    };
+  },
+};
+
+var d = {
+  name: 'jay',
+  say() {
+    return () => console.log(this);
+  },
+};
+
+b.say(); // b {name: 'jay', say()...}
+// b called the function
+c.say(); // function() {console.log(this)}
+// returned a function that gets called later
+c.say()(); // Window {...}
+// c.say() gets the function and the Window runs it
+d.say(); // () => console.log(this)
+// returned the arrow function
+d.say()(); // d {name: 'jay', say()...}
+// arrow function does not rebind this and inherits this from parent
+```
 
 #### 스코프 - 암묵적 전역
 
