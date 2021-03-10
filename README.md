@@ -353,14 +353,15 @@ race().then(console.log);
 
 ---
 
-#### 1. EXECUTION CONTEXT
+#### 1. EXECUTION CONTEXT ⭐
 
 실행 컨텍스트(Execution Context)는 scope, hoisting, this, function, closure 등의 동작원리를 담고 있는 자바스크립트의 핵심원리  
 JavaScript의 코드는 항상 일종의 실행 컨텍스트 내에서 실행됩니다  
-실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는환경 입니다  
+<font color="red">실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는환경 입니다  
 JavaScript에는 Global 또는 Function의 두 가지 유형의 실행 컨텍스트가 있습니다  
 각 컨텍스트에는 생성단계(creation phase) 및 실행단계(executing phase)의 두 단계가 있습니다  
-JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.
+JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.  
+함수 호출()시 new lexical environment가 생성되고 함수실행컨텍스트는 엔진에게 현재작업중인 lexical environment 알려주고 렉시컬스코프는 접근가능한 변수들을 결정</font>
 
 ⭐Global Execution Context (this === window :true)
 
@@ -1058,10 +1059,11 @@ var와 let, 그리고 const는 다음처럼 사용하는 것을 추천한다.
 
 #### THIS - 1
 
-JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.  
+<font color="red">This is the object that the function is a property of</font> ⭐  
+<font color="pink">JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.  
 JS는 THIS라는 정보를담은 함수를 다른곳으로 할당하는순간 잃어버릴수있기때문에 Bind 또는 Class안에서 Arrow함수⭐로 선언해줌에따라 선언될당시 this에 바인딩할 객체가 정적으로 결정!  
 *화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 이를 Lexical this*라한다.  
-일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
+일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.</font>
 
 ```js
 console.log(this); // window
@@ -1103,9 +1105,23 @@ bob.run(); // Bob {run: ƒ}
 bob.run2(); // Counter {count: 0, increase: ƒ, decrease: ƒ}
 ```
 
+```js
+const character = {
+  name: 'Simon',
+  getCharacter() {
+    // 화살표 함수로 메소드를 정의하는 것은 피해야 한다 => getCharacter: function() {} => bind
+    return this.name;
+  },
+};
+const giveMeTheCharacterNOW = character.getCharacter.bind(character);
+
+// How Would you fix this?
+console.log('?', giveMeTheCharacterNOW()); //this should return 'Simon' bud doesn't
+```
+
 #### THIS - 2
 
-`This is the object that the function is a property of`
+<font color="red">This is the object that the function is a property of</font> ⭐
 
 Back in 실행 컨택스트(Execution Context),  
 JavaScript 엔진이 어떻게 global execution context를 생성하고 this를 global window object에 초기화하는지에대해 설명했습니다.
@@ -1142,6 +1158,46 @@ _this refers to whatever is on the left of the . (dot) when calling a method_
 ```js
 // obj is to the left of the dot
 obj.method();
+```
+
+<font color="pink">THIS의 이점: 1. gives methods access to there object</font>
+
+```js
+const obj = {
+  name: 'Billy',
+  sing() {
+    return 'lalala' + this.name;
+  },
+  singAgain() {
+    return this.sing() + '!';
+  },
+};
+
+obj.singAgain();
+```
+
+<font color="pink">THIS의 이점: 2. execute same code for multiple objects</font>
+
+```js
+function importantPerson() {
+  console.log(this.name + '!');
+}
+
+var name = 'Sunny';
+
+const obj1 = {
+  name: 'Cassy',
+  importantPerson: importantPerson,
+};
+
+const obj2 = {
+  name: 'Jacob',
+  importantPerson: importantPerson,
+};
+
+importantPerson(); // Sunny
+obj1.importantPerson(); // Cassy
+obj2.importantPerson(); // Jacob
 ```
 
 Still confused? Try this:
@@ -1274,6 +1330,7 @@ person4.hi();
 
 #### 스코프(SCOPE)
 
+<font color="orange">스코프는 우리가접근할수있는 변수, 변수를찾는규칙의집합</font>  
 _스코프는 참조 대상 식별자(identifier, 변수, 함수의 이름과 같이 어떤 대상을 다른 대상과 구분하여 식별할 수 있는 유일한 이름)를 찾아내기 위한 규칙이다. 자바스크립트는 이 규칙대로 식별자를 찾는다._
 
 ```js
@@ -1311,7 +1368,28 @@ console.log(x); // ?
 
 단, ECMAScript 6에서 도입된 let keyword를 사용하면 블록 레벨 스코프를 사용할 수 있다.
 
+#### Function Scope vs Block Scope
+
+JS는 함수안에서만 new scope, new environment 생성
+
+let, const로 블록스코프사용.
+
+```js
+function loop() {
+  for (var i = 0; i < 5; i++) {
+    console.log(i);
+  }
+  console.log('final', i);
+}
+
+loop(); // ?
+// let: error
+```
+
 #### 스코프 - 렉시컬 스코프 vs 다이나믹 스코프
+
+<font color='pink'>In javascript our lexical scope (available data + variables where the function was defined) determines our available variables.  
+Not where the function is called (dynamic scope)</font>
 
 _렉시컬 스코프는 함수를 어디서 호출하는지가 아니라 어디에 선언하였는지에 따라 결정된다_
 
@@ -1448,6 +1526,58 @@ console.log(window.y); // undefined
 5. 또한 변수가 아니라 단지 프로퍼티인 y는 delete 연산자로 삭제할 수 있다. 전역 변수는 프로퍼티이지만 delete 연산자로 삭제할 수 없다.
 
 ---
+
+#### Context vs Scope
+
+스코프는 함수가 호출되었을때 접근할수있는 변수
+컨택스트는 this값이 무엇인지 말한다.
+
+---
+
+#### JAVASCRIPT TYPES
+
+_Primitive: number, string, boolean, bigint, symbol, null, undefined_
+
+- 원시 값은 불변으로 정의되며 변경할 수 없습니다.(변경이 불가능하다는 뜻은 메모리 영역에서의 변경이 불가능하다는 뜻이다. 재할당은 가능하다)
+- Primitives는 값으로 전달됩니다. 즉, 값이 복사 된 다음 메모리의 다른 곳에 배치됩니다.
+
+```js
+let str = 'Hello';
+str = 'world';
+```
+
+위에서 메모리에 문자열 ‘Hello’가 생성되고 식별자 str은 메모리에 생성된 문자열 ‘Hello’의 메모리 주소를 가리킨다  
+그리고 두번째 구문이 실행되면 이전에 생성된 문자열 ‘Hello’을 수정하는 것이 아니라 새로운 문자열 ‘world’를 메모리에 생성하고 식별자 str은 이것을 가리킨다  
+이때 문자열 ‘Hello’와 ‘world’는 모두 메모리에 존재하고 있다. 변수 str은 문자열 ‘Hello’를 가리키고 있다가 문자열 ‘world’를 가리키도록 변경되었을 뿐이다.
+
+```js
+var statement = 'I am an immutable value'; // string은 immutable value
+
+var otherStr = statement.slice(8, 17);
+
+console.log(otherStr); // 'immutable'
+console.log(statement); // 'I am an immutable value'
+```
+
+2행에서 Stirng 객체의 slice() 메소드는 statement 변수에 저장된 문자열을 변경하는 것이 아니라 사실은 새로운 문자열을 생성하여 반환하고 있다. 그 이유는 문자열은 변경할 수 없는 immutable value이기 때문이다.
+
+_Object(Non Primitive): function, array....._
+
+<font color="pink">객체는 변경 될 수 있으며 해당 속성은 참조로 전달되므로 해당 속성은 메모리에 별도로 저장되지 않습니다.</font>
+
+```js
+var arr = [];
+console.log(arr.length); // 0
+
+var v2 = arr.push(2); //v2 = 1, arr.push()는 메소드 실행 후 arr의 length를 반환
+console.log(arr.length); // 1
+```
+
+객체인 arr은 push 메소드에 의해 update되고 v2에는 배열의 새로운 length 값이 반환된다.  
+배열은 객체이고 객체는 immutable value가 아닌 변경 가능한 값이기 때문이다.
+
+<font color="pink">Object.assign () 또는 전개연산자 {...} 를이용해 원본을 변경하지 않고 새 변수를 수정할 수 있습니다.  
+그러나 이들은 "shallow copy"만 만듭니다.</font>
 
 ---
 
