@@ -357,11 +357,11 @@ race().then(console.log);
 
 실행 컨텍스트(Execution Context)는 scope, hoisting, this, function, closure 등의 동작원리를 담고 있는 자바스크립트의 핵심원리  
 JavaScript의 코드는 항상 일종의 실행 컨텍스트 내에서 실행됩니다  
-<font color="red">실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는환경 입니다  
+**실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는환경 입니다  
 JavaScript에는 Global 또는 Function의 두 가지 유형의 실행 컨텍스트가 있습니다  
 각 컨텍스트에는 생성단계(creation phase) 및 실행단계(executing phase)의 두 단계가 있습니다  
 JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.  
-함수 호출()시 new lexical environment가 생성되고 함수실행컨텍스트는 엔진에게 현재작업중인 lexical environment 알려주고 렉시컬스코프는 접근가능한 변수들을 결정</font>
+함수 호출()시 new lexical environment가 생성되고 함수실행컨텍스트는 엔진에게 현재작업중인 lexical environment 알려주고 렉시컬스코프는 접근가능한 변수들을 결정**
 
 ⭐Global Execution Context (this === window :true)
 
@@ -1059,11 +1059,11 @@ var와 let, 그리고 const는 다음처럼 사용하는 것을 추천한다.
 
 #### THIS - 1
 
-<font color="red">This is the object that the function is a property of</font> ⭐  
-<font color="pink">JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.  
+**This is the object that the function is a property of** ⭐  
+**JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.  
 JS는 THIS라는 정보를담은 함수를 다른곳으로 할당하는순간 잃어버릴수있기때문에 Bind 또는 Class안에서 Arrow함수⭐로 선언해줌에따라 선언될당시 this에 바인딩할 객체가 정적으로 결정!  
 *화살표 함수의 this 언제나 상위 스코프의 this를 가리킨다. 이를 Lexical this*라한다.  
-일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.</font>
+일반 함수는 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.**
 
 ```js
 console.log(this); // window
@@ -1121,7 +1121,7 @@ console.log('?', giveMeTheCharacterNOW()); //this should return 'Simon' bud does
 
 #### THIS - 2
 
-<font color="red">This is the object that the function is a property of</font> ⭐
+**This is the object that the function is a property of** ⭐
 
 Back in 실행 컨택스트(Execution Context),  
 JavaScript 엔진이 어떻게 global execution context를 생성하고 this를 global window object에 초기화하는지에대해 설명했습니다.
@@ -1160,7 +1160,7 @@ _this refers to whatever is on the left of the . (dot) when calling a method_
 obj.method();
 ```
 
-<font color="pink">THIS의 이점: 1. gives methods access to there object</font>
+**THIS의 이점: 1. gives methods access to there object**
 
 ```js
 const obj = {
@@ -1176,7 +1176,7 @@ const obj = {
 obj.singAgain();
 ```
 
-<font color="pink">THIS의 이점: 2. execute same code for multiple objects</font>
+**THIS의 이점: 2. execute same code for multiple objects**
 
 ```js
 function importantPerson() {
@@ -1330,7 +1330,7 @@ person4.hi();
 
 #### 스코프(SCOPE)
 
-<font color="orange">스코프는 우리가접근할수있는 변수, 변수를찾는규칙의집합</font>  
+**스코프는 우리가접근할수있는 변수, 변수를찾는규칙의집합**  
 _스코프는 참조 대상 식별자(identifier, 변수, 함수의 이름과 같이 어떤 대상을 다른 대상과 구분하여 식별할 수 있는 유일한 이름)를 찾아내기 위한 규칙이다. 자바스크립트는 이 규칙대로 식별자를 찾는다._
 
 ```js
@@ -1388,8 +1388,8 @@ loop(); // ?
 
 #### 스코프 - 렉시컬 스코프 vs 다이나믹 스코프
 
-<font color='pink'>In javascript our lexical scope (available data + variables where the function was defined) determines our available variables.  
-Not where the function is called (dynamic scope)</font>
+**In javascript our lexical scope (available data + variables where the function was defined) determines our available variables.  
+Not where the function is called (dynamic scope)**
 
 _렉시컬 스코프는 함수를 어디서 호출하는지가 아니라 어디에 선언하였는지에 따라 결정된다_
 
@@ -1563,7 +1563,7 @@ console.log(statement); // 'I am an immutable value'
 
 _Object(Non Primitive): function, array....._
 
-<font color="pink">객체는 변경 될 수 있으며 해당 속성은 참조로 전달되므로 해당 속성은 메모리에 별도로 저장되지 않습니다.</font>
+**객체는 변경 될 수 있으며 해당 속성은 참조로 전달되므로 해당 속성은 메모리에 별도로 저장되지 않습니다.**
 
 ```js
 var arr = [];
@@ -1576,30 +1576,320 @@ console.log(arr.length); // 1
 객체인 arr은 push 메소드에 의해 update되고 v2에는 배열의 새로운 length 값이 반환된다.  
 배열은 객체이고 객체는 immutable value가 아닌 변경 가능한 값이기 때문이다.
 
-<font color="pink">Object.assign () 또는 전개연산자 {...} 를이용해 원본을 변경하지 않고 새 변수를 수정할 수 있습니다.  
-그러나 이들은 "shallow copy"만 만듭니다.</font>
+**Object.assign () 또는 전개연산자 {...} 를이용해 원본을 변경하지 않고 새 변수를 수정할 수 있습니다.  
+그러나 이들은 "shallow copy"만 만듭니다.**
+
+```js
+let obj = {
+  a: 'a',
+  b: 'b',
+  c: {
+    deep: 'try and copy me',
+  },
+};
+
+let clone = Object.assign({}, obj); //shallow clone
+let clone2 = { ...obj }; //shallow clone
+let superClone = JSON.parse(JSON.stringify(obj)); // deep clone
+
+obj.c.deep = 'hahaha';
+console.log(obj);
+console.log(clone);
+console.log(clone2);
+console.log(superClone);
+```
+
+```js
+// Exercise❗
+const number = 100;
+const string = 'Jay';
+let obj1 = {
+  value: 'a',
+};
+let obj2 = {
+  value: 'b',
+};
+let obj3 = obj2;
+
+function change(number, string, obj1, obj2) {
+  number = number * 10;
+  string = 'Pete';
+  obj1 = obj2;
+  obj2.value = 'c';
+}
+
+change(number, string, obj1, obj2);
+
+//Guess the outputs here before you run the code:
+console.log(number);
+console.log(string);
+console.log(obj1.value);
+```
+
+falsy값
+
+- flase
+- 0, -0, +0
+- ""
+- null
+- undefined
+- NaN
 
 ---
 
-#### 중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져
+#### CLOSURES AND PROTOTYPES 🧡
 
-#### 타입(JS런타임때 결정)
+클로저와 프로토 타입 상속은 JavaScript를 특별하게 만들고 다른 프로그래밍 언어와 다른 두 가지 요소입니다.
 
-#### 클로저활용
+**Function Constructor**
 
-#### 프로토타입
+함수는 JavaScript에서 객체이며 다른 언어에는 해당되지 않습니다.  
+그 때문에 여러 가지 방법으로 호출 할 수 있지만 생성자 일 수도 있습니다.  
+함수 생성자는 새 객체를 만들고 반환합니다.  
+모든 JavaScript 함수는 실제로 함수 객체 자체입니다
 
-#### Object Oriented Programming
+```js
+// function constructor
+new Function('optionalArguments', 'functionBody');
 
-#### Functional Programming
+// 함수를 생성함 ❗❗
+const four = new Function('return 4'); // 4
+const four = new Function('num', 'return num'); // 4
+four(4);
+const sum = new Function('x', 'y', 'return x + y');
+console.log(sum(2, 3)); // 5
+```
 
-#### Asyn
+JavaScript의 거의 모든 것은 생성자로 만들 수 있습니다.  
+숫자 및 문자열과 같은 기본적인 JavaScript 유형도 생성자를 사용하여 만들 수 있습니다.
 
-#### 모듈
+```js
+// examples of constructor functions in JavaScript
+const five = new Number(5);
+const assignFive = 5;
 
-#### Error Handling
+// this is different than using regular assignment
+const newString = new String(`I am a new string`);
+const assignString = `I am an assigned string`;
 
-#### 자료구조 in JS
+typeof five; // object
+typeof assignFive; // number
+typeof newString; //object
+typeof assignString; // string
+
+five === assignFive; // false
+five == assignFive; // true - types are coerced
+
+// Notice how the types are different
+// depending on how they are created.
+
+// Arrays, Booleans, Dates, Objects, and Strings
+// can be created this way as well.
+```
+
+**Functions are first class citizens in JS**
+
+```js
+// 1
+var stuff = function () {};
+
+// 2
+function a(fn) {
+  fn();
+}
+
+a(function () {
+  console.log('hi there');
+});
+
+// 3
+function b() {
+  return function c() {
+    console.log('hi there');
+  };
+}
+
+b()();
+
+var d = b();
+d();
+```
+
+```js
+function a() {
+  //  initialize the function just once❗
+}
+for (let i = 0; i < 5; i++) {
+  a(); // 여기서 함수선언하지말기❗
+}
+```
+
+```js
+function a(param = 6) {
+  return param;
+}
+
+a();
+```
+
+**Higher Order Functions**
+A Higher Order Function (HOF)는 함수를 인수로 사용하거나 다른 함수를 반환하는 함수입니다.  
+There are 3 kinds of functions in JavaScript
+
+- function ()
+- function (a,b)
+- function hof() { return function () {} }
+
+**동일한 작업을 수행하는 여러 함수를 작성하는 대신 DRY를 기억하십시오(don't repeat yourself)**
+
+1. Level 1
+
+```js
+function letAdamLogin() {
+  let array = [];
+  for (let i = 0; i < 10000000; i++) {
+    array.push(i);
+  }
+  return 'Access Granted to Adam';
+}
+
+function letEvaLogin() {
+  let array = [];
+  for (let i = 0; i < 10000000; i++) {
+    array.push(i);
+  }
+  return 'Access Granted to Eva';
+}
+
+letAdamLogin();
+letEvaLogin();
+```
+
+2. Level 2
+
+```js
+const giveAccessTo = (name) => 'Access Greanted to' + name;
+
+function letUserLogin(user) {
+  // we now tell WHAT DATA to use.
+  let array = [];
+  for (let i = 0; i < 10000000; i++) {
+    array.push(i);
+  }
+  return giveAccessTo(user);
+}
+
+letUserLogin();
+```
+
+3. HOC
+
+```js
+const giveAccessTo = (name) => 'Access Greanted to' + name;
+
+function authenticate(verify) {
+  // we now tell WHAT DATA to use.
+  let array = [];
+  for (let i = 0; i < verify; i++) {
+    array.push(i);
+  }
+  return giveAccessTo(person.name);
+}
+
+function sing(person) {
+  return 'hi' + person.name;
+}
+
+function letPerson(person, fn) {
+  if (person.level === 'admin') {
+    return fn(person);
+  } else if (person.level === 'user') {
+    return fn(person);
+  }
+  return giveAccessTo(person.name);
+}
+
+letPerson({ level: 'admin', name: 'Brittney' }, sing);
+```
+
+bad❗
+
+```js
+const giveAccessTo = (name) => console.log(`Access granted to ${name}`);
+
+function auth(roleAmt) {
+  let array = [];
+  for (let i = 0; i < roleAmt; i++) {
+    array.push(i);
+  }
+  return true;
+}
+
+function checkPerson(person, fn) {
+  if (person.level === 'admin') {
+    fn(100000);
+  } else if (person.level === 'user') {
+    fn(500000);
+  }
+  return giveAccessTo(person.name);
+}
+
+checkPerson({ level: 'admin', name: 'Brittney' }, auth);
+```
+
+Gooooooood❗
+
+```js
+function multBy(a) {
+  return function (b) {
+    return a * b;
+  };
+}
+
+// can also be an arrow function
+const multiplyBy = (a) => (b) => a * b;
+
+const multByTwo = multiplyBy(2);
+const multByTen = multiplyBy(10);
+
+multByTwo(4); // 8
+multByTen(5); // 50
+```
+
+#### **Closures** ☕👍
+
+**클로저는 함수가 선언 된 범위를 벗어난 이후에도 둘러싸는 scope 또는 환경에서 변수에접근할수있도록해준다**  
+**중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져**  
+**즉, 클로저를 사용하면 내부 범위(inner scope)에서 외부 함수 범위(outer functions scope)에 액세스 할 수 있습니다.**  
+**JavaScript 엔진은 변수가 콜스택에서 튀어 나온 후에 "sweeping"하는 대신 변수를 참조하는 함수 내부에 변수를 보관합니다.**
+
+클로저가 유익한 두 가지 주요 이유는 **메모리 효율성**과 **캡슐화**입니다.
+
+```js
+function a() {
+  let grandpa = 'grandpa'
+  return function b() {
+    let father = 'father'
+    let random = 12345 // not referenced, will get garbage collected
+    return function c() {
+      let son = 'son'
+      return `closure inherited all the scopes: ${grandpa} > ${father} > ${son}`
+    }
+  }
+}
+
+a()()()
+
+// closure inherited all the scopes: grandpa > father > son
+
+const closure = grandma => mother => daughter => return `${grandma} > ${mother} > ${daughter}`
+
+// grandma > mother > daughter
+```
+
+```js
+
+```
 
 ---
 
