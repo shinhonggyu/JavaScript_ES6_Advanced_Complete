@@ -720,6 +720,7 @@ ES6의 let으로 선언된 변수는 블록 레벨 스코프를 가지므로 코
 - _실행 컨텍스트(EXECUTION CONTEXT)는 엔진에게 현재 작업중인 lexical environment을 알려주고 lexical scope는 사용 가능한 변수를 결정합니다._
 - _in Javascript our lexical scope (available data + variables where the function was defined) determines our available variables._
 - _Not where the function is called (dynamic scope), So it doesn't matter where we call our function._
+- 렉시컬 스코프는 자바스크립트엔진이 코드를 실행하기전에 코드가 쓰여진곳에따라 각 함수가 어떤변수에 접근할수있는지 알려준다
 
 ```js
 function one() {
@@ -1641,11 +1642,11 @@ falsy값
 
 클로저와 프로토 타입 상속은 JavaScript를 특별하게 만들고 다른 프로그래밍 언어와 다른 두 가지 요소입니다.
 
-**Function Constructor**
+**Function Constructor** (함수)생성자
 
 함수는 JavaScript에서 객체이며 다른 언어에는 해당되지 않습니다.  
 그 때문에 여러 가지 방법으로 호출 할 수 있지만 생성자 일 수도 있습니다.  
-함수 생성자는 새 객체를 만들고 반환합니다.  
+함수 **생성자는 새 객체를 만들고 반환합니다.**  
 모든 JavaScript 함수는 실제로 함수 객체 자체입니다
 
 ```js
@@ -1858,10 +1859,12 @@ multByTen(5); // 50
 
 #### **Closures** ☕👍
 
-**클로저는 함수가 선언 된 범위를 벗어난 이후에도 둘러싸는 scope 또는 환경에서 변수에접근할수있도록해준다**  
+**클로저는 함수가 선언 된 스코프를 벗어난 이후에도 둘러싸는 scope 또는 환경에서 변수에접근할수있도록해준다**  
 **중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져**  
 **즉, 클로저를 사용하면 내부 범위(inner scope)에서 외부 함수 범위(outer functions scope)에 액세스 할 수 있습니다.**  
-**JavaScript 엔진은 변수가 콜스택에서 튀어 나온 후에 "sweeping"하는 대신 변수를 참조하는 함수 내부에 변수를 보관합니다.**
+**JavaScript 엔진은 변수가 콜스택에서 튀어 나온 후에 "sweeping"하는 대신 ⭐변수를 참조하는 함수 내부에 변수를 보관합니다.⭐**
+
+클로저를 사용하면 함수가 선언된 스코프를 떠난이후에도 주변을둘러싼 스코프또는 환경에서 변수에접근할수있습니다.
 
 클로저가 유익한 두 가지 주요 이유는 **메모리 효율성**과 **캡슐화**입니다.
 
@@ -1870,7 +1873,7 @@ function a() {
   let grandpa = 'grandpa'
   return function b() {
     let father = 'father'
-    let random = 12345 // not referenced, will get garbage collected
+    let random = 12345 // not referenced, will get garbage collected ⭐
     return function c() {
       let son = 'son'
       return `closure inherited all the scopes: ${grandpa} > ${father} > ${son}`
@@ -1888,8 +1891,290 @@ const closure = grandma => mother => daughter => return `${grandma} > ${mother} 
 ```
 
 ```js
+// Exercise
+function callMeMaybe() {
+  setTimeout(function () {
+    console.log(callMe);
+  }, 4000);
+  const callMe = 'Hi! I am now here!';
+}
+
+callMeMaybe();
+```
+
+⭐클로저가 유익한 두 가지 주요 이유는 **메모리 효율성**과 **캡슐화**입니다.⭐
+```js
+// Memory efficient👍
+function heavyDuty(index) {
+  const bigArray = new Array(7000).fill('👍');
+  console.log('created');
+  return console.log(bigArray[index]);
+}
+
+heavyDuty(699);
+heavyDuty(699);
+heavyDuty(699);
+const getHeavyDuty = heavyDuty2();
+getHeavyDuty(688)
+getHeavyDuty(700)
+getHeavyDuty(800)
+
+function heavyDuty2() {
+  const bigArray = new Array(7000).fill('👍');
+  console.log('created Again❗');
+  return function(index) {
+    return console.log(bigArray[index])
+  }
+}
+```
+Encapsulation means the restriction of direct access to some of an object's components  
+캡슐화는 객체의 일부 컴포넌트들에에 대한 직접 접근 제한을 의미합니다.    
+가능한 한 객체의 내부 부분을 숨기고 실행에 필요한 부분 만 노출합니다.  
+
+캡슐화를 사용하는 이유❓
+1. Security - Controlled access
+2. Hide Implementation and Expose Behaviours(구현 숨기기 및 동작 노출)
+3. Loose Coupling - Modify the implementation at any time(느슨한 결합-언제든지 구현 수정)
+
+```js
+// Encapsulation👍
+const makeNuclearButton = () => {
+  let timeWithoutDestruction = 0;
+  const passTime = () => timeWithoutDestruction++;
+  const totalPeaceTime = () => timeWithoutDestruction;
+  const launch = () => {
+    timeWithoutDestruction = -1;
+    return '💥';
+  };
+  setInterval(passTime, 1000);
+  return {
+    totalPeaceTime: totalPeaceTime,
+  };
+};
+const ohno = makeNuclearButton();
+ohno.totalPeaceTime()
+```
+```js
+// Closure Exercise 1
+let view;
+function initialize() {
+  view = '👍';
+  console.log('view has been set!')
+}
+
+initialize()  // view has been set! 
+initialize()  // view has been set! 
+initialize()  // view has been set! 
+```
+```js
+let view;
+function initialize() {
+  let called = 0;
+  return function() {
+    if (called > 0) {
+      return;
+    } else {
+      view = '👍';
+      called++;
+      console.log('view has been set!')
+    }
+  }
+}
+const startOnce = initialize();
+startOnce();
+console.log(view)
+```
+```js
+// Closure Exercise 2
+const array = [1,2,3,4];
+for (var i = 0; i < array.length; i++) {
+  (function(closureI) {
+    setTimeout(function() {
+    console.log('I am at index' + array[closureI])
+    }, 3000)
+  })(i)
+}
+```
+
+#### Prototype💖(Inheritance:상속을 구현 할수있다, 속성과 함수들을 정의)을 기반으로해서 객체지향프로그래밍과 코드재사용 할수있다
+#### behavior reuse 행동재사용(Inheritance) by reusing existing objects(기존에있는 오브젝트 재사용)
+```js
+const array = []
+array.__proto__ // [...]
+array.__proto__.__proto__ // {...}
+array.toString() // "" 오브젝트 메쏘드
+```
+```js
+let dragon = {
+  name: 'Tanya',
+  fire: true,
+  fight() {
+    return console.log(5);
+  },
+  sing() {
+    if (this.fire) {
+      return console.log(`I am ${this.name}, the breather of fire`);
+    }
+  },
+};
+
+let lizard = {
+  name: 'KiKi',
+  fight() {
+    return console.log(1);
+  },
+};
+
+// const singLizard = dragon.sing.bind(lizard);
+// console.log(singLizard()); // I am KiKi, the breather of fire
+
+lizard.__proto__ = dragon; // 프로토타입 체인⭐
+console.log(lizard.fire);
+lizard.sing(); // I am KiKi, the breather of fire
+lizard.fight(); // 1❗
+// lizard.dance(); error -> lized 의프로토타입체인 dragon -> 드래곤의 프로토타입체인  -> { }
+console.log(dragon.__proto__); // { } base object
+console.log(dragon.isPrototypeOf(lizard)); // { } true
+// dragon -> dragon의 프로토타입체인 { } base object의 isPrototypeOf
+// ⭐ lizard inherit from Dragon
+```
+```js
+let dragon = {
+  name: 'Tanya',
+  fire: true,
+  fight() {
+    return console.log(5);
+  },
+  sing() {
+    if (this.fire) {
+      return console.log(`I am ${this.name}, the breather of fire`);
+    }
+  },
+};
+
+let lizard = {
+  name: 'KiKi',
+  fight() {
+    return console.log(1);
+  },
+};
+
+lizard.__proto__ = dragon; // create 프로토타입체인
+for (let prop in lizard) {
+  if (lizard.hasOwnProperty(prop)) {
+    // { } base obj method
+    console.log(prop); // name, fight
+  }
+  console.log(prop); // name, fight, fire, sing
+}
 
 ```
+#### **Prototypal Inheritance**
+Javascript의 거의 모든 객체는 프로토 타입 체인을 통해 속성을 전달합니다.  
+이 체인을 프로토 타입 상속이라고합니다.   
+객체의 자식은 부모의 속성을 "상속"합니다.    
+JavaScript의 모든 객체는 의도적으로 생성하거나 변경하지 않도록 변경하지 않는 한 Object 생성자의 자손입니다.  
+객체는 **Object.prototype**에서 메서드와 속성을 상속합니다.    
+프로토 타입 속성에는 현재 객체와 객체가 생성 된 "프로토 타입"을 가리키는 링크를 생성하는 __proto__라는 접근 자 속성도 있습니다.
+```js
+Object.prototype.__proto__;
+// null
+
+Object.prototype;
+{
+  __proto__: null;
+  // ...more methods and properties
+}
+
+Object;
+// function Object()
+// This is the object constructor function
+
+Object.prototype.constructor;
+// function Object()
+// Points to the constructor
+
+Object.__proto__;
+// function () {...}
+// Because it is created with a constructor function
+```
+
+**`__proto__` actually lives on the prototype**
+
+**we shouldn't use⭐__proto__ = some type of an object** (performance reason)
+```js
+let human = {
+  mortal: true,
+};
+let socrates = Object.create(human);
+console.log(socrates); // {}
+socrates.age = 45;
+console.log(socrates); // {age: 45}
+console.log(socrates.mortal); // true
+console.log(human.isPrototypeOf(socrates)); // true
+// // ⭐ socrates inherit from human
+```
+**every function has a prototype property**  
+Javascript의 모든 것은 JavaScript의 객체입니다  
+배열 및 함수는 base object 로부터 프로토 타입 체인을 통해 상속되는 객체입니다.
+
+#### Prototype vs  `__proto__`  
+__proto__와 프로토 타입의 차이점을 이해하는 것은 JavaScript 개발자에게 매우 혼란스러운 개념 일 수 있습니다.  
+JavaScript의 모든 함수는 생성 될 때 call, apply 및 bind methods를 제공하는 프로토 타입 속성을 자동으로 가져옵니다.  
+실제로 일반 함수로는 아무 작업도하지 않지만 생성자 함수에서 prototype 속성을 사용하면 생성 한 객체에 자체 메서드를 추가 할 수 있습니다.  
+JavaScript에서 새 객체가 생성 될 때마다 `__proto__` getter 함수를 사용하여 생성되는 항목을 기반으로 내장 된 생성자 함수를 사용합니다.  
+이는 배열, 부울, 날짜, 숫자, 개체, 문자열, 함수 또는 RegExp 일 수 있습니다. 각각에는 생성자에서 상속하는 고유 한 별도의 속성과 메서드가 있습니다  
+`__proto__` 속성은 프로토 타입 객체 간의 링크를 생성하는 것이며, 자식은 프로토 타입 체인을 통해 부모로부터 속성을 상속받습니다.
+<img src="https://images.ctfassets.net/aq13lwl6616q/4U7Xxx4CIyG6bHmpOp6ujj/00720fdac4cb138ed97e80da74730cd2/prototype_chain.png"
+width="700">
+
+```js
+let newArr = new Array
+newArr
+/* []
+    {
+// all array properties and methods
+// inherited from Array constructor function.
+      length: 0
+      prototype: {
+        concat, forEach, pop, splice...
+        __proto__: Array(0)
+        prototype: {
+          __proto__: Object
+          prototype: {
+            __proto__: null
+          }
+        }
+      }
+    }
+```
+
+**`__proto__` always points to prototype**⭐
+**only functions have the prototype property**⭐
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
@@ -1922,9 +2207,5 @@ const closure = grandma => mother => daughter => return `${grandma} > ${mother} 
 #### 클래스안에있는 함수를 다른콜백으로 전달해줄때는 클래스정보가 무시되므로 함수를 클래스와 Binding해주거나 화살표함수
 
 #### Builder Pattern
-
-#### Prototype💖 프로토타입(Inheritance:상속을 구현 할수있다, 속성과 함수들을 정의)을 기반으로해서 객체지향프로그래밍과 코드재사용 할수있다
-
-#### behavior reuse 행동재사용(Inheritance) by reusing existing objects(기존에있는 오브젝트 재사용)
 
 #### Modules💘이란 파일안에 코드를 모듈화해서 작성하는것/ 한 모듈 = 한 파일안에 작성되어있는 코드/ 모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌스코프로 측정된다/ export, import 활용
