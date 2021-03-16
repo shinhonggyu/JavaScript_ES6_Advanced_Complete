@@ -1,14 +1,14 @@
-#### 자바스크립트 엔진💖
+#### **자바스크립트 엔진**⭐
 
 - JavaScript 엔진은 JavaScript 코드를 제공하는 컴퓨터 프로그램으로 컴퓨터에 실행 방법을 알려줍니다.
 - 엔진 내부에서는 어떤 일이 발생하는지는 엔진에 달려 있습니다
 
 ![Image description](https://images.ctfassets.net/aq13lwl6616q/3o7Q3edCrVJG9Zzj6VMZ1K/28136a643636dfa04090f3fb5c5467ff/javascript_engine.png)
 
-`Google이 Chrome V8 엔진을 만든 2008년은 JavaScript의 중요한 순간이었습니다.`  
-`V8 엔진은 C ++로 작성되고 Chrome 브라우저에서 사용되며 Node JS를 지원하는 오픈 소스 고성능 JavaScript 엔진입니다`  
-`성능은 주로 엔진의 두 부분 인 인터프리터와 컴파일러를 결합하기 때문에 이전에 나온 엔진을 능가했습니다.`  
-`오늘날 모든 주요 엔진은이 동일한 기술을 사용합니다.`
+**Google이 Chrome V8 엔진을 만든 2008년은 JavaScript의 중요한 순간이었습니다.  
+V8 엔진은 C ++로 작성되고 Chrome 브라우저에서 사용되며 Node JS를 지원하는 오픈 소스 고성능 JavaScript 엔진입니다.   
+성능은 주로 엔진의 두 부분 인 인터프리터와 컴파일러를 결합하기 때문에 이전에 나온 엔진을 능가했습니다.   
+오늘날 모든 주요 엔진은이 동일한 기술을 사용합니다.**
 
 ---
 
@@ -16,10 +16,10 @@
 파서는 Abstrack Syntax Tree(추상 구문 트리) or AST라 불리는 자료구조를 생성합니다  
 AST는 원본 구문의 모든 세부 사항을 표시하지는 않지만 구조적 또는 콘텐츠 관련 세부 사항을 포함하는 소스 코드의 트리 그래프
 
-#### 인터프리터와 컴파일❗
+#### **인터프리터와 컴파일**❗
 
 - 인터프리터는 기계 언어 프로그램으로 컴파일 할 필요없이 코드의 각 줄을 한 줄씩 직접 실행합니다.
-- Interpreters can use different strategies to increase performance.
+- Interpreters는 다양한 전략을 사용하여 성과를 높일 수 있습니다.  
 - 그들은 소스 코드를 파싱하고 즉시 실행할 수 있으며,이를보다 효율적인 기계 코드로 변환하거나, 컴파일러로 만든 미리 컴파일 된 코드를 실행하거나, 이들의 일부 조합을 실행할 수 있습니다.
 - 컴파일러는 컴퓨터에서 읽고 실행할 수 있도록 미리 명령을 기계 코드 또는 하위 수준 형식으로 변환합니다.
 - 모든 코드를 실행하고 코드의 기능을 파악한 다음 컴퓨터가 읽기 쉬운 다른 언어로 컴파일합니다.(Babel, TS)
@@ -220,14 +220,13 @@ person = 'Brittney Postma';
 
 #### Synchronous
 
-`So, what is the issue with being a single threaded language❓`  
-Lets's start from the beginning.
-When you visit a web page, you run a browser to do so (Chrome, Firefox, Safari, Edge).  
-Each browser has its own version of JavaScript Runtime with a set of Web API's, methods that developers can access from the window object.  
-In a synchronous language, only one thing can be done at a time.  
-Imagine an alert on the page, blocking the user from accessing any part of the page until the OK button is clicked.  
-If everything in JavaScript that took a significant amount of time, blocked the browser, then we would have a pretty bad user experience  
-`this is where concurrency and the event loop come in.`
+**싱글 스레드 언어의 문제는 무엇입니까❓**    
+웹 페이지를 방문 할 때 브라우저를 실행합니다 (Chrome, Firefox, Safari, Edge).  
+각 브라우저에는 개발자가 **window object**에서 액세스 할 수있는 웹 API 집합이 포함 된 고유 한 버전의 JavaScript 런타임이 있습니다.  
+동기 언어에서는 한 번에 한 가지 작업 만 수행 할 수 있습니다.  
+확인 버튼을 클릭 할 때까지 사용자가 페이지의 일부에 액세스하지 못하도록 차단하는 페이지의 경고를 상상해보십시오.
+상당한 시간이 걸리는 JavaScript의 모든 것이 브라우저를 차단하면 사용자 경험이 상당히 나빠질 것입니다.   
+**이것은 concurrency(동시성)과 이벤트 루프가 들어오는 곳입니다.**
 
 ---
 
@@ -841,13 +840,13 @@ doodle(); // Error! because it is enclosed in its own scope.
 ES5까지 변수를 선언할 수 있는 유일한 방법은 var 키워드를 사용하는 것이었다.  
 var 키워드로 선언된 변수는 아래와 같은 특징이 있다. 이는 다른 언어와는 다른 특징으로 주의를 기울이지 않으면 심각한 문제를 일으킨다.
 
-1. `함수 레벨 스코프(Function-level scope)`
+1. **함수 레벨 스코프(Function-level scope)**
 
-   - `함수의 코드 블록만을 스코프(우리가 접근할수있는 변수) 로 인정한다. === Block scope를 무시한다`  
-     따라서 전역 함수 외부에서 생성한 변수는 모두 전역 변수이다. 이는 전역 변수를 남발할 가능성을 높인다
-   - for 문의 변수 선언문에서 선언한 변수를 for 문의 코드 블록 외부에서 참조할 수 있다.
+   - **함수의 코드 블록만을 스코프(우리가 접근할수있는 변수) 로 인정한다. === Block scope를 무시한다**  
+     **따라서 전역 함수 외부에서 생성한 변수는 모두 전역 변수이다. 이는 전역 변수를 남발할 가능성을 높인다**
+   - **for 문의 변수 선언문에서 선언한 변수를 for 문의 코드 블록 외부에서 참조할 수 있다.**
 
-2. var 키워드 생략 허용
+2. **var 키워드 생략 허용**
 
    - 암묵적 전역 변수를 양산할 가능성이 크다.
 
@@ -858,7 +857,7 @@ var 키워드로 선언된 변수는 아래와 같은 특징이 있다. 이는 �
    console.log(age); // error
    ```
 
-3. 변수 중복 선언 허용
+3. **변수 중복 선언 허용**
 
    - 의도하지 않은 변수값의 변경이 일어날 가능성이 크다.
 
@@ -896,7 +895,7 @@ var 키워드로 선언된 변수는 아래와 같은 특징이 있다. 이는 �
    let bar = 456; // Uncaught SyntaxError: Identifier 'bar' has already been declared
    ```
 
-4. `변수 호이스팅`
+4. **변수 호이스팅**
 
    - 변수를 선언하기 이전에 참조할 수 있다
 
@@ -914,12 +913,13 @@ var 키워드로 선언된 변수는 아래와 같은 특징이 있다. 이는 �
 
 ES6는 이러한 var 키워드의 단점을 보완하기 위해, block scope에 대한 액세스를 제공하기 위해 let과 const 키워드를 도입하였다.
 
-`함수 레벨 스코프(Function-level scope)`  
-`함수 내에서 선언된 변수는 함수 내에서만 유효하며 함수 외부에서는 참조할 수 없다.`  
-`즉, 함수 내부에서 선언한 변수는 지역 변수이며 함수 외부에서 선언한 변수는 모두 전역 변수이다.`
+**함수 레벨 스코프(Function-level scope)  
+함수 내에서 선언된 변수는 함수 내에서만 유효하며 함수 외부에서는 참조할 수 없다.  
+즉, 함수 내부에서 선언한 변수는 지역 변수이며 함수 외부에서 선언한 변수는 모두 전역 변수이다.**
 
-`블록 레벨 스코프(Block-level scope)`  
-`모든 코드 블록(함수, if 문, for 문, while 문, try/catch 문 등) 내에서 선언된 변수는 코드 블록 내에서만 유효하며 코드 블록 외부에서는 참조할 수 없다. 즉, 코드 블록 내부에서 선언한 변수는 지역 변수이다.`
+**블록 레벨 스코프(Block-level scope)  
+모든 코드 블록(함수, if 문, for 문, while 문, try/catch 문 등) 내에서 선언된 변수는 코드 블록 내에서만 유효하며 코드 블록 외부에서는 참조할 수 없다.  
+즉, 코드 블록 내부에서 선언한 변수는 지역 변수이다.**
 
 ```js
 if (5 > 4) {
@@ -1644,9 +1644,9 @@ falsy값
 
 **Function Constructor** (함수)생성자
 
-함수는 JavaScript에서 객체이며 다른 언어에는 해당되지 않습니다.  
-그 때문에 여러 가지 방법으로 호출 할 수 있지만 생성자 일 수도 있습니다.  
-함수 **생성자는 새 객체를 만들고 반환합니다.**  
+**함수는 JavaScript에서 객체이며 다른 언어에는 해당되지 않습니다.**  
+그 때문에 여러 가지 방법으로 호출 할 수 있지만 **생성자 일 수도 있습니다**    
+**함수생성자는 새 객체를 만들고 반환합니다.**  
 모든 JavaScript 함수는 실제로 함수 객체 자체입니다
 
 ```js
@@ -1661,8 +1661,8 @@ const sum = new Function('x', 'y', 'return x + y');
 console.log(sum(2, 3)); // 5
 ```
 
-JavaScript의 거의 모든 것은 생성자로 만들 수 있습니다.  
-숫자 및 문자열과 같은 기본적인 JavaScript 유형도 생성자를 사용하여 만들 수 있습니다.
+**JavaScript의 거의 모든 것은 생성자로 만들 수 있습니다.** 
+**숫자 및 문자열과 같은 기본적인 JavaScript 유형도 생성자를 사용하여 만들 수 있습니다.**
 
 ```js
 // examples of constructor functions in JavaScript
@@ -1955,6 +1955,28 @@ const ohno = makeNuclearButton();
 ohno.totalPeaceTime()
 ```
 ```js
+// Encapsulation👍
+const encapsulation = () => {
+  let people = [];
+  const setName = name => people.push(name);
+  const getName = idx => people[idx];
+  const rmName = idx => people.splice(idx, 1);
+  return {
+    setName,
+    getName,
+    rmName
+  };
+};
+const data = encapsulation();
+data.setName("Brittney"); // 0
+data.getName(0); // 'Brittney'
+data.rmName(0); // ['Brittney']
+// you have no access to the array people
+// can only change it via methods provided
+```
+
+Closure Exercise
+```js
 // Closure Exercise 1
 let view;
 function initialize() {
@@ -2002,7 +2024,7 @@ for (var i = 0; i < array.length; i++) {
 const array = []
 array.__proto__ // [...]
 array.__proto__.__proto__ // {...}
-array.toString() // "" 오브젝트 메쏘드
+array.toString() // "" 오브젝트 메쏘드(프로토타입체인)
 ```
 ```js
 let dragon = {
@@ -2074,7 +2096,7 @@ Javascript의 거의 모든 객체는 프로토 타입 체인을 통해 속성�
 이 체인을 프로토 타입 상속이라고합니다.   
 객체의 자식은 부모의 속성을 "상속"합니다.    
 JavaScript의 모든 객체는 의도적으로 생성하거나 변경하지 않도록 변경하지 않는 한 Object 생성자의 자손입니다.  
-객체는 **Object.prototype**에서 메서드와 속성을 상속합니다.    
+**객체는 Object.prototype에서 메서드와 속성을 상속합니다.**      
 프로토 타입 속성에는 현재 객체와 객체가 생성 된 "프로토 타입"을 가리키는 링크를 생성하는 __proto__라는 접근 자 속성도 있습니다.
 ```js
 Object.prototype.__proto__;
@@ -2108,6 +2130,7 @@ let human = {
 };
 let socrates = Object.create(human);
 console.log(socrates); // {}
+console.log(socrates.__proto__); // {mortal: true}
 socrates.age = 45;
 console.log(socrates); // {age: 45}
 console.log(socrates.mortal); // true
@@ -2115,8 +2138,8 @@ console.log(human.isPrototypeOf(socrates)); // true
 // // ⭐ socrates inherit from human
 ```
 **every function has a prototype property**  
-Javascript의 모든 것은 JavaScript의 객체입니다  
-배열 및 함수는 base object 로부터 프로토 타입 체인을 통해 상속되는 객체입니다.
+**Javascript의 모든 것은 JavaScript의 객체입니다**   
+**배열 및 함수는 base object 로부터 프로토 타입 체인을 통해 상속되는 객체입니다.**
 
 #### Prototype vs  `__proto__`  
 __proto__와 프로토 타입의 차이점을 이해하는 것은 JavaScript 개발자에게 매우 혼란스러운 개념 일 수 있습니다.  
@@ -2152,31 +2175,275 @@ newArr
 **`__proto__` always points to prototype**⭐
 **only functions have the prototype property**⭐
 
+Exercise
+```js
+// Exercise - extend the functionality of a built in object
+
+// 1.
+// Date object -> to have new method .lastYear() which shows you last year 'YYYY' format.
+
+new Date('1900-10-10').lastYear()
+// '1899'
+
+// Answer
+Date.prototype.lastYear = function() {
+  return this.getFullYear() - 1;
+}
+```
+___
+
+#### **Object Oriented Programming**
+객체 지향 프로그래밍 (OOP)은 프로그램을 더 쉽게 읽고 이해할 수 있도록 **모든 코드를 "상자"(객체)로 그룹화해야한다**는 생각입니다.  
+**객체 지향 프로그래밍이 코드를 더 이해하기 쉽고, 확장하기 쉬우며, 유지하기 쉬우며, 메모리 효율적이고, DRY로 만드는 데 도움이된다!**  
+데이터를 캡슐화하면 프로그램을 구성하는 데 도움이됩니다.  
+**각 객체에는 자신이하는 일을 정의하는 상태와 상태를 사용하거나 수정할 수있는 메서드 (객체에 대한 함수)가 있습니다.**   
+자바 스크립트의 거의 모든 것이 객체라는 점을 고려하면이 작업이 쉬울 것이라고 생각할 것입니다.  
+모두 다른 능력을 가진 많은 캐릭터가있는 게임을 만들고 싶다고 가정 해 보겠습니다. 이것에 대해 어떻게할까요?
+```js
+// DRY(don't repeat yourself)
+const elf1 = {
+  name: 'Dobby',
+  type: 'house',
+  weapon: 'cloth',
+  say: function () {
+    return console.log(`Hi, my name is ${this.name}, I am a ${this.type} elf.`);
+  },
+  attack: function () {
+    return console.log(`attack with ${this.weapon}`);
+  },
+};
+
+const elf2 = {
+  name: 'Legolas',
+  type: 'high',
+  weapon: 'bow',
+  say: function () {
+    return console.log(`Hi, my name is ${this.name}, I am a ${this.type} elf.`);
+  },
+  attack: function () {
+    return console.log(`attack with ${this.weapon}`);
+  },
+};
+
+elf1.attack();  // attack with cloth
+elf2.attack();  // attack with bow
+```
+
+#### **Factory Functions**
+보시다시피이 코드는 이미 매우 **반복적**이며 한 문자 유형만으로는 유지 관리 할 수 ​​없습니다.  
+더 많은 캐릭터를 추가한다고 상상해보십시오.  
+그래서 **객체를 생성하는 또 다른 방법 인 Factory Functions이 도입**되었습니다.  
+Factory Functions는 실행될 때마다 새 객체를 반환합니다.  
+```js
+function createElf(name, type, weapon) {
+  return {
+    name: name,
+    type: type,
+    weapon: weapon,
+    say() {
+      return `Hi, my name is ${name}, I am a ${type} elf.`;
+    },
+    attack() {
+      return `${name} attacks with ${weapon}`;
+    }
+  };
+}
+
+const dobby = createElf("Dobby", "house", "cloth");
+const legolas = createElf("Legolas", "high", "bow");
+
+dobby.say(); // Hi, my name is Dobby, I am a house elf.
+legolas.say(); // Hi, my name is Legolas, I am a high elf.
+dobby.attack(); // Dobby attacks with cloth.
+legolas.attack(); // Legolas attacks with bow.
+```
+
+#### **Stores**
+이것은 올바른 방향으로 나아가는 단계이지만 캐릭터를 더 추가하면 동일한 문제가 다시 발생하게됩니다.  
+코드가 DRY가 아닐뿐만 아니라  the attack method이 생성되고 모든 새로운 엘프에 대한 메모리 공간을 차지합니다.  
+이것은 매우 효율적이지 않습니다.  
+이 문제를 어떻게 해결합니까? 우리는 메소드를 store로 분리 할 수 ​​있습니다.
+```js
+function createElf(name, type, weapon) {
+  return {
+    name: name, // old way
+    type, // with ES6 assignment, if they are the same name
+    weapon
+  };
+}
+
+// each method has to be assigned to the store method to
+// create the __proto__ chain
+const dobby = createElf("Dobby", "house", "cloth");
+dobby.attack = elfMethodsStore.attack;
+dobby.say = elfMethodsStore.say;
+
+const legolas = createElf("Legolas", "high", "bow");
+legolas.attack = elfMethodsStore.attack;
+legolas.say = elfMethodsStore.say;
+```
+
+#### **Object.create**
+store가 있으면 메모리 효율성이 어느 정도 절약되었지만 각 메소드를 할당하는데 많은 수작업이 필요했습니다.  
+따라서 각 메서드를 할당 할 필요없이 체인을 만드는 데 도움이되도록 Object.create가 제공되었습니다.  
+```js
+const elfMethodsStore = {
+  attack() {
+    return `attack with ${this.weapon}`;
+  },
+  say() {
+    return `Hi, my name is ${this.name}, I am a ${this.type} elf.`;
+  },
+};
+
+function createElf(name, type, weapon) {
+  // this creates the __proto__ chain to the store ⭐
+  let newElf = Object.create(elfMethodsStore);
+  console.log(newElf.__proto__); // { attack: [Function], say: [Function] }
+  // this assigns all the methods
+  newElf.name = name;
+  newElf.type = type;
+  newElf.weapon = weapon;
+  // this returns the new Elf with everything attached
+  return newElf;
+}
+
+const dobby = createElf('Dobby', 'house', 'cloth');
+const legolas = createElf("Legolas", "high", "bow");
+dobby.attack(); // attack with cloth
+legolas.attack(); // attack with bow
+```
+
+#### **Constructor Functions(생성자 함수)**
+Object.create를 사용하는 것은 진정한 프로토 타입 상속이며 코드가 더 깨끗하고 읽기 쉽습니다.  
+그러나 대부분의 프로그램에서 사용되는 것을 볼 수 없습니다.  
+Object.create가 나오기 전에 Constructor Functions(생성자 함수)를 사용할 수있었습니다.  
+Constructor functions(생성자 함수)는 위에서 언급 한 함수 생성자(function constructor)와 똑같습니다.  
+숫자 및 문자열 함수는  new keyword로 구성 및 호출되었으며 대문자로 표시되었습니다.  
+new 키워드는 실제로 생성자 함수의 의미를 변경합니다.  
+new가 없으면 방금 만든 객체 대신 window object 를 가리 킵니다.  
+생성자 함수를 대문자로 사용하여 식별하고 new 키워드를 사용하는 방법을 아는 것이 가장 좋습니다.  
+생성자 함수에 추가 된 속성은 this 키워드를 사용해야 만 수행 할 수 있으며 일반 변수는 객체에 추가되지 않습니다.
+```js
+// constructor functions are typically capitalized
+function Elf(name, type, weapon) {
+  // not returning anything
+  // "constructing" a new elf
+  this.name = name;
+  this.type = type;
+  this.weapon = weapon;
+}
+
+// to use a constructor function
+// the "new" keyword must be used
+const dobby = new Elf('Dobby', 'house', 'cloth');
+const legolas = new Elf('Legolas', 'high', 'bow');
+
+// To add methods we need to add ⭐
+Elf.prototype.attack = function () {
+  // cannot be an arrow function ⭐
+  // this would be scoped to the window obj
+  return `attack with ${this.weapon}`;
+};
+// This would need to be repeated for each method.
+
+dobby.attack(); // attack with cloth
+legolas.attack(); // attack with bow
+
+```
+JavaScript의 생성자 함수는 실제로 생성자 자체입니다.
 
 
+#### **Class**
+아직 헷갈 리 시나요? 프로토 타입은 프로토 타입 상속을 실제로 이해하지 않는 한 약간 이상하고 읽기 어렵습니다.  
+아무도 메소드를 추가하는 프로토 타입 방식을 좋아하지 않았기 때문에 ES6 JavaScript는 클래스 키워드를 제공했습니다.  
+그러나 JavaScript의 클래스는 실제 클래스가 아니며 syntactic sugar입니다.  
+내부적으로는 여전히 오래된 prototype method를 사용하고 있습니다.  
+사실 그것들은 하나의 큰 차이가있는 "special functions"일뿐입니다. functions은 호이스트되고 클래스는 그렇지 않습니다.  
+코드베이스에서 사용하기 전에 클래스를 선언해야합니다.  
+클래스에는 클래스로 생성 된 객체를 생성하고 인스턴스화하는 생성자 인 new 메서드도 함께 제공됩니다.  
+extends 키워드를 사용하여 클래스를 확장 할 수 있으므로 하위 클래스를 만들 수 있습니다.  
+extended class에 생성자가있는 경우 constructor를  base class에 연결하려면 super 키워드가 필요합니다.  
+새로운 객체를 클래스와 비교하기 위해 instanceof 키워드를 사용하여 클래스에서 상속 된 것이 있는지 확인할 수 있습니다.
+```js
+class Character {
+  constructor(name, weapon) {
+    this.name = name;
+    this.weapon = weapon;
+  }
+  attack() {
+    return `attack with ${this.weapon}`;
+  }
+}
 
+class Elf extends Character {
+  constructor(name, weapon, type) {
+    super(name, weapon);
+    // pulls in name and weapon from Character
+    this.type = type;
+  }
+}
 
+class Ogre extends Character {
+  constructor(name, weapon, color) {
+    super(name, weapon);
+    this.color = color;
+  }
+  enrage() {
+    return `double attack power`;
+  }
+}
 
+const legolas = new Elf('Legolas', 'bow', 'high');
+const gruul = new Ogre('Gruul', 'club', 'gray');
 
+console.log(legolas.attack());
+console.log(gruul.enrage());
+console.log(gruul.attack());
 
+console.log(legolas instanceof Elf);
+console.log(gruul instanceof Ogre);
 
+```
 
+#### **Private and public fields**
+대부분의 클래스 기반 언어에는 클래스 내에서 공용 또는 개인 필드(public or private fields)를 만드는 기능이 있습니다.  
+자바 스크립트의 클래스에 추가하는 것은 아직 개발중인 실험적 기능입니다.  
+브라우저에서의 지원은 제한적이지만 Babel과 같은 시스템으로 구현할 수 있습니다.  
+**공개 선언(Public declarations)**은 생성자 위에 설정되며 클래스 내에서 사용할 수 있지만 새 인스턴스에 추가되지는 않습니다.  
+**private 선언**은 변수 앞에 # 기호로 설정되며 해당 클래스 내에서만 액세스 할 수 있으며 외부에서 액세스하거나 변경할 수 없습니다.
+```js
+// public declarations
+class Rectangle {
+  height = 0;
+  width;
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// private declarations
+class Rectangle {
+  #height = 0;
+  #width;
+  constructor(height, width) {
+    this.#height = height;
+    this.#width = width;
+  }
+}
+```
+**객체 지향 프로그래밍이 코드를 더 이해하기 쉽고, 확장하기 쉬우며, 유지하기 쉬우며, 메모리 효율적이고, DRY로 만드는 데 도움이된다!**
 
 ---
+
+#### **FUNCTIONAL PROGRAMMING**
+
+
+
+
+___
+
 
 #### Http, Https, Web APIs, 브라우저좌표
 
