@@ -2193,8 +2193,20 @@ Date.prototype.lastYear = function() {
 ___
 
 #### **Object Oriented Programming**
+객체 지향 프로그래밍의 네 가지 기둥  
+1. encapsulation 메소드와 속성을사용하여 상자(객체)들이 상호작용함으로써 유지보수, 재사용
+2. abstraction
+3. inheritance DRY, 메모리효율
+4. polymorphism 다형성
+
 객체 지향 프로그래밍 (OOP)은 프로그램을 더 쉽게 읽고 이해할 수 있도록 **모든 코드를 "상자"(객체)로 그룹화해야한다**는 생각입니다.  
-**객체 지향 프로그래밍이 코드를 더 이해하기 쉽고, 확장하기 쉬우며, 유지하기 쉬우며, 메모리 효율적이고, DRY로 만드는 데 도움이된다!**  
+
+1. Clear + Understandable
+2. Easy to Extend
+3. Easy to Maintain
+4. Memory Efficient
+5. DRY
+
 데이터를 캡슐화하면 프로그램을 구성하는 데 도움이됩니다.  
 **각 객체에는 자신이하는 일을 정의하는 상태와 상태를 사용하거나 수정할 수있는 메서드 (객체에 대한 함수)가 있습니다.**   
 자바 스크립트의 거의 모든 것이 객체라는 점을 고려하면이 작업이 쉬울 것이라고 생각할 것입니다.  
@@ -2419,8 +2431,8 @@ console.log(gruul instanceof Ogre);
 
 ```
 
-#### **Private and public fields**
-대부분의 클래스 기반 언어에는 클래스 내에서 공용 또는 개인 필드(public or private fields)를 만드는 기능이 있습니다.  
+#### **_Private and public fields**
+**대부분의 클래스 기반 언어에는 클래스 내에서 공용 또는 개인 필드(public or private fields)를 만드는 기능이 있습니다.**  
 자바 스크립트의 클래스에 추가하는 것은 아직 개발중인 실험적 기능입니다.  
 브라우저에서의 지원은 제한적이지만 Babel과 같은 시스템으로 구현할 수 있습니다.  
 **공개 선언(Public declarations)**은 생성자 위에 설정되며 클래스 내에서 사용할 수 있지만 새 인스턴스에 추가되지는 않습니다.  
@@ -2446,7 +2458,6 @@ class Rectangle {
   }
 }
 ```
-**객체 지향 프로그래밍이 코드를 더 이해하기 쉽고, 확장하기 쉬우며, 유지하기 쉬우며, 메모리 효율적이고, DRY로 만드는 데 도움이된다!**
 
 **this - 4 Ways**
 ```js
@@ -2549,24 +2560,70 @@ class Elf extends Character { // extend and set the prototype => __proto__ to po
 const dolby = new Elf('Dolby', 'cloth', 'house');
 ```
 
+**Inheritance Exercise**
+```js
+class Character {
+  constructor(name, weapon) {
+    this.name = name,
+    this.weapon = weapon;
+  }
+  attack() {
+    return 'attack with ' + this.weapon
+  }
+}
+
+class Queen extends Character {
+  constructor(name, weapon, kind) {
+    super(name, weapon)
+    this.kind = kind;
+  }
+  attack() {
+    console.log(super.attack());
+    return `I am the ${this.name} of ${this.kind}, now bow down to me! `
+  }
+}
+//Polymorphism--
+//Extend the Character class to have a Queen class. The output of the below code should be:
+const victoria = new Queen('Victoria', 'army', 'hearts');
+// create a new instace with the queen having (name, weapon, type). Type inlcudes: 'hearts', 'clubs', 'spades', 'diamonds'
+
+victoria.attack()
+// will console.log the attack() method in Character class AND will return another string: 'I am the Victoria of hearts, now bow down to me! '
+
+```
 
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
 #### **FUNCTIONAL PROGRAMMING**
 함수형 프로그래밍은 객체 지향 프로그래밍과 동일한 목표를 염두에두고 있으므로 코드를 이해하기 쉽고 확장하기 쉬우 며 유지 관리하기 쉬우 며 메모리 효율적이며 DRY를 유지합니다.  
-객체 대신 재사용 가능한 함수를 사용하여 데이터를 만들고 작업합니다. 
+**객체 대신 재사용 가능한 함수를 사용하여 데이터를 만들고 작업합니다.**  
+함수형 프로그래밍은 객체 지향 프로그래밍과 유사한 관심사 분리를 기반으로합니다.   
+그러나 **함수형 프로그래밍에서는 데이터와 프로그램의 동작이 완전히 분리되어 있습니다.**    
+또한 **어떤 것이 만들어지면 변경되지 않아야한다는 생각도 있습니다.**   
+**OOP와 달리 shared state는 함수형 프로그래밍이 pure functions개념에서 작동하므로 피합니다.**
+
+**Pure Functions**❗  
+순수 함수는 그 밖의 어떤 것에 대한  side effects이 없으며 동일한 입력이 주어지면 항상 동일한 값을 출력합니다.  
+전달 된 데이터를 변경하지 않고 원본을 변경하지 않고 반환 할 새 데이터를 만듭니다.   
+그러나 100 % pure functions을 가질 수는 없습니다.  
+어느 시점에서 DOM과 상호 작용하거나 API를 가져와야합니다.  
+console.log조차도 함수 외부에서 window object를 사용하기 때문에 함수를 순수하지 않게 만듭니다.  
+사실은 프로그램은 side effects없이 존재할 수 없다는 것입니다.    
+따라서 함수형 프로그래밍의 목표는 부작용을 데이터에서 분리하여 최소화하는 것입니다.   
+
+다음을 수행하는 매우 작고 재사용 가능하며 예측 가능한 순수 함수를 많이 빌드하십시오.  
+
+- **Complete 1 task per function. (기능 당 작업 1 개를 완료하십시오.)**
+- **Do not mutate state. (상태를 변경하지 마십시오.)**
+- **Do not share state. (상태를 공유하지 마십시오.)**
+- **Be predictable. (예측 가능합니다.)**
+- **Be composable, one input and one output. (하나의 입력과 하나의 출력으로 구성 가능해야합니다.)**
+- **Be pure if possible. (가능하면 순수하십시오.)**
+- **Return something. (무언가를 반환하십시오.)**
+
+
+
 
 
 
