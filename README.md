@@ -2351,6 +2351,19 @@ dobby.attack(); // attack with cloth
 legolas.attack(); // attack with bow
 
 ```
+```js
+// Constructor Functions
+const Elf1 = new Function(
+  'name',
+  'weapon',
+  `this.name = name
+   this.weapon = weapon`
+);
+
+const sarah = new Elf1('sarah', 'fireworks');
+console.log(sarah);
+
+```
 JavaScript의 생성자 함수는 실제로 생성자 자체입니다.
 
 
@@ -2435,9 +2448,125 @@ class Rectangle {
 ```
 **객체 지향 프로그래밍이 코드를 더 이해하기 쉽고, 확장하기 쉬우며, 유지하기 쉬우며, 메모리 효율적이고, DRY로 만드는 데 도움이된다!**
 
+**this - 4 Ways**
+```js
+// new binding this
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const person1 = new Person('shin', 30);
+console.log(person1)
+
+// implicit binding
+const person2 = {
+  name: 'Karen',
+  age: 40,
+  hi() {
+    console.log('hi' + this.name)
+  }
+}
+
+// explicit binding
+const person3 = {
+  name: 'Karen',
+  age: 40,
+  hi: function() {
+    console.log('hi' + this.setTimeout)
+  }.bind(window)
+}
+
+// arrow function (lexical scoping)
+const person4 = {
+  name: 'Karen',
+  age: 40,
+  hi: function() {
+    var inner = () => {
+      console.log('hi' + this.name)
+    }
+    return inner()
+  }
+}
+
+const person4 = {
+  name: 'Karen',
+  age: 40,
+  hi: function() {
+    function inner() {
+      console.log(this) // window
+    }
+    return inner()
+  }
+}
+
+person4.hi()
+```
+
+**Inheritance**
+```js
+class Elf {
+  constructor(name, weapon) {
+    this.name = name;
+    this.weapon = weapon;
+  }
+  attack() {
+    return console.log('attack with ' + this.weapon);
+  }
+}
+
+const fiona = new Elf('Fiona', 'ninja stars');
+const ogre = {...fiona} // {name: "Fiona", weapon: "ninja stars"}
+// ogre.__proto__ {}
+// fiona.__proto__ Elf {}
+// fiona === ogre false
+// these objects are not referencing the same place in memory ⭐
+// also lost prototype chain
+// inheritance comes in
+
+
+// base class
+class Character {
+  constructor(name, weapon) {
+    this.name = name;
+    this.weapon = weapon;
+  }
+  attack() {
+    return console.log('attack with ' + this.weapon);
+  }
+}
+
+// Elf now has a prototype chain up to Character
+class Elf extends Character { // extend and set the prototype => __proto__ to point to character
+  constructor(name, weapon, type) {
+    // console.log(this) error❗ because in order to use this keyword inside of constructor (when we extend⭐) have to call super first❗
+    super(name, weapon) // call the elf superclass is Character constructor
+    // console.log(this) { name: 'Dolby', weapon: 'cloth' }
+    this.type = type
+  }
+}
+
+const dolby = new Elf('Dolby', 'cloth', 'house');
+```
+
+
+
 ---
 
+
+
+
+
+
+
+
+
+
+
+
 #### **FUNCTIONAL PROGRAMMING**
+함수형 프로그래밍은 객체 지향 프로그래밍과 동일한 목표를 염두에두고 있으므로 코드를 이해하기 쉽고 확장하기 쉬우 며 유지 관리하기 쉬우 며 메모리 효율적이며 DRY를 유지합니다.  
+객체 대신 재사용 가능한 함수를 사용하여 데이터를 만들고 작업합니다. 
 
 
 
