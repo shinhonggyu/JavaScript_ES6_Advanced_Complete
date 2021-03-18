@@ -2603,17 +2603,39 @@ victoria.attack()
 또한 **어떤 것이 만들어지면 변경되지 않아야한다는 생각도 있습니다.**   
 **OOP와 달리 shared state는 함수형 프로그래밍이 pure functions개념에서 작동하므로 피합니다.**
 
+**Exercise**⭐
+```js
+// Amazon shopping
+const user = {
+  name: 'Kim',
+  active: true,
+  cart: [],
+  purchases: []
+}
+
+
+//Implement a cart feature:
+// 1. Add items to cart.
+// 2. Add 3% tax to item in cart
+// 3. Buy item: cart --> purchases
+// 4. Empty cart
+
+//Bonus:
+// accept refunds.
+// Track user history.
+```
+
 **Pure Functions**❗  
-순수 함수는 그 밖의 어떤 것에 대한  side effects이 없으며 동일한 입력이 주어지면 항상 동일한 값을 출력합니다.  
+**순수 함수는 그 밖의 어떤 것에 대한  side effects이 없으며 동일한 입력이 주어지면 항상 동일한 값을 출력합니다.**   
 전달 된 데이터를 변경하지 않고 원본을 변경하지 않고 반환 할 새 데이터를 만듭니다.   
 그러나 100 % pure functions을 가질 수는 없습니다.  
 어느 시점에서 DOM과 상호 작용하거나 API를 가져와야합니다.  
 console.log조차도 함수 외부에서 window object를 사용하기 때문에 함수를 순수하지 않게 만듭니다.  
 사실은 프로그램은 side effects없이 존재할 수 없다는 것입니다.    
-따라서 함수형 프로그래밍의 목표는 부작용을 데이터에서 분리하여 최소화하는 것입니다.   
+따라서 **함수형 프로그래밍의 목표는 부작용을 데이터에서 분리하여 최소화하는 것**입니다.   
 
 다음을 수행하는 매우 작고 재사용 가능하며 예측 가능한 순수 함수를 많이 빌드하십시오.  
-
+  ⭐PERFECT FUNCTION⭐
 - **Complete 1 task per function. (기능 당 작업 1 개를 완료하십시오.)**
 - **Do not mutate state. (상태를 변경하지 마십시오.)**
 - **Do not share state. (상태를 공유하지 마십시오.)**
@@ -2621,6 +2643,174 @@ console.log조차도 함수 외부에서 window object를 사용하기 때문에
 - **Be composable, one input and one output. (하나의 입력과 하나의 출력으로 구성 가능해야합니다.)**
 - **Be pure if possible. (가능하면 순수하십시오.)**
 - **Return something. (무언가를 반환하십시오.)**
+
+1. 순수함수는 몇번을 호출하던 동일한 input에 항상 동일한 output을 리턴한다   
+2. 순수함수는 함수외부에 어떤것이라도 수정할수없다
+```js
+// 함수 외부것을 수정하는 side effects가 있다❗
+// side effiects that reusing shared state❗
+const array = [1, 2, 3];
+function mutateArray(arr) {
+  arr.pop();
+}
+function mutateArray2(arr) {
+  arr.forEach((item) => {
+    arr.push(1);
+  });
+}
+// 함수 호출 순서가 중요합니다.⭐
+mutateArray(array);
+console.log(array); // [1, 2]
+mutateArray2(array);
+console.log(array); // [1, 2, 1, 1]
+```
+
+**no side effects code**
+```js
+// no side effects
+// input -> output
+const array = [1, 2, 3];
+function removeLastItem(arr) {
+  const newArray = [].concat(arr);
+  newArray.pop();
+  return newArray;
+}
+
+function multiplyBy2(arr) {
+  return arr.map((item) => item * 2);
+}
+
+const array2 = removeLastItem(array);
+const array3 = multiplyBy2(array);
+console.log(array, array2, array3);
+
+```
+
+Is that a pure function ❓
+```js
+function a() {
+  console.log('hi')
+}
+```
+console.log는 window wepAPI이다.❗  
+브라우저를 사용하여 브라우저에 무언가를 기록하고 있습니다.  
+그래서 그것은 실제로 외부 세계에 영향을 미치고 있습니다.  
+
+
+입력 결과는 항상 동일한 출력이어야합니다.  
+동일한 입력이 주어지면 함수가 항상 동일한 출력을 반환.  
+
+
+**Referential transparency (참조 투명성)**
+함수형 프로그래밍의 중요한 개념 중 하나는 프로그램 결과를 변경하지 않고 표현식을 결과 값으로 대체하는 기능인 참조 투명성입니다.
+```js
+function a(num1, num2) {
+  return num1 + num2;
+}
+
+function b(num) {
+  return num * 2;
+}
+
+b(a(3, 4)); // 14
+// a should always return 7
+// so it could be changed to
+b(7); // 14
+// and the output is the same
+```
+
+함수형 프로그래밍의 기둥 pure function 👍
+1. no side effect ❗   
+2. same input no matter how many times we call it gives us the same output  ❗
+
+
+**Idempotence (멱등법칙 : 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질을 의미)**  
+멱등성은 함수형 프로그래밍의 또 다른 중요한 부분입니다.  
+함수에 동일한 입력이 주어지면 항상 동일한 출력을 반환한다는 생각입니다.  
+이 기능은 계속해서 사용할 수 있으며 아무것도 변경되지 않습니다.  
+이것이 **코드를 예측 가능하게 만드는 방법**입니다.
+```js
+Math.abs(Math.abs(-50))
+```
+
+**Imperative(명령적) vs Declarative(선언적)**
+
+Imperative(명령적)code is tells the machine what to do and how to do it   
+Declarative(선언적)code is tells the machine what to do and what should happen.
+it doesn't tell the computer how to do things.❗
+
+Humans are declared.❗
+
+그러나 JavaScript와 같은 고급 언어를 사용하는 것은 실제로 덜 선언적입니다.  
+이것은 함수 프로그래밍에서 중요합니다.   
+우리 코드를 더 잘 이해하고 컴퓨터가 작업을 수행하는 가장 좋은 방법을 알아내는 더러운 작업을 처리하도록하기 위해 선언 적이기를 원하기 때문입니다.  
+
+<img src="https://images.ctfassets.net/aq13lwl6616q/5nFLOTAXwQRDSb2WDlJSFN/bb8d98271f6f1e491142d11249557b76/imperative_code.png"
+width="700">
+
+
+**Immutability(불변성)** ⭐  
+
+**불변성은 단순히 원본 데이터 나 상태(state)를 수정하는 것이 아닙니다.**  
+**대신 함수 내부에 state의 복사본을 만들고 새로운 버전의 state를 반환해야합니다.**    
+```js
+// Bad code
+const obj = { name: 'Brittney' };
+
+function clone(obj) {
+  return { ...obj }; // this is pure
+}
+
+// obj.name = 'Joe'; mutated the state
+
+// Better code
+function updateName(obj) {
+  const newObj = clone(obj);
+  newObj.name = 'Joe';
+  return newObj;
+}
+
+const updatedNameObj = updateName(obj);
+console.log(obj);
+console.log(updatedNameObj);
+```
+코드를 반복해서 복사하는 데 메모리 측면에서 비용이 많이들 수 있다고 생각할 수 있습니다.  
+그러나 데이터가 새 정보 만 복사하고 공통성을 위해 원래 상태를 가리킬 수있는 structural sharing(구조적 공유)라는 것이 있습니다.  
+<img src="https://images.ctfassets.net/aq13lwl6616q/7hMhPpSyzvev3ERSpooIC3/6e2b4401726e627db5777f1bde116148/structure_tree.png" width="400">   
+Persistent data structure   
+컴퓨팅에서 영구 데이터 구조는 수정 될 때 항상 이전 버전을 보존하는 데이터 구조입니다.   
+이러한 데이터 구조는 작업이 내부 구조를 업데이트하지 않고 항상 새로 업데이트 된 구조를 생성하기 때문에 사실상 변경 불가능합니다  
+
+
+**HOC, Closure**  
+JavaScript functions are first class citizens which means we can have high order functions and closure
+```js
+// HOF
+const hof = () => () => 5;
+hof() // function
+hof()() // 5
+
+const hof = (fn) => fn(5);
+hof(function a(x) { return x })
+
+// Closure
+// in javascript we create closure whenever a function accesses a variable defined outside of the immediate function scope that is the scope of the parent.
+const closure = function () {
+  let count = 0;
+  return function increment() {
+    count++;
+    return console.log(count);
+  };
+};
+
+const incrementFn = closure();
+incrementFn(); // 1
+incrementFn(); // 2
+
+```
+
+**Currying**
+
 
 
 
