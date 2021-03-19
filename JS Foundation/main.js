@@ -25,4 +25,3 @@ memoized(5);
 memoized(5);
 memoized(6);
 memoized(5);
-// console.log('3', memoized(6));

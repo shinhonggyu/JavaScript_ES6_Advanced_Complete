@@ -6,8 +6,8 @@
 ![Image description](https://images.ctfassets.net/aq13lwl6616q/3o7Q3edCrVJG9Zzj6VMZ1K/28136a643636dfa04090f3fb5c5467ff/javascript_engine.png)
 
 **Google이 Chrome V8 엔진을 만든 2008년은 JavaScript의 중요한 순간이었습니다.  
-V8 엔진은 C ++로 작성되고 Chrome 브라우저에서 사용되며 Node JS를 지원하는 오픈 소스 고성능 JavaScript 엔진입니다.   
-성능은 주로 엔진의 두 부분 인 인터프리터와 컴파일러를 결합하기 때문에 이전에 나온 엔진을 능가했습니다.   
+V8 엔진은 C ++로 작성되고 Chrome 브라우저에서 사용되며 Node JS를 지원하는 오픈 소스 고성능 JavaScript 엔진입니다.  
+성능은 주로 엔진의 두 부분 인 인터프리터와 컴파일러를 결합하기 때문에 이전에 나온 엔진을 능가했습니다.  
 오늘날 모든 주요 엔진은이 동일한 기술을 사용합니다.**
 
 ---
@@ -19,7 +19,7 @@ AST는 원본 구문의 모든 세부 사항을 표시하지는 않지만 구조
 #### **인터프리터와 컴파일**❗
 
 - 인터프리터는 기계 언어 프로그램으로 컴파일 할 필요없이 코드의 각 줄을 한 줄씩 직접 실행합니다.
-- Interpreters는 다양한 전략을 사용하여 성과를 높일 수 있습니다.  
+- Interpreters는 다양한 전략을 사용하여 성과를 높일 수 있습니다.
 - 그들은 소스 코드를 파싱하고 즉시 실행할 수 있으며,이를보다 효율적인 기계 코드로 변환하거나, 컴파일러로 만든 미리 컴파일 된 코드를 실행하거나, 이들의 일부 조합을 실행할 수 있습니다.
 - 컴파일러는 컴퓨터에서 읽고 실행할 수 있도록 미리 명령을 기계 코드 또는 하위 수준 형식으로 변환합니다.
 - 모든 코드를 실행하고 코드의 기능을 파악한 다음 컴퓨터가 읽기 쉬운 다른 언어로 컴파일합니다.(Babel, TS)
@@ -220,12 +220,12 @@ person = 'Brittney Postma';
 
 #### Synchronous
 
-**싱글 스레드 언어의 문제는 무엇입니까❓**    
+**싱글 스레드 언어의 문제는 무엇입니까❓**  
 웹 페이지를 방문 할 때 브라우저를 실행합니다 (Chrome, Firefox, Safari, Edge).  
 각 브라우저에는 개발자가 **window object**에서 액세스 할 수있는 웹 API 집합이 포함 된 고유 한 버전의 JavaScript 런타임이 있습니다.  
 동기 언어에서는 한 번에 한 가지 작업 만 수행 할 수 있습니다.  
 확인 버튼을 클릭 할 때까지 사용자가 페이지의 일부에 액세스하지 못하도록 차단하는 페이지의 경고를 상상해보십시오.
-상당한 시간이 걸리는 JavaScript의 모든 것이 브라우저를 차단하면 사용자 경험이 상당히 나빠질 것입니다.   
+상당한 시간이 걸리는 JavaScript의 모든 것이 브라우저를 차단하면 사용자 경험이 상당히 나빠질 것입니다.  
 **이것은 concurrency(동시성)과 이벤트 루프가 들어오는 곳입니다.**
 
 ---
@@ -1645,7 +1645,7 @@ falsy값
 **Function Constructor** (함수)생성자
 
 **함수는 JavaScript에서 객체이며 다른 언어에는 해당되지 않습니다.**  
-그 때문에 여러 가지 방법으로 호출 할 수 있지만 **생성자 일 수도 있습니다**    
+그 때문에 여러 가지 방법으로 호출 할 수 있지만 **생성자 일 수도 있습니다**  
 **함수생성자는 새 객체를 만들고 반환합니다.**  
 모든 JavaScript 함수는 실제로 함수 객체 자체입니다
 
@@ -1661,7 +1661,7 @@ const sum = new Function('x', 'y', 'return x + y');
 console.log(sum(2, 3)); // 5
 ```
 
-**JavaScript의 거의 모든 것은 생성자로 만들 수 있습니다.** 
+**JavaScript의 거의 모든 것은 생성자로 만들 수 있습니다.**
 **숫자 및 문자열과 같은 기본적인 JavaScript 유형도 생성자를 사용하여 만들 수 있습니다.**
 
 ```js
@@ -1903,6 +1903,7 @@ callMeMaybe();
 ```
 
 ⭐클로저가 유익한 두 가지 주요 이유는 **메모리 효율성**과 **캡슐화**입니다.⭐
+
 ```js
 // Memory efficient👍
 function heavyDuty(index) {
@@ -1915,23 +1916,25 @@ heavyDuty(699);
 heavyDuty(699);
 heavyDuty(699);
 const getHeavyDuty = heavyDuty2();
-getHeavyDuty(688)
-getHeavyDuty(700)
-getHeavyDuty(800)
+getHeavyDuty(688);
+getHeavyDuty(700);
+getHeavyDuty(800);
 
 function heavyDuty2() {
   const bigArray = new Array(7000).fill('👍');
   console.log('created Again❗');
-  return function(index) {
-    return console.log(bigArray[index])
-  }
+  return function (index) {
+    return console.log(bigArray[index]);
+  };
 }
 ```
+
 Encapsulation means the restriction of direct access to some of an object's components  
-캡슐화는 객체의 일부 컴포넌트들에에 대한 직접 접근 제한을 의미합니다.    
-가능한 한 객체의 내부 부분을 숨기고 실행에 필요한 부분 만 노출합니다.  
+캡슐화는 객체의 일부 컴포넌트들에에 대한 직접 접근 제한을 의미합니다.  
+가능한 한 객체의 내부 부분을 숨기고 실행에 필요한 부분 만 노출합니다.
 
 캡슐화를 사용하는 이유❓
+
 1. Security - Controlled access
 2. Hide Implementation and Expose Behaviours(구현 숨기기 및 동작 노출)
 3. Loose Coupling - Modify the implementation at any time(느슨한 결합-언제든지 구현 수정)
@@ -1952,23 +1955,24 @@ const makeNuclearButton = () => {
   };
 };
 const ohno = makeNuclearButton();
-ohno.totalPeaceTime()
+ohno.totalPeaceTime();
 ```
+
 ```js
 // Encapsulation👍
 const encapsulation = () => {
   let people = [];
-  const setName = name => people.push(name);
-  const getName = idx => people[idx];
-  const rmName = idx => people.splice(idx, 1);
+  const setName = (name) => people.push(name);
+  const getName = (idx) => people[idx];
+  const rmName = (idx) => people.splice(idx, 1);
   return {
     setName,
     getName,
-    rmName
+    rmName,
   };
 };
 const data = encapsulation();
-data.setName("Brittney"); // 0
+data.setName('Brittney'); // 0
 data.getName(0); // 'Brittney'
 data.rmName(0); // ['Brittney']
 // you have no access to the array people
@@ -1976,56 +1980,62 @@ data.rmName(0); // ['Brittney']
 ```
 
 Closure Exercise
+
 ```js
 // Closure Exercise 1
 let view;
 function initialize() {
   view = '👍';
-  console.log('view has been set!')
+  console.log('view has been set!');
 }
 
-initialize()  // view has been set! 
-initialize()  // view has been set! 
-initialize()  // view has been set! 
+initialize(); // view has been set!
+initialize(); // view has been set!
+initialize(); // view has been set!
 ```
+
 ```js
 let view;
 function initialize() {
   let called = 0;
-  return function() {
+  return function () {
     if (called > 0) {
       return;
     } else {
       view = '👍';
       called++;
-      console.log('view has been set!')
+      console.log('view has been set!');
     }
-  }
+  };
 }
 const startOnce = initialize();
 startOnce();
-console.log(view)
+console.log(view);
 ```
+
 ```js
 // Closure Exercise 2
-const array = [1,2,3,4];
+const array = [1, 2, 3, 4];
 for (var i = 0; i < array.length; i++) {
-  (function(closureI) {
-    setTimeout(function() {
-    console.log('I am at index' + array[closureI])
-    }, 3000)
-  })(i)
+  (function (closureI) {
+    setTimeout(function () {
+      console.log('I am at index' + array[closureI]);
+    }, 3000);
+  })(i);
 }
 ```
 
 #### Prototype💖(Inheritance:상속을 구현 할수있다, 속성과 함수들을 정의)을 기반으로해서 객체지향프로그래밍과 코드재사용 할수있다
+
 #### behavior reuse 행동재사용(Inheritance) by reusing existing objects(기존에있는 오브젝트 재사용)
+
 ```js
-const array = []
-array.__proto__ // [...]
-array.__proto__.__proto__ // {...}
-array.toString() // "" 오브젝트 메쏘드(프로토타입체인)
+const array = [];
+array.__proto__; // [...]
+array.__proto__.__proto__; // {...}
+array.toString(); // "" 오브젝트 메쏘드(프로토타입체인)
 ```
+
 ```js
 let dragon = {
   name: 'Tanya',
@@ -2060,6 +2070,7 @@ console.log(dragon.isPrototypeOf(lizard)); // { } true
 // dragon -> dragon의 프로토타입체인 { } base object의 isPrototypeOf
 // ⭐ lizard inherit from Dragon
 ```
+
 ```js
 let dragon = {
   name: 'Tanya',
@@ -2089,15 +2100,17 @@ for (let prop in lizard) {
   }
   console.log(prop); // name, fight, fire, sing
 }
-
 ```
+
 #### **Prototypal Inheritance**
+
 Javascript의 거의 모든 객체는 프로토 타입 체인을 통해 속성을 전달합니다.  
-이 체인을 프로토 타입 상속이라고합니다.   
-객체의 자식은 부모의 속성을 "상속"합니다.    
+이 체인을 프로토 타입 상속이라고합니다.  
+객체의 자식은 부모의 속성을 "상속"합니다.  
 JavaScript의 모든 객체는 의도적으로 생성하거나 변경하지 않도록 변경하지 않는 한 Object 생성자의 자손입니다.  
-**객체는 Object.prototype에서 메서드와 속성을 상속합니다.**      
-프로토 타입 속성에는 현재 객체와 객체가 생성 된 "프로토 타입"을 가리키는 링크를 생성하는 __proto__라는 접근 자 속성도 있습니다.
+**객체는 Object.prototype에서 메서드와 속성을 상속합니다.**  
+프로토 타입 속성에는 현재 객체와 객체가 생성 된 "프로토 타입"을 가리키는 링크를 생성하는 **proto**라는 접근 자 속성도 있습니다.
+
 ```js
 Object.prototype.__proto__;
 // null
@@ -2123,7 +2136,8 @@ Object.__proto__;
 
 **`__proto__` actually lives on the prototype**
 
-**we shouldn't use⭐__proto__ = some type of an object** (performance reason)
+**we shouldn't use⭐**proto** = some type of an object** (performance reason)
+
 ```js
 let human = {
   mortal: true,
@@ -2137,12 +2151,14 @@ console.log(socrates.mortal); // true
 console.log(human.isPrototypeOf(socrates)); // true
 // // ⭐ socrates inherit from human
 ```
+
 **every function has a prototype property**  
-**Javascript의 모든 것은 JavaScript의 객체입니다**   
+**Javascript의 모든 것은 JavaScript의 객체입니다**  
 **배열 및 함수는 base object 로부터 프로토 타입 체인을 통해 상속되는 객체입니다.**
 
-#### Prototype vs  `__proto__`  
-__proto__와 프로토 타입의 차이점을 이해하는 것은 JavaScript 개발자에게 매우 혼란스러운 개념 일 수 있습니다.  
+#### Prototype vs `__proto__`
+
+**proto**와 프로토 타입의 차이점을 이해하는 것은 JavaScript 개발자에게 매우 혼란스러운 개념 일 수 있습니다.  
 JavaScript의 모든 함수는 생성 될 때 call, apply 및 bind methods를 제공하는 프로토 타입 속성을 자동으로 가져옵니다.  
 실제로 일반 함수로는 아무 작업도하지 않지만 생성자 함수에서 prototype 속성을 사용하면 생성 한 객체에 자체 메서드를 추가 할 수 있습니다.  
 JavaScript에서 새 객체가 생성 될 때마다 `__proto__` getter 함수를 사용하여 생성되는 항목을 기반으로 내장 된 생성자 함수를 사용합니다.  
@@ -2176,30 +2192,34 @@ newArr
 **only functions have the prototype property**⭐
 
 Exercise
+
 ```js
 // Exercise - extend the functionality of a built in object
 
 // 1.
 // Date object -> to have new method .lastYear() which shows you last year 'YYYY' format.
 
-new Date('1900-10-10').lastYear()
+new Date('1900-10-10').lastYear();
 // '1899'
 
 // Answer
-Date.prototype.lastYear = function() {
+Date.prototype.lastYear = function () {
   return this.getFullYear() - 1;
-}
+};
 ```
-___
+
+---
 
 #### **Object Oriented Programming**
-객체 지향 프로그래밍의 네 가지 기둥  
+
+객체 지향 프로그래밍의 네 가지 기둥
+
 1. encapsulation 메소드와 속성을사용하여 상자(객체)들이 상호작용함으로써 유지보수, 재사용
 2. abstraction
 3. inheritance DRY, 메모리효율
 4. polymorphism 다형성
 
-객체 지향 프로그래밍 (OOP)은 프로그램을 더 쉽게 읽고 이해할 수 있도록 **모든 코드를 "상자"(객체)로 그룹화해야한다**는 생각입니다.  
+객체 지향 프로그래밍 (OOP)은 프로그램을 더 쉽게 읽고 이해할 수 있도록 **모든 코드를 "상자"(객체)로 그룹화해야한다**는 생각입니다.
 
 1. Clear + Understandable
 2. Easy to Extend
@@ -2208,9 +2228,10 @@ ___
 5. DRY
 
 데이터를 캡슐화하면 프로그램을 구성하는 데 도움이됩니다.  
-**각 객체에는 자신이하는 일을 정의하는 상태와 상태를 사용하거나 수정할 수있는 메서드 (객체에 대한 함수)가 있습니다.**   
+**각 객체에는 자신이하는 일을 정의하는 상태와 상태를 사용하거나 수정할 수있는 메서드 (객체에 대한 함수)가 있습니다.**  
 자바 스크립트의 거의 모든 것이 객체라는 점을 고려하면이 작업이 쉬울 것이라고 생각할 것입니다.  
 모두 다른 능력을 가진 많은 캐릭터가있는 게임을 만들고 싶다고 가정 해 보겠습니다. 이것에 대해 어떻게할까요?
+
 ```js
 // DRY(don't repeat yourself)
 const elf1 = {
@@ -2237,15 +2258,17 @@ const elf2 = {
   },
 };
 
-elf1.attack();  // attack with cloth
-elf2.attack();  // attack with bow
+elf1.attack(); // attack with cloth
+elf2.attack(); // attack with bow
 ```
 
 #### **Factory Functions**
+
 보시다시피이 코드는 이미 매우 **반복적**이며 한 문자 유형만으로는 유지 관리 할 수 ​​없습니다.  
 더 많은 캐릭터를 추가한다고 상상해보십시오.  
 그래서 **객체를 생성하는 또 다른 방법 인 Factory Functions이 도입**되었습니다.  
-Factory Functions는 실행될 때마다 새 객체를 반환합니다.  
+Factory Functions는 실행될 때마다 새 객체를 반환합니다.
+
 ```js
 function createElf(name, type, weapon) {
   return {
@@ -2257,12 +2280,12 @@ function createElf(name, type, weapon) {
     },
     attack() {
       return `${name} attacks with ${weapon}`;
-    }
+    },
   };
 }
 
-const dobby = createElf("Dobby", "house", "cloth");
-const legolas = createElf("Legolas", "high", "bow");
+const dobby = createElf('Dobby', 'house', 'cloth');
+const legolas = createElf('Legolas', 'high', 'bow');
 
 dobby.say(); // Hi, my name is Dobby, I am a house elf.
 legolas.say(); // Hi, my name is Legolas, I am a high elf.
@@ -2271,33 +2294,37 @@ legolas.attack(); // Legolas attacks with bow.
 ```
 
 #### **Stores**
+
 이것은 올바른 방향으로 나아가는 단계이지만 캐릭터를 더 추가하면 동일한 문제가 다시 발생하게됩니다.  
-코드가 DRY가 아닐뿐만 아니라  the attack method이 생성되고 모든 새로운 엘프에 대한 메모리 공간을 차지합니다.  
+코드가 DRY가 아닐뿐만 아니라 the attack method이 생성되고 모든 새로운 엘프에 대한 메모리 공간을 차지합니다.  
 이것은 매우 효율적이지 않습니다.  
 이 문제를 어떻게 해결합니까? 우리는 메소드를 store로 분리 할 수 ​​있습니다.
+
 ```js
 function createElf(name, type, weapon) {
   return {
     name: name, // old way
     type, // with ES6 assignment, if they are the same name
-    weapon
+    weapon,
   };
 }
 
 // each method has to be assigned to the store method to
 // create the __proto__ chain
-const dobby = createElf("Dobby", "house", "cloth");
+const dobby = createElf('Dobby', 'house', 'cloth');
 dobby.attack = elfMethodsStore.attack;
 dobby.say = elfMethodsStore.say;
 
-const legolas = createElf("Legolas", "high", "bow");
+const legolas = createElf('Legolas', 'high', 'bow');
 legolas.attack = elfMethodsStore.attack;
 legolas.say = elfMethodsStore.say;
 ```
 
 #### **Object.create**
+
 store가 있으면 메모리 효율성이 어느 정도 절약되었지만 각 메소드를 할당하는데 많은 수작업이 필요했습니다.  
-따라서 각 메서드를 할당 할 필요없이 체인을 만드는 데 도움이되도록 Object.create가 제공되었습니다.  
+따라서 각 메서드를 할당 할 필요없이 체인을 만드는 데 도움이되도록 Object.create가 제공되었습니다.
+
 ```js
 const elfMethodsStore = {
   attack() {
@@ -2321,21 +2348,23 @@ function createElf(name, type, weapon) {
 }
 
 const dobby = createElf('Dobby', 'house', 'cloth');
-const legolas = createElf("Legolas", "high", "bow");
+const legolas = createElf('Legolas', 'high', 'bow');
 dobby.attack(); // attack with cloth
 legolas.attack(); // attack with bow
 ```
 
 #### **Constructor Functions(생성자 함수)**
+
 Object.create를 사용하는 것은 진정한 프로토 타입 상속이며 코드가 더 깨끗하고 읽기 쉽습니다.  
 그러나 대부분의 프로그램에서 사용되는 것을 볼 수 없습니다.  
 Object.create가 나오기 전에 Constructor Functions(생성자 함수)를 사용할 수있었습니다.  
 Constructor functions(생성자 함수)는 위에서 언급 한 함수 생성자(function constructor)와 똑같습니다.  
-숫자 및 문자열 함수는  new keyword로 구성 및 호출되었으며 대문자로 표시되었습니다.  
+숫자 및 문자열 함수는 new keyword로 구성 및 호출되었으며 대문자로 표시되었습니다.  
 new 키워드는 실제로 생성자 함수의 의미를 변경합니다.  
 new가 없으면 방금 만든 객체 대신 window object 를 가리 킵니다.  
 생성자 함수를 대문자로 사용하여 식별하고 new 키워드를 사용하는 방법을 아는 것이 가장 좋습니다.  
 생성자 함수에 추가 된 속성은 this 키워드를 사용해야 만 수행 할 수 있으며 일반 변수는 객체에 추가되지 않습니다.
+
 ```js
 // constructor functions are typically capitalized
 function Elf(name, type, weapon) {
@@ -2361,8 +2390,8 @@ Elf.prototype.attack = function () {
 
 dobby.attack(); // attack with cloth
 legolas.attack(); // attack with bow
-
 ```
+
 ```js
 // Constructor Functions
 const Elf1 = new Function(
@@ -2374,12 +2403,12 @@ const Elf1 = new Function(
 
 const sarah = new Elf1('sarah', 'fireworks');
 console.log(sarah);
-
 ```
+
 JavaScript의 생성자 함수는 실제로 생성자 자체입니다.
 
-
 #### **Class**
+
 아직 헷갈 리 시나요? 프로토 타입은 프로토 타입 상속을 실제로 이해하지 않는 한 약간 이상하고 읽기 어렵습니다.  
 아무도 메소드를 추가하는 프로토 타입 방식을 좋아하지 않았기 때문에 ES6 JavaScript는 클래스 키워드를 제공했습니다.  
 그러나 JavaScript의 클래스는 실제 클래스가 아니며 syntactic sugar입니다.  
@@ -2388,8 +2417,9 @@ JavaScript의 생성자 함수는 실제로 생성자 자체입니다.
 코드베이스에서 사용하기 전에 클래스를 선언해야합니다.  
 클래스에는 클래스로 생성 된 객체를 생성하고 인스턴스화하는 생성자 인 new 메서드도 함께 제공됩니다.  
 extends 키워드를 사용하여 클래스를 확장 할 수 있으므로 하위 클래스를 만들 수 있습니다.  
-extended class에 생성자가있는 경우 constructor를  base class에 연결하려면 super 키워드가 필요합니다.  
+extended class에 생성자가있는 경우 constructor를 base class에 연결하려면 super 키워드가 필요합니다.  
 새로운 객체를 클래스와 비교하기 위해 instanceof 키워드를 사용하여 클래스에서 상속 된 것이 있는지 확인할 수 있습니다.
+
 ```js
 class Character {
   constructor(name, weapon) {
@@ -2428,15 +2458,16 @@ console.log(gruul.attack());
 
 console.log(legolas instanceof Elf);
 console.log(gruul instanceof Ogre);
-
 ```
 
-#### **_Private and public fields**
+#### **\_Private and public fields**
+
 **대부분의 클래스 기반 언어에는 클래스 내에서 공용 또는 개인 필드(public or private fields)를 만드는 기능이 있습니다.**  
 자바 스크립트의 클래스에 추가하는 것은 아직 개발중인 실험적 기능입니다.  
 브라우저에서의 지원은 제한적이지만 Babel과 같은 시스템으로 구현할 수 있습니다.  
 **공개 선언(Public declarations)**은 생성자 위에 설정되며 클래스 내에서 사용할 수 있지만 새 인스턴스에 추가되지는 않습니다.  
 **private 선언**은 변수 앞에 # 기호로 설정되며 해당 클래스 내에서만 액세스 할 수 있으며 외부에서 액세스하거나 변경할 수 없습니다.
+
 ```js
 // public declarations
 class Rectangle {
@@ -2460,6 +2491,7 @@ class Rectangle {
 ```
 
 **this - 4 Ways**
+
 ```js
 // new binding this
 function Person(name, age) {
@@ -2468,53 +2500,54 @@ function Person(name, age) {
 }
 
 const person1 = new Person('shin', 30);
-console.log(person1)
+console.log(person1);
 
 // implicit binding
 const person2 = {
   name: 'Karen',
   age: 40,
   hi() {
-    console.log('hi' + this.name)
-  }
-}
+    console.log('hi' + this.name);
+  },
+};
 
 // explicit binding
 const person3 = {
   name: 'Karen',
   age: 40,
-  hi: function() {
-    console.log('hi' + this.setTimeout)
-  }.bind(window)
-}
+  hi: function () {
+    console.log('hi' + this.setTimeout);
+  }.bind(window),
+};
 
 // arrow function (lexical scoping)
 const person4 = {
   name: 'Karen',
   age: 40,
-  hi: function() {
+  hi: function () {
     var inner = () => {
-      console.log('hi' + this.name)
-    }
-    return inner()
-  }
-}
+      console.log('hi' + this.name);
+    };
+    return inner();
+  },
+};
 
 const person4 = {
   name: 'Karen',
   age: 40,
-  hi: function() {
+  hi: function () {
     function inner() {
-      console.log(this) // window
+      console.log(this); // window
     }
-    return inner()
-  }
-}
+    return inner();
+  },
+};
 
-person4.hi()
+person4.hi();
 ```
 
 **Inheritance**
+
 ```js
 class Elf {
   constructor(name, weapon) {
@@ -2527,14 +2560,13 @@ class Elf {
 }
 
 const fiona = new Elf('Fiona', 'ninja stars');
-const ogre = {...fiona} // {name: "Fiona", weapon: "ninja stars"}
+const ogre = { ...fiona }; // {name: "Fiona", weapon: "ninja stars"}
 // ogre.__proto__ {}
 // fiona.__proto__ Elf {}
 // fiona === ogre false
 // these objects are not referencing the same place in memory ⭐
 // also lost prototype chain
 // inheritance comes in
-
 
 // base class
 class Character {
@@ -2548,12 +2580,13 @@ class Character {
 }
 
 // Elf now has a prototype chain up to Character
-class Elf extends Character { // extend and set the prototype => __proto__ to point to character
+class Elf extends Character {
+  // extend and set the prototype => __proto__ to point to character
   constructor(name, weapon, type) {
     // console.log(this) error❗ because in order to use this keyword inside of constructor (when we extend⭐) have to call super first❗
-    super(name, weapon) // call the elf superclass is Character constructor
+    super(name, weapon); // call the elf superclass is Character constructor
     // console.log(this) { name: 'Dolby', weapon: 'cloth' }
-    this.type = type
+    this.type = type;
   }
 }
 
@@ -2561,25 +2594,25 @@ const dolby = new Elf('Dolby', 'cloth', 'house');
 ```
 
 **Inheritance Exercise**
+
 ```js
 class Character {
   constructor(name, weapon) {
-    this.name = name,
-    this.weapon = weapon;
+    (this.name = name), (this.weapon = weapon);
   }
   attack() {
-    return 'attack with ' + this.weapon
+    return 'attack with ' + this.weapon;
   }
 }
 
 class Queen extends Character {
   constructor(name, weapon, kind) {
-    super(name, weapon)
+    super(name, weapon);
     this.kind = kind;
   }
   attack() {
     console.log(super.attack());
-    return `I am the ${this.name} of ${this.kind}, now bow down to me! `
+    return `I am the ${this.name} of ${this.kind}, now bow down to me! `;
   }
 }
 //Polymorphism--
@@ -2587,32 +2620,31 @@ class Queen extends Character {
 const victoria = new Queen('Victoria', 'army', 'hearts');
 // create a new instace with the queen having (name, weapon, type). Type inlcudes: 'hearts', 'clubs', 'spades', 'diamonds'
 
-victoria.attack()
+victoria.attack();
 // will console.log the attack() method in Character class AND will return another string: 'I am the Victoria of hearts, now bow down to me! '
-
 ```
-
 
 ---
 
 #### **FUNCTIONAL PROGRAMMING**
+
 함수형 프로그래밍은 객체 지향 프로그래밍과 동일한 목표를 염두에두고 있으므로 코드를 이해하기 쉽고 확장하기 쉬우 며 유지 관리하기 쉬우 며 메모리 효율적이며 DRY를 유지합니다.  
 **객체 대신 재사용 가능한 함수를 사용하여 데이터를 만들고 작업합니다.**  
-함수형 프로그래밍은 객체 지향 프로그래밍과 유사한 관심사 분리를 기반으로합니다.   
-그러나 **함수형 프로그래밍에서는 데이터와 프로그램의 동작이 완전히 분리되어 있습니다.**    
-또한 **어떤 것이 만들어지면 변경되지 않아야한다는 생각도 있습니다.**   
+함수형 프로그래밍은 객체 지향 프로그래밍과 유사한 관심사 분리를 기반으로합니다.  
+그러나 **함수형 프로그래밍에서는 데이터와 프로그램의 동작이 완전히 분리되어 있습니다.**  
+또한 **어떤 것이 만들어지면 변경되지 않아야한다는 생각도 있습니다.**  
 **OOP와 달리 shared state는 함수형 프로그래밍이 pure functions개념에서 작동하므로 피합니다.**
 
 **Exercise**⭐
+
 ```js
 // Amazon shopping
 const user = {
   name: 'Kim',
   active: true,
   cart: [],
-  purchases: []
-}
-
+  purchases: [],
+};
 
 //Implement a cart feature:
 // 1. Add items to cart.
@@ -2626,16 +2658,17 @@ const user = {
 ```
 
 **Pure Functions**❗  
-**순수 함수는 그 밖의 어떤 것에 대한  side effects이 없으며 동일한 입력이 주어지면 항상 동일한 값을 출력합니다.**   
-전달 된 데이터를 변경하지 않고 원본을 변경하지 않고 반환 할 새 데이터를 만듭니다.   
+**순수 함수는 그 밖의 어떤 것에 대한 side effects이 없으며 동일한 입력이 주어지면 항상 동일한 값을 출력합니다.**  
+전달 된 데이터를 변경하지 않고 원본을 변경하지 않고 반환 할 새 데이터를 만듭니다.  
 그러나 100 % pure functions을 가질 수는 없습니다.  
 어느 시점에서 DOM과 상호 작용하거나 API를 가져와야합니다.  
 console.log조차도 함수 외부에서 window object를 사용하기 때문에 함수를 순수하지 않게 만듭니다.  
-사실은 프로그램은 side effects없이 존재할 수 없다는 것입니다.    
-따라서 **함수형 프로그래밍의 목표는 부작용을 데이터에서 분리하여 최소화하는 것**입니다.   
+사실은 프로그램은 side effects없이 존재할 수 없다는 것입니다.  
+따라서 **함수형 프로그래밍의 목표는 부작용을 데이터에서 분리하여 최소화하는 것**입니다.
 
 다음을 수행하는 매우 작고 재사용 가능하며 예측 가능한 순수 함수를 많이 빌드하십시오.  
-  ⭐PERFECT FUNCTION⭐
+ ⭐PERFECT FUNCTION⭐
+
 - **Complete 1 task per function. (기능 당 작업 1 개를 완료하십시오.)**
 - **Do not mutate state. (상태를 변경하지 마십시오.)**
 - **Do not share state. (상태를 공유하지 마십시오.)**
@@ -2644,8 +2677,9 @@ console.log조차도 함수 외부에서 window object를 사용하기 때문에
 - **Be pure if possible. (가능하면 순수하십시오.)**
 - **Return something. (무언가를 반환하십시오.)**
 
-1. 순수함수는 몇번을 호출하던 동일한 input에 항상 동일한 output을 리턴한다   
+1. 순수함수는 몇번을 호출하던 동일한 input에 항상 동일한 output을 리턴한다
 2. 순수함수는 함수외부에 어떤것이라도 수정할수없다
+
 ```js
 // 함수 외부것을 수정하는 side effects가 있다❗
 // side effiects that reusing shared state❗
@@ -2666,6 +2700,7 @@ console.log(array); // [1, 2, 1, 1]
 ```
 
 **no side effects code**
+
 ```js
 // no side effects
 // input -> output
@@ -2683,26 +2718,26 @@ function multiplyBy2(arr) {
 const array2 = removeLastItem(array);
 const array3 = multiplyBy2(array);
 console.log(array, array2, array3);
-
 ```
 
 Is that a pure function ❓
+
 ```js
 function a() {
-  console.log('hi')
+  console.log('hi');
 }
 ```
+
 console.log는 window wepAPI이다.❗  
 브라우저를 사용하여 브라우저에 무언가를 기록하고 있습니다.  
-그래서 그것은 실제로 외부 세계에 영향을 미치고 있습니다.  
-
+그래서 그것은 실제로 외부 세계에 영향을 미치고 있습니다.
 
 입력 결과는 항상 동일한 출력이어야합니다.  
-동일한 입력이 주어지면 함수가 항상 동일한 출력을 반환.  
-
+동일한 입력이 주어지면 함수가 항상 동일한 출력을 반환.
 
 **Referential transparency (참조 투명성)**
 함수형 프로그래밍의 중요한 개념 중 하나는 프로그램 결과를 변경하지 않고 표현식을 결과 값으로 대체하는 기능인 참조 투명성입니다.
+
 ```js
 function a(num1, num2) {
   return num1 + num2;
@@ -2720,39 +2755,40 @@ b(7); // 14
 ```
 
 함수형 프로그래밍의 기둥 pure function 👍
-1. no side effect ❗   
-2. same input no matter how many times we call it gives us the same output  ❗
 
+1. no side effect ❗
+2. same input no matter how many times we call it gives us the same output ❗
 
 **Idempotence (멱등법칙 : 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질을 의미)**  
 멱등성은 함수형 프로그래밍의 또 다른 중요한 부분입니다.  
 함수에 동일한 입력이 주어지면 항상 동일한 출력을 반환한다는 생각입니다.  
 이 기능은 계속해서 사용할 수 있으며 아무것도 변경되지 않습니다.  
 이것이 **코드를 예측 가능하게 만드는 방법**입니다.
+
 ```js
-Math.abs(Math.abs(-50))
+Math.abs(Math.abs(-50));
 ```
 
 **Imperative(명령적) vs Declarative(선언적)**
 
-Imperative(명령적)code is tells the machine what to do and how to do it   
+Imperative(명령적)code is tells the machine what to do and how to do it  
 Declarative(선언적)code is tells the machine what to do and what should happen.
 it doesn't tell the computer how to do things.❗
 
 Humans are declared.❗
 
 그러나 JavaScript와 같은 고급 언어를 사용하는 것은 실제로 덜 선언적입니다.  
-이것은 함수 프로그래밍에서 중요합니다.   
-우리 코드를 더 잘 이해하고 컴퓨터가 작업을 수행하는 가장 좋은 방법을 알아내는 더러운 작업을 처리하도록하기 위해 선언 적이기를 원하기 때문입니다.  
+이것은 함수 프로그래밍에서 중요합니다.  
+우리 코드를 더 잘 이해하고 컴퓨터가 작업을 수행하는 가장 좋은 방법을 알아내는 더러운 작업을 처리하도록하기 위해 선언 적이기를 원하기 때문입니다.
 
 <img src="https://images.ctfassets.net/aq13lwl6616q/5nFLOTAXwQRDSb2WDlJSFN/bb8d98271f6f1e491142d11249557b76/imperative_code.png"
 width="700">
 
-
-**Immutability(불변성)** ⭐  
+**Immutability(불변성)** ⭐
 
 **불변성은 단순히 원본 데이터 나 상태(state)를 수정하는 것이 아닙니다.**  
-**대신 함수 내부에 state의 복사본을 만들고 새로운 버전의 state를 반환해야합니다.**    
+**대신 함수 내부에 state의 복사본을 만들고 새로운 버전의 state를 반환해야합니다.**
+
 ```js
 // Bad code
 const obj = { name: 'Brittney' };
@@ -2774,24 +2810,27 @@ const updatedNameObj = updateName(obj);
 console.log(obj);
 console.log(updatedNameObj);
 ```
+
 코드를 반복해서 복사하는 데 메모리 측면에서 비용이 많이들 수 있다고 생각할 수 있습니다.  
 그러나 데이터가 새 정보 만 복사하고 공통성을 위해 원래 상태를 가리킬 수있는 structural sharing(구조적 공유)라는 것이 있습니다.  
-<img src="https://images.ctfassets.net/aq13lwl6616q/7hMhPpSyzvev3ERSpooIC3/6e2b4401726e627db5777f1bde116148/structure_tree.png" width="400">   
-Persistent data structure   
-컴퓨팅에서 영구 데이터 구조는 수정 될 때 항상 이전 버전을 보존하는 데이터 구조입니다.   
-이러한 데이터 구조는 작업이 내부 구조를 업데이트하지 않고 항상 새로 업데이트 된 구조를 생성하기 때문에 사실상 변경 불가능합니다  
-
+<img src="https://images.ctfassets.net/aq13lwl6616q/7hMhPpSyzvev3ERSpooIC3/6e2b4401726e627db5777f1bde116148/structure_tree.png" width="400">  
+Persistent data structure  
+컴퓨팅에서 영구 데이터 구조는 수정 될 때 항상 이전 버전을 보존하는 데이터 구조입니다.  
+이러한 데이터 구조는 작업이 내부 구조를 업데이트하지 않고 항상 새로 업데이트 된 구조를 생성하기 때문에 사실상 변경 불가능합니다
 
 **HOC, Closure**  
 JavaScript functions are first class citizens which means we can have high order functions and closure
+
 ```js
 // HOF
 const hof = () => () => 5;
-hof() // function
-hof()() // 5
+hof(); // function
+hof()(); // 5
 
 const hof = (fn) => fn(5);
-hof(function a(x) { return x })
+hof(function a(x) {
+  return x;
+});
 
 // Closure
 // in javascript we create closure whenever a function accesses a variable defined outside of the immediate function scope that is the scope of the parent.
@@ -2806,10 +2845,10 @@ const closure = function () {
 const incrementFn = closure();
 incrementFn(); // 1
 incrementFn(); // 2
-
 ```
 
 **Currying**
+
 ```js
 // currying
 const multiply = (a, b) => a * b;
@@ -2817,14 +2856,15 @@ const curriedMultiply = (a) => (b) => a * b;
 const curriedMultiplyBy5 = curriedMultiply(5);
 
 // 10years
-curriedMultiplyBy5(4)
-curriedMultiplyBy5(4)
-curriedMultiplyBy5(4)
+curriedMultiplyBy5(4);
+curriedMultiplyBy5(4);
+curriedMultiplyBy5(4);
 ```
 
 **Partial Application(부분 적용)**  
 부분적 적용은 커링 아이디어를 확대하고 매개 변수를 분리하여 한 단계 더 발전시키고 있습니다.  
 함수에 두 개 이상의 인수가있는 경우 그 중 하나를 나중에 사용할 값에 바인딩 할 수 있습니다.
+
 ```js
 const multiply = (a, b, c) => a * b * c;
 const curriedMultiplyBy5 = multiply.bind(null, 5); // this is null
@@ -2834,22 +2874,67 @@ curriedMultiplyBy5(4, 10); // 200
 
 커링과 부분적용의 차이점  
 Partial Application is on the second call i expect all the arguments.  
-currying says i expect one argument at a time.  
+currying says i expect one argument at a time.
 
+#### **Memoization + Caching** 👍
 
-**Memoization + Caching** 👍   
+```js
+function addTo80(n) {
+  console.log('long time..');
+  return console.log(n + 80);
+}
 
+let cache = {};
+function memoizedAddTo80(n) {
+  if (n in cache) {
+    return console.log(cache[n]);
+  } else {
+    console.log('long time..');
+    cache[n] = n + 80;
+    return console.log(cache[n]);
+  }
+}
 
+memoizedAddTo80(5);
+memoizedAddTo80(5);
+memoizedAddTo80(6);
+```
 
+#### **Memoization + Caching + Closure** 👍👍
 
+```js
+function addTo80(n) {
+  console.log('long time..');
+  return console.log(n + 80);
+}
 
+// let cache = {};
+// we don't want to fill the cache in global scope❗
+function memoizedAddTo80() {
+  let cache = {};
+  // problem is now that everytime we run this cache gets reset❗
+  return function (n) {
+    // closure 생성해서 avoid global scope⭐
+    if (n in cache) {
+      return console.log(cache[n]);
+    } else {
+      console.log('long time..');
+      cache[n] = n + 80;
+      return console.log(cache[n]);
+    }
+  };
+}
 
+const memoized = memoizedAddTo80();
+memoized(5);
+memoized(5);
+memoized(6);
+memoized(5);
+```
 
+**Dynamic programming allows us to use memoization to optimize code** 💖
 
-
-
-___
-
+---
 
 #### Http, Https, Web APIs, 브라우저좌표
 
