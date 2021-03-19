@@ -2810,6 +2810,36 @@ incrementFn(); // 2
 ```
 
 **Currying**
+```js
+// currying
+const multiply = (a, b) => a * b;
+const curriedMultiply = (a) => (b) => a * b;
+const curriedMultiplyBy5 = curriedMultiply(5);
+
+// 10years
+curriedMultiplyBy5(4)
+curriedMultiplyBy5(4)
+curriedMultiplyBy5(4)
+```
+
+**Partial Application(부분 적용)**  
+부분적 적용은 커링 아이디어를 확대하고 매개 변수를 분리하여 한 단계 더 발전시키고 있습니다.  
+함수에 두 개 이상의 인수가있는 경우 그 중 하나를 나중에 사용할 값에 바인딩 할 수 있습니다.
+```js
+const multiply = (a, b, c) => a * b * c;
+const curriedMultiplyBy5 = multiply.bind(null, 5); // this is null
+
+curriedMultiplyBy5(4, 10); // 200
+```
+
+커링과 부분적용의 차이점  
+Partial Application is on the second call i expect all the arguments.  
+currying says i expect one argument at a time.  
+
+
+**Memoization + Caching** 👍   
+
+
 
 
 
