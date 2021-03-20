@@ -2934,6 +2934,174 @@ memoized(5);
 
 **Dynamic programming allows us to use memoization to optimize code** 💖
 
+**Pipe and Compose** 💖💖
+JavaScript에서는 속도와 효율성을 위해 함수를 작고 재사용 할 수 있도록 유지하는 것이 가장 좋습니다.  
+Function composition은 공장 조립 라인과 같이 functions를 배치하는 아이디어입니다.  
+실제 functions pipe () 및 compose ()는 아직 JavaScript에 실제로 존재하지 않지만이를 사용하는 라이브러리가 많이 있습니다.  
+그러나 자신의 버전을 만들 수 있습니다.  
+compose () 함수는 오른쪽에서 왼쪽으로 함수를 읽고 pipe () 함수는 왼쪽에서 오른쪽으로 읽습니다.
+
+```js
+// create our own COMPOSE function
+const compose = (fn1, fn2) => (data) => fn1(fn2(data));
+// create our own PIPE function
+const pipe = (fn1, fn2) => (data) => fn2(fn1(data));
+const multiplyBy3 = (num) => num * 3;
+const makePositive = (num) => Math.abs(num);
+// use compose to combine multiple functions
+const composeFn = compose(multiplyBy3, makePositive); // return composeFn(data)⭐
+const pipeFn = pipe(multiplyBy3, makePositive); // return pipeFn(data) ⭐
+composeFn(-50); // 150
+pipeFn(-50); // 150
+
+// essentially we are doing this
+// fn1(fn2(fn3(50)))
+// compose(fn1, fn2, fn3)(50)
+// pipe(fn3, fn2, fn1)(50)
+```
+
+**Arity**  
+Arity는 단순히 함수가 취하는 인수의 수를 의미합니다.  
+함수에 매개 변수가 많을수록 분리 및 재사용이 더 어려워집니다.  
+함수를 작성할 때 1 개 또는 2 개의 매개 변수 만 고수하십시오.
+
+#### **Reviewing Functional Programming** ☕
+
+- 1 Task
+- return Statement
+- Pure
+- No shared state
+- Immutable State
+- Composable
+- Predictable
+
+```js
+// Amazon shopping
+const user = {
+  name: 'Kim',
+  active: true,
+  cart: [],
+  purchases: [],
+};
+
+//Implement a cart feature:
+// 1. Add items to cart.
+// 2. Add 3% tax to item in cart
+// 3. Buy item: cart --> purchases
+// 4. Empty cart
+
+//Bonus:
+// accept refunds.
+// Track user history.
+```
+
+Solution
+
+```js
+const user = {
+  name: 'Kim',
+  active: true,
+  cart: [],
+  purchases: [],
+};
+
+const userHistory = [];
+
+function addToCart(user, item) {
+  userHistory.push(
+    Object.assign({}, user, { cart: user.cart, purchases: user.purchases })
+  );
+  const updateCart = user.cart.concat(item);
+  return Object.assign({}, user, { cart: updateCart });
+}
+
+function taxItems(user) {
+  userHistory.push(
+    Object.assign({}, user, { cart: user.cart, purchases: user.purchases })
+  );
+  const { cart } = user;
+  const taxRate = 1.4;
+  const updatedCart = cart.map((item) => {
+    return {
+      name: item.name,
+      price: item.price * taxRate,
+    };
+  });
+  return Object.assign({}, user, { cart: updatedCart });
+}
+
+function buyItems(user) {
+  userHistory.push(
+    Object.assign({}, user, { cart: user.cart, purchases: user.purchases })
+  );
+  return Object.assign({}, user, { purchases: user.cart });
+}
+
+function emptyCart(user) {
+  userHistory.push(
+    Object.assign({}, user, { cart: user.cart, purchases: user.purchases })
+  );
+  return Object.assign({}, user, { cart: [] });
+}
+
+function refundItem(user, item) {
+  userHistory.push(
+    Object.assign({}, user, { cart: user.cart, purchases: user.purchases })
+  );
+  const { purchases } = user;
+  const refundItem = purchases.splice(item);
+  return Object.assign({}, user, { purchases: refundItem });
+}
+const compose = (fn1, fn2) => (...args) => fn1(fn2(...args));
+
+const purchaseItems = (...fns) => fns.reduce(compose);
+
+purchaseItems(
+  emptyCart,
+  buyItems,
+  taxItems,
+  addToCart
+)(user, { name: 'laptop', price: 200 });
+
+refundItem(user, { name: 'laptop', price: 200 });
+
+console.log(userHistory);
+```
+
+그렇다면 함수형 프로그래밍이 모든 것에 대한 답일까요❓  
+아니요,하지만 **동일한 데이터 집합에 대해 다른 작업을 수행**해야하는 상황에서 유용합니다.  
+함수형 프로그래밍은 필요에 따라 이동할 수있는 재사용 가능한 함수를 만들기위한 토대를 마련합니다.  
+예를 들어 산업 및 machine learning 분야에서 훌륭하며 React 및 Redux와 같은 일부 프런트 엔드 라이브러리에서도 마찬가지입니다.  
+Redux는 JavaScript 개발자를위한 함수형 프로그래밍을 정말 대중화했습니다.
+
+---
+
+#### **OOP vs FP**
+
+**COMPOSITION VS INHERITANCE**  
+컴포지션은 방금 FP로 수행 한 작업으로, 코드를 모듈화하기 위해 재사용 가능한 작은 함수를 만듭니다.  
+상속은 OOP로 클래스를 만들고 속성을 상속하는 하위 클래스로 확장하는 것입니다.  
+OOP에서 우리는 부작용이있는 상태 저장 공통 데이터에 대해 몇 가지 작업을 생성합니다.  
+FP에서는 상태를 변경하지 않는 순수 함수로 고정 데이터에 대한 많은 작업을 만듭니다.  
+어느 것이 더 나은지에 대한 큰 논쟁이 있으며 대부분의 사람들은 composition이 더 좋다고 생각합니다.
+
+**OOP Problems**  
+상속의 단점 중 하나는 그것이 변경되지 않는다는 사실에 기반을두고 있다는 것입니다. 우리는 그것이 무엇인지 알려줍니다.  
+클래스를 만들고 클래스를 설명하는 속성과 메서드를 제공합니다.  
+하지만 앞으로는 해당 클래스를 업데이트하고 더 많은 기능을 추가해야합니다.  
+기본 클래스에 새 메서드를 추가하면 전체 프로그램에 잔물결 효과가 생깁니다.  
+FP는 더 선언적이고 어떻게할지가아닌 무엇을할지 , OOP는 무엇을 어떻게해야하는지 더 중요합니다.  
+이것은 긴밀한 결합 문제입니다. 서로 의존해야하는 것은 취약한 기본 클래스 문제로 이어지고, 겉보기에 안전한 변경으로 인해 예기치 않은 영향이 발생합니다.  
+재사용 가능한 작은 코드의 반대입니다.  
+클래스 또는 하위 클래스 중 하나에서 작은 것을 변경하면 프로그램이 중단 될 수 있습니다.  
+또 다른 문제는 계층 구조로, 클래스의 한 부분 만 수행 할 수있는 하위 클래스를 만들어야 할 수 있지만 대신 모든 것이 전달됩니다.
+
+**Finally**  
+컴포지션은 향후 변경하기 쉬운보다 안정적인 환경을 만들기 때문에 프로그램을 만들 때 사용하기에 더 좋은 도구 일 것입니다.  
+핵심은 프로젝트에 더 적합한 구조를 결정하는 것입니다.  
+이 두 스타일의 아이디어를 사용하여 코드를 작성할 수 있습니다.  
+React는 class components에서 OOP를 사용하여 상속을 확장 한 다음 pure components에서 FP를 사용합니다.
+
 ---
 
 #### Http, Https, Web APIs, 브라우저좌표
