@@ -3104,6 +3104,121 @@ React는 class components에서 OOP를 사용하여 상속을 확장 한 다음 
 
 ---
 
+#### **Asyncronous JavaScript** 👍👍
+
+```js
+setTimeout(() => console.log('1'), 0);
+setTimeout(() => console.log('2'), 1000);
+
+Promise.resolve('hi').then((data) => console.log('2', data));
+
+console.log('3');
+```
+
+**A promise is an object that may produce a single value some time in the future** 🙌
+
+**Either a resolved value, or a reason that it's not resolved(rejected)**
+
+**a promise maybe in one of three possible States fullfilled, rejected or pending**
+
+```js
+const urls = [
+  'https://jsonplaceholder.typicode.com/users',
+  'https://jsonplaceholder.typicode.com/posts',
+  'https://jsonplaceholder.typicode.com/albums',
+];
+
+Promise.all(
+  urls.map((url) => {
+    return fetch(url).then((res) => res.json());
+  })
+).then((results) => {
+  console.log(results[0]);
+  console.log(results[1]);
+  console.log(results[2]);
+});
+```
+
+```js
+const urls = [
+  'https://jsonplaceholder.typicode.com/users',
+  'https://jsonplaceholder.typicode.com/posts',
+  'https://jsonplaceholder.typicode.com/albums',
+];
+
+const getData = async function () {
+  try {
+    const [users, posts, albums] = await Promise.all(
+      urls.map(async function (url) {
+        const response = await fetch(url);
+        return response.json();
+      })
+    );
+    console.log('users', users);
+    console.log('posts', posts);
+    console.log('albums', albums);
+  } catch (error) {
+    console.log('ooooooooops', error);
+  }
+};
+
+const getData2 = async function () {
+  const arrayOfPromises = urls.map((url) => fetch(url));
+  for await (let request of arrayOfPromises) {
+    const data = await request.json();
+    console.log(data);
+  }
+};
+```
+
+```js
+const promisify = (item, delay) =>
+  new Promise((resolve) => setTimeout(() => resolve(item), delay));
+
+const a = () => promisify('a', 100);
+const b = () => promisify('b', 5000);
+const c = () => promisify('c', 3000);
+
+async function parallel() {
+  const promises = [a(), b(), c()];
+  const [output1, output2, output3] = await Promise.all(promises);
+  return `parallel is done: ${output1} ${output2} ${output3}`;
+}
+
+// parallel().then(console.log);
+
+async function race() {
+  const promises = [a(), b(), c()];
+  const output1 = await Promise.race(promises);
+  return `race is done: ${output1}`;
+}
+
+// race().then(console.log);
+
+async function sequence() {
+  const output1 = await a();
+  const output2 = await b();
+  const output3 = await c();
+  return `parallel is done: ${output1} ${output2} ${output3}`;
+}
+
+sequence().then(console.log);
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
 #### Http, Https, Web APIs, 브라우저좌표
 
 #### defer, DOMContentLoaded, load, unload
@@ -3113,16 +3228,6 @@ React는 class components에서 OOP를 사용하여 상속을 확장 한 다음 
 #### Bubbling & (capturing) event.stop(Immediate)Propagation ❌ ,
 
 #### 이벤트위임
-
-#### 스택(함수들의 실행순서와 어디로 돌아가야하는지의 정보를담고있다) = LIFO(last in first out)
-
-#### 힙(오브젝트를 생성하거나 데이터를 만들때 그데이터들이 저장되는 공간)
-
-#### JS가 실행되는 런타임환경(실행환경) 위에서는 멀티쓰레딩과 이벤트루프를 이용할수있다
-
-### JS + 브라우저 런타임(실행환경)⭐
-
-#### JS엔진에는메모리힙(할당된데이터들이저장) + 콜스택(함수들이 호출하는 순서를 기억했다가 함수가끝나면 원래있던자리로 돌아가기위해 쓰이는 LIFO자료구조)로 구성됨.
 
 #### 웹APIs는 TaskQueue(FIFO)에 콜백함수를 넣어준다 -> 이벤트루프가 TaskQueue와 콜스택을 관찰하며 콜스택이 비워지면 콜스택에 TaskQueue에있는 콜백함수를 넣어준다.
 
