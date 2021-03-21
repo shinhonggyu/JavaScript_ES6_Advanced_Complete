@@ -3203,19 +3203,86 @@ async function sequence() {
 }
 
 sequence().then(console.log);
-
 ```
 
+---
 
+#### **MODULES IN JAVASCRIPT**
 
+모듈은 함께 그룹화 된 코드 조각으로, 함께 결합하여 필요에 따라 확장 가능한 프로그램을 만들 수 있습니다.  
+좋은 모듈은 자체 포함되어 있으며 프로그램을 중단하지 않고 이동하거나 삭제할 수 있도록 자체 특정 기능과 함께 그룹화됩니다.
 
+**Module Patterns**  
+원래 JavaScript에서는 모듈 패턴이있었습니다.  
+block scope가 나오기 전에는 global scope와 function scope.만있었습니다.  
+이러한 모듈 개념을 만들기 위해 module scope가 function scope 바로 위에 구현되었습니다.  
+이를 통해 global scope를 거치지 않고도 함수간에 exporting 및 importing를 통해 변수를 공유 할 수 있습니다.  
+모듈로서의 함수는 본질적으로 즉시 호출되는 함수 표현식 IIFE입니다.
 
+**Issues with Modules**  
+모듈이 코드를 포함하고 구성하는 데 도움이되지만 여전히 발생할 수있는 문제가 있습니다.  
+const를 사용하여 모듈을 선언하지 않으면 이름 충돌이 발생할 수 있습니다.  
+또한 스크립트가 잘못된 순서로 배치되면 종속성 문제가 있습니다 (예 : jQuery를 사용하기 전에 호출해야 함).  
+이러한 문제 때문에 사람들은이를 해결하기 위해 libraries을 개발하기 시작했습니다.  
+ES6 이전에는 JavaScript CommonJS 및 AMD에서 모듈을 구현하는 두 가지 방법이있었습니다.
 
+- **CommonJS**  
+  모듈 시스템과 상호 작용하기 위해 require 및 exports 키워드를 사용합니다.  
+  Require는 다른 모듈에서 가져 오는 데 사용되는 함수이고 exports는 함수를 내보내는 객체입니다.  
+  이들은 다른 모듈이 시작되기 전에로드되기를 기다리는 한 모듈에서 동기식으로 실행되며 브라우저에는 적합하지 않습니다.  
+  그러나 NodeJS가 여전히 이 라이브러리를 사용하기 때문에이 코드는 익숙해 보일 수 있습니다.  
+  브라우저에서 사용할 CommonJS와 함께 스크립트를 번들링하는 데 도움이되는 Browserify 및 webpack과 같은 다른 패키지가 있습니다.
 
+- **Asynchronous Module Definition (AMD)**  
+  이름에서 알 수 있듯이 AMD는 모듈을 비동기 적으로로드합니다.  
+  이것은 코드를 번들로 묶은 패키지 이전의 브라우저에 아주 좋습니다.  
+  define 함수는 백그라운드에서 비 차단 방식으로로드되는 종속성 모듈의 배열을 사용합니다.  
+  완료되면 콜백 함수가 실행됩니다.  
+  패키지는 AMD endpoint를 구현하고 사람들이 AMD 모듈을 사용하는 주요 방법 인 RequireJS처럼 나왔습니다.
 
+**ES6 Modules** 💖  
+ES6가 나온 후, 위의 거의 모든 것이 2 개의 새로운 키워드로 창 밖으로 던져졌습니다.  
+이제 파일에서 import 및 export 키워드를 사용하여 모듈을 구현할 수 있습니다.
 
+```js
+import module1 from 'module1';
+import module2 from 'module2';
 
+export function name() {}
+```
 
+다음은 새로운 ES6 구문에서 위의 모듈 코드입니다.
+
+```js
+const privateVar = 'I cannot be accessed outside this file';
+
+export function name(msg1, msg2) {
+  const say1 = Math.floor(Math.random() * msg1.length);
+  const say2 = Math.floor(Math.random() * msg2.length);
+  return say1 > say2 ? say1 : say2;
+}
+```
+
+**export에는 name과 default의 두 가지 유형이 있습니다.**  
+A named export는 중괄호 ({importFnName})를 사용하여 가져오고 default function은 다음과 같이 생성됩니다.
+
+```js
+import { importFnName } from './script.js';
+// with a default function the {} are not needed
+import name from './script.js';
+// both default and named function import
+import name, { importFnName } from './script.js';
+
+export default function name(msg1, msg2) {
+  const say1 = Math.floor(Math.random() * msg1.length);
+  const say2 = Math.floor(Math.random() * msg2.length);
+  return say1 > say2 ? say1 : say2;
+}
+```
+
+브라우저에서 이것을 실행하려고하면 아직 2 가지 더해야 할 일이 있습니다.  
+html 스크립트 태그의 type을 모듈로 선언해야하며 파일은 서버에서 제공되어야합니다.  
+npm의 live-server와 같은 패키지를 사용하여 자체 서버를 가동 할 수 있습니다.
 
 ---
 
@@ -3223,9 +3290,9 @@ sequence().then(console.log);
 
 #### defer, DOMContentLoaded, load, unload
 
-#### HTMLrequest->DOM,CSSOM->RenderTree->layout->paint(레이어단위로 페인트를준비)->composition
+#### **HTMLrequest->DOM,CSSOM->RenderTree->layout->paint(레이어단위로 페인트를준비)->composition**
 
-#### Bubbling & (capturing) event.stop(Immediate)Propagation ❌ ,
+#### **Bubbling & (capturing) event.stop(Immediate)Propagation ❌** ,
 
 #### 이벤트위임
 
@@ -3240,3 +3307,21 @@ sequence().then(console.log);
 #### Builder Pattern
 
 #### Modules💘이란 파일안에 코드를 모듈화해서 작성하는것/ 한 모듈 = 한 파일안에 작성되어있는 코드/ 모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌스코프로 측정된다/ export, import 활용
+
+---
+
+#### What Happens When You Type in a URL ❓
+
+1. 웹 브라우저에 URL을 입력합니다.
+
+2. 브라우저는 DNS를 통해 도메인 이름의 IP 주소를 찾습니다.
+
+3. 브라우저는 서버에 HTTP 요청을 보냅니다.
+
+4. 서버는 HTTP 응답을 다시 보냅니다.
+
+5. 브라우저가 HTML 렌더링을 시작합니다.
+
+6. 브라우저는 HTML (이미지, CSS, JavaScript)에 포함 된 추가 개체에 대한 요청을 보내고 3-5 단계를 반복합니다.
+
+7. 페이지가로드되면 브라우저는 필요에 따라 추가 비동기 요청을 보냅니다.
