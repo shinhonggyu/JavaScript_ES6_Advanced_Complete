@@ -2163,7 +2163,8 @@ JavaScript의 모든 함수는 생성 될 때 call, apply 및 bind methods를 �
 실제로 일반 함수로는 아무 작업도하지 않지만 생성자 함수에서 prototype 속성을 사용하면 생성 한 객체에 자체 메서드를 추가 할 수 있습니다.  
 JavaScript에서 새 객체가 생성 될 때마다 `__proto__` getter 함수를 사용하여 생성되는 항목을 기반으로 내장 된 생성자 함수를 사용합니다.  
 이는 배열, 부울, 날짜, 숫자, 개체, 문자열, 함수 또는 RegExp 일 수 있습니다. 각각에는 생성자에서 상속하는 고유 한 별도의 속성과 메서드가 있습니다  
-`__proto__` 속성은 프로토 타입 객체 간의 링크를 생성하는 것이며, 자식은 프로토 타입 체인을 통해 부모로부터 속성을 상속받습니다.
+`__proto__` 속성은 프로토 타입 객체 간의 링크를 생성하는 것이며, 자식은 프로토 타입 체인을 통해 부모로부터 속성을 상속받습니다.  
+
 <img src="https://images.ctfassets.net/aq13lwl6616q/4U7Xxx4CIyG6bHmpOp6ujj/00720fdac4cb138ed97e80da74730cd2/prototype_chain.png"
 width="700">
 
@@ -2410,7 +2411,7 @@ JavaScript의 생성자 함수는 실제로 생성자 자체입니다.
 #### **Class**
 
 아직 헷갈 리 시나요? 프로토 타입은 프로토 타입 상속을 실제로 이해하지 않는 한 약간 이상하고 읽기 어렵습니다.  
-아무도 메소드를 추가하는 프로토 타입 방식을 좋아하지 않았기 때문에 ES6 JavaScript는 클래스 키워드를 제공했습니다.  
+아무도 **메소드를 추가하는 프로토 타입 방식**을 좋아하지 않았기 때문에 ES6 JavaScript는 클래스 키워드를 제공했습니다.  
 그러나 JavaScript의 클래스는 실제 클래스가 아니며 syntactic sugar입니다.  
 내부적으로는 여전히 오래된 prototype method를 사용하고 있습니다.  
 사실 그것들은 하나의 큰 차이가있는 "special functions"일뿐입니다. functions은 호이스트되고 클래스는 그렇지 않습니다.  
@@ -2583,7 +2584,8 @@ class Character {
 class Elf extends Character {
   // extend and set the prototype => __proto__ to point to character
   constructor(name, weapon, type) {
-    // console.log(this) error❗ because in order to use this keyword inside of constructor (when we extend⭐) have to call super first❗
+    // console.log(this) error❗ 
+    // because in order to use this keyword inside of constructor (when we extend⭐) have to call super first❗
     super(name, weapon); // call the elf superclass is Character constructor
     // console.log(this) { name: 'Dolby', weapon: 'cloth' }
     this.type = type;
@@ -3266,6 +3268,9 @@ export function name(msg1, msg2) {
 **export에는 name과 default의 두 가지 유형이 있습니다.**  
 A named export는 중괄호 ({importFnName})를 사용하여 가져오고 default function은 다음과 같이 생성됩니다.
 
+1. Named Exports (Zero or more exports per module)❗
+2. Default Exports (One per module)❗
+
 ```js
 import { importFnName } from './script.js';
 // with a default function the {} are not needed
@@ -3284,7 +3289,121 @@ export default function name(msg1, msg2) {
 html 스크립트 태그의 type을 모듈로 선언해야하며 파일은 서버에서 제공되어야합니다.  
 npm의 live-server와 같은 패키지를 사용하여 자체 서버를 가동 할 수 있습니다.
 
+`<script type="module" src="'./script.js'></script>`
+
 ---
+
+#### **ERROR HANDLING**  
+개발자로서 배워야 할 가장 중요한 것 중 하나는 오류를 해결하는 방법입니다.  
+오류 처리 방법을 배우면 더 나은 프로그래머가됩니다.  
+프로그램을 작성할때 **throw** 키워드를 사용하여 프로그램을 중지하고 선택적인 **finally** 블록이있는 **try / catch** 블록 또는 비동기 코드의 **.catch ()** 메서드를 사용하여 오류를 처리 할 수 ​​있습니다.
+
+```js
+throw new Error();
+
+// synchronous try/catch/finally block
+function fail() {
+  try {
+    console.log('this works');
+    throw new Error('oopsie!!!')
+  } catch (error) {
+    console.log("we have made an oopsie", error);
+    // error.name / error.message / error.stack ⭐
+  } finally {
+    console.log('still good')
+  }
+}
+
+fail();
+// this works // because it goes line by line
+// we have made an oopsie Error: oopsie!!! at fail
+// still good
+```
+```js
+try {
+  try {
+    something();
+  } catch (error) {
+    throw new Error(error);
+  }
+} catch (error) {
+  console.log('got it', error);
+}
+
+```
+**Async Error Handling**
+
+```js
+Promise.resolve('asyncfail')
+  .then(response => {
+    console.log(response);
+    return response
+  })
+  .catch(error => {
+    console.log(error)
+  });
+
+  
+  (async function() {
+    try {
+      await Promise.resolve('oopsie #1');
+      await Promise.resolve('oopsie #2');
+    } catch (error) {
+      console.log(error)
+    }
+    console.log("is this still good?")
+  })();
+```
+
+일반 **Error** 생성자 외에도 7 개의 다른 기본 제공 오류 생성자가 있습니다.
+
+- EvalError - 전역 함수 eval ()에 오류가 있습니다
+- InternalError - JavaScript 엔진에서 오류가 발생합니다. 일반적으로 무언가가 너무 클 때.
+- RangeError - 숫자 변수 또는 매개 변수가 유효한 범위를 벗어난 경우 오류입니다
+- ReferenceError - 잘못된 것을 참조 할 때 발생하는 오류입니다. 예 : 변수가 선언되기 전에 사용되는 경우.
+- SyntaxError - 구문 분석에서 발생하는 오류, 엔진은 작성된 내용을 이해하지 못합니다.
+- TypeError - 변수가 올바른 유형이 아닌 경우 오류.
+- URIError - encodeURI () 또는 decodeURI ()가 잘못된 매개 변수를 전달할 때 오류입니다.
+
+new 키워드를 사용하여 생성 된 오류에는 3 개의 속성이 있습니다.
+- name - 오류의 이름입니다.
+- message - 오류에 제공된 parameter(매개 변수)입니다.
+- stack - 오류가 발생한 줄과 문자 번호를 포함하는 오류 발생시 stack trace 또는 callback queue.
+```js
+const myError = new Error("oopsie");
+
+myError.name; // "Error"
+myError.message; // "oopsie"
+myError.stack; // "Error: oopsie at <anonymous>:1:17
+
+function a() {
+  const b = new Error("uh oh");
+  return b;
+}
+
+a(); // b().stack
+// Error: uh oh
+// at a (<anonymous>:2:12)
+// at <anonymous>:1:1
+```
+Error는 생성자 함수이므로이를 확장하여 추가 할 수 있습니다.  
+오류가 발생할 수있는 불량 행위자에게 stack trace 및 기타 정보를 제공하여 프로그램의 일부를 드러내고 싶지 않습니다.  
+따라서 오류를 표시 할 내용을 사용자 지정할 수 있습니다.
+```js
+class AuthenticationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "AuthenticationError";
+    this.message = "authentication problem";
+    this.fix = "please log in";
+  }
+}
+
+const err = new AuthenticationError("oopsie");
+err; // authenticationError: "authentication problem" stack trace
+err.fix; // please log in
+```
+___
 
 #### Http, Https, Web APIs, 브라우저좌표
 
