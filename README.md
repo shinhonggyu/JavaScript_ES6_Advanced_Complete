@@ -1691,6 +1691,21 @@ five == assignFive; // true - types are coerced
 **Functions are first class citizens in JS**
 
 ```js
+// first-class
+const addTwo = (a) => a + 2;
+const multiplyTwo = (a) => a * 2;
+const transform = (numbers) => numbers.map(addTwo).map(multiplyTwo);
+transform([1, 2, 3, 4]);
+```
+
+```js
+// higher-order functions
+const addToppings = (topping) => (food) => food + topping;
+const egg = addToppings('🥚');
+console.log(egg('🥓'));
+```
+
+```js
 // 1
 var stuff = function () {};
 
@@ -2163,7 +2178,7 @@ JavaScript의 모든 함수는 생성 될 때 call, apply 및 bind methods를 �
 실제로 일반 함수로는 아무 작업도하지 않지만 생성자 함수에서 prototype 속성을 사용하면 생성 한 객체에 자체 메서드를 추가 할 수 있습니다.  
 JavaScript에서 새 객체가 생성 될 때마다 `__proto__` getter 함수를 사용하여 생성되는 항목을 기반으로 내장 된 생성자 함수를 사용합니다.  
 이는 배열, 부울, 날짜, 숫자, 개체, 문자열, 함수 또는 RegExp 일 수 있습니다. 각각에는 생성자에서 상속하는 고유 한 별도의 속성과 메서드가 있습니다  
-`__proto__` 속성은 프로토 타입 객체 간의 링크를 생성하는 것이며, 자식은 프로토 타입 체인을 통해 부모로부터 속성을 상속받습니다.  
+`__proto__` 속성은 프로토 타입 객체 간의 링크를 생성하는 것이며, 자식은 프로토 타입 체인을 통해 부모로부터 속성을 상속받습니다.
 
 <img src="https://images.ctfassets.net/aq13lwl6616q/4U7Xxx4CIyG6bHmpOp6ujj/00720fdac4cb138ed97e80da74730cd2/prototype_chain.png"
 width="700">
@@ -2584,7 +2599,7 @@ class Character {
 class Elf extends Character {
   // extend and set the prototype => __proto__ to point to character
   constructor(name, weapon, type) {
-    // console.log(this) error❗ 
+    // console.log(this) error❗
     // because in order to use this keyword inside of constructor (when we extend⭐) have to call super first❗
     super(name, weapon); // call the elf superclass is Character constructor
     // console.log(this) { name: 'Dolby', weapon: 'cloth' }
@@ -2630,6 +2645,30 @@ victoria.attack();
 
 #### **FUNCTIONAL PROGRAMMING**
 
+1. **Pure Functions**
+2. **Stateless, Immutability**
+3. **Expressions Only**
+
+```js
+// ❌ Not statements like if, switch, for...
+let number = [1, 2, 3];
+
+function multiply(numbers, multiplier) {
+  for (let i = 0; i < numbers.length; i++) {
+    numbers[i] = numbers[i] * multiplier;
+  }
+}
+
+// expressions
+function multiply(numbers, multiplier) {
+  return numbers.map((num) => num * multiplier);
+}
+```
+
+4. **First-class and higher-order functions**  
+   함수를 변수에 할당하거나 함수에 인자로 전달하거나 리턴하는 등의 일들을 할수있는 First Class 특징과  
+   함수에서 또다른 함수를 리턴하는 고차함수 이 두가지 속성을 가지고 있어야합니다.
+
 함수형 프로그래밍은 객체 지향 프로그래밍과 동일한 목표를 염두에두고 있으므로 코드를 이해하기 쉽고 확장하기 쉬우 며 유지 관리하기 쉬우 며 메모리 효율적이며 DRY를 유지합니다.  
 **객체 대신 재사용 가능한 함수를 사용하여 데이터를 만들고 작업합니다.**  
 함수형 프로그래밍은 객체 지향 프로그래밍과 유사한 관심사 분리를 기반으로합니다.  
@@ -2659,7 +2698,26 @@ const user = {
 // Track user history.
 ```
 
-**Pure Functions**❗  
+**Pure Functions**❗
+
+```js
+// ❌
+let num = 1;
+
+function add(a) {
+  return a + num;
+}
+```
+
+```js
+// 동일한 인자, 동일한 결과값
+function add(a, b) {
+  return a + b;
+}
+
+const result = add(2, 3);
+```
+
 **순수 함수는 그 밖의 어떤 것에 대한 side effects이 없으며 동일한 입력이 주어지면 항상 동일한 값을 출력합니다.**  
 전달 된 데이터를 변경하지 않고 원본을 변경하지 않고 반환 할 새 데이터를 만듭니다.  
 그러나 100 % pure functions을 가질 수는 없습니다.  
@@ -2787,6 +2845,26 @@ Humans are declared.❗
 width="700">
 
 **Immutability(불변성)** ⭐
+
+```js
+// ❌
+let person = { name: 'ellie', age: 20 };
+
+function increaseAge(person) {
+  person.age = person.age - 5;
+  return person;
+}
+```
+
+```js
+// Stateless, Immutability ⭐
+// No SideEffect ⭐
+let person = Object.freeze({ name: 'ellie', age: 20 });
+
+function increaseAge(person) {
+  return Object.freeze({ ...person, age: person.age + 1 });
+}
+```
 
 **불변성은 단순히 원본 데이터 나 상태(state)를 수정하는 것이 아닙니다.**  
 **대신 함수 내부에 state의 복사본을 만들고 새로운 버전의 state를 반환해야합니다.**
@@ -3293,7 +3371,8 @@ npm의 live-server와 같은 패키지를 사용하여 자체 서버를 가동 �
 
 ---
 
-#### **ERROR HANDLING**  
+#### **ERROR HANDLING**
+
 개발자로서 배워야 할 가장 중요한 것 중 하나는 오류를 해결하는 방법입니다.  
 오류 처리 방법을 배우면 더 나은 프로그래머가됩니다.  
 프로그램을 작성할때 **throw** 키워드를 사용하여 프로그램을 중지하고 선택적인 **finally** 블록이있는 **try / catch** 블록 또는 비동기 코드의 **.catch ()** 메서드를 사용하여 오류를 처리 할 수 ​​있습니다.
@@ -3305,12 +3384,12 @@ throw new Error();
 function fail() {
   try {
     console.log('this works');
-    throw new Error('oopsie!!!')
+    throw new Error('oopsie!!!');
   } catch (error) {
-    console.log("we have made an oopsie", error);
+    console.log('we have made an oopsie', error);
     // error.name / error.message / error.stack ⭐
   } finally {
-    console.log('still good')
+    console.log('still good');
   }
 }
 
@@ -3319,6 +3398,7 @@ fail();
 // we have made an oopsie Error: oopsie!!! at fail
 // still good
 ```
+
 ```js
 try {
   try {
@@ -3329,30 +3409,29 @@ try {
 } catch (error) {
   console.log('got it', error);
 }
-
 ```
+
 **Async Error Handling**
 
 ```js
 Promise.resolve('asyncfail')
-  .then(response => {
+  .then((response) => {
     console.log(response);
-    return response
+    return response;
   })
-  .catch(error => {
-    console.log(error)
+  .catch((error) => {
+    console.log(error);
   });
 
-  
-  (async function() {
-    try {
-      await Promise.resolve('oopsie #1');
-      await Promise.resolve('oopsie #2');
-    } catch (error) {
-      console.log(error)
-    }
-    console.log("is this still good?")
-  })();
+(async function () {
+  try {
+    await Promise.resolve('oopsie #1');
+    await Promise.resolve('oopsie #2');
+  } catch (error) {
+    console.log(error);
+  }
+  console.log('is this still good?');
+})();
 ```
 
 일반 **Error** 생성자 외에도 7 개의 다른 기본 제공 오류 생성자가 있습니다.
@@ -3366,18 +3445,20 @@ Promise.resolve('asyncfail')
 - URIError - encodeURI () 또는 decodeURI ()가 잘못된 매개 변수를 전달할 때 오류입니다.
 
 new 키워드를 사용하여 생성 된 오류에는 3 개의 속성이 있습니다.
+
 - name - 오류의 이름입니다.
 - message - 오류에 제공된 parameter(매개 변수)입니다.
 - stack - 오류가 발생한 줄과 문자 번호를 포함하는 오류 발생시 stack trace 또는 callback queue.
+
 ```js
-const myError = new Error("oopsie");
+const myError = new Error('oopsie');
 
 myError.name; // "Error"
 myError.message; // "oopsie"
 myError.stack; // "Error: oopsie at <anonymous>:1:17
 
 function a() {
-  const b = new Error("uh oh");
+  const b = new Error('uh oh');
   return b;
 }
 
@@ -3386,24 +3467,342 @@ a(); // b().stack
 // at a (<anonymous>:2:12)
 // at <anonymous>:1:1
 ```
+
 Error는 생성자 함수이므로이를 확장하여 추가 할 수 있습니다.  
 오류가 발생할 수있는 불량 행위자에게 stack trace 및 기타 정보를 제공하여 프로그램의 일부를 드러내고 싶지 않습니다.  
 따라서 오류를 표시 할 내용을 사용자 지정할 수 있습니다.
+
 ```js
 class AuthenticationError extends Error {
   constructor(message) {
     super(message);
-    this.name = "AuthenticationError";
-    this.message = "authentication problem";
-    this.fix = "please log in";
+    this.name = 'AuthenticationError';
+    this.message = 'authentication problem';
+    this.fix = 'please log in';
   }
 }
 
-const err = new AuthenticationError("oopsie");
+const err = new AuthenticationError('oopsie');
 err; // authenticationError: "authentication problem" stack trace
 err.fix; // please log in
 ```
-___
+
+---
+
+#### **Data Structure**🍕
+
+**a collection of data values**  
+**자료구조는(Data Structure) 서비스나 어플리케이션에서 필요한데이터를 메모리에 어떻게 구조적으로 잘정리해서 담아두고 관리하고**  
+**최종적으로 가장 효율적인 방식으로 필요한데이터에 빠르게접근(search)하고 수정(modify) 삽입(insert) 삭제(delete) 할수있도록 도와줍니다.**
+
+1. How to Build One
+2. **How to Use it** ⭐
+
+Key points❓
+
+- **Order** - 자료구조안에있는 데이터들의 순서가보장이되는지❓
+- **Unique** - 중복된 데이터가 들어갈수있는지❓
+- **Search** - 검색할때 얼마나 효율적인지❗
+- **Modification** - 수정(원하는기능에따라)할때 얼마나 효율적인지❗
+
+Array(메모리에 연속적으로 저장되어있는 값, j = 5 같이 한개의 변수에 한개의값을 저장하는것 대신 여러개의 숫자를 지정한다음 배열에저장할수있습니다)  
+,단일연결List, 이중연결List, Stack, Hash table 등이있다.
+
+연결List는 크기를 상황에 따라서 늘이거나 줄일수있습니다.
+연결List는 쉽게 순서를바꾸거나, 간략화, 쪼개기, 뒤집기등이 가능합니다.
+가장유명하고 보편적인 큐(FIFO)-줄, 스택(LIFO)-팬케익
+
+이진트리❗
+노드 구조체를 포인터한개대신 두개를 갖게한다면 트리구조를만들수있다.
+한노드는 두개까지의 자식을 가질수있다.
+
+하지만 상황에맞게 자료구조를 수정함으로써 트리의 자식노드수를 3이나 4또는 임의의수로 늘릴수있습니다.
+
+무한루프와 같이 제멋대로 연결되는 자료들은 그래프 자료구조를 사용합니다.
+
+**각각 다른 자료구조는 특정 계산에 유용한 속성을 가지고 있습니다**
+
+많은 프로그래밍 언어는 라이브러리에 이미 만들어진 자료구조들로 가득차있다
+
+#### **Algorithm**🍗
+
+**DATA PROCESSING**  
+**within a finite amount of space and time**
+
+**알고리즘은 제한된 공간과 시간안에서 데이터를 어떻게 처리할것인지를 정해놓은 로직**  
+**즉, 주어진 INPUT으로 정의된 계산을수행한다음에 OUTPUT(결과값)을 내는것**
+
+**Big O**⭐  
+**동일한 알고리즘의 로직으로 INPUT의사이즈가 점점 커질수록 시간이 얼마나더많이 걸리느냐를 정의한 시간복잡도를 표기할수있는 방법이다.**
+
+주어진데이터를 검색(search)하거나 정렬(sort), 총점(sum)을 구하는등의 다양한계산을 할수있는것.
+
+Key points❓
+
+- **Input Size** - Input의 Size가 커질수록 Big O가 어떻게변화하는지❗
+- **공간(Space)과 시간(Time)의 복잡도는 어떤지❗**
+- 어떤**Data Structure**를 이용해서 이알고리즘을 쓰는게 좋은지❗
+
+**제일 좋은알고리즘은 제공된 데이터를 정말 작은공간과 빠른시간안에서 효율적(Efficient)으로 처리할수있는것**
+
+---
+
+### **Data Structures In JavaScript** 💥
+
+### **목표: 자료구조 이해하고 문제에따른 올바른 자료구조를 고를수있다⭐**
+
+What is a Data Structure ❓
+
+**각각 다른 자료구조는 특정 계산에 유용한 속성을 가지고 있습니다**
+
+자료구조는 다른 유형의 파일 캐비닛(백팩, 냉장고, 파일, 상자..)
+각각의 컨테이너는 그 자체로 유용합니다.
+
+Which code is best ❓
+
+- Readable
+- Memory (Space Complexity)
+- Speed (Time Complexity)
+
+understanding data structures
+
+1. How to Build One
+   (How can we build with code some of these data structures)
+2. **How to Use it** ⭐
+
+다양한 시나리오에 따라 데이터를 특정 형식으로 저장해야합니다.
+
+우리의 목표는 CPU가 정보를 얻기 위해 수행해야하는 작업을 최소화하는 것입니다.
+그것이 데이터 구조가 강력한 이유입니다
+
+**Data Structures**
+
+- Arrays
+- Stacks
+- Queues
+- Linked Lists
+- Trees
+- Tries
+- Graphs
+- Hash Tables
+
+**Algorithms**
+
+- Sorting
+- Dynamic Programming
+- BFS + DFS (Searching)
+- Recursion
+
+서로 다른 data structures에서 수행 할 수있는 다양한 작업은 무엇입니까?  
+data structures는 단순히 데이터를 구성하는 방법이기 때문입니다.  
+각 data structures에는 장단점이 있습니다.  
+자료구조로 수행 할 작업 유형은
+
+- 삽입(insertion)
+- 삭제(Deletion)
+- 순회(Traversal)
+- 검색(Searching)
+- 정렬(Sorting)
+- 접근(access)⭐
+
+**Array**
+
+```js
+const strings = ['x', 'a', 'b', 'c', 'd'];
+//     0    1    2    3
+// 4x4 = 16 bytes of storage
+
+strings[2]; // O(1)
+
+// push
+strings.push('e'); // O(1)
+
+// pop
+strings.pop(); // O(1)
+
+// unshift
+strings.unshift('x'); // O(n) depending on the size of array
+
+// splice
+strings.splice(2, 0, 'alien'); // O(n/2) = O(n)
+// remember our rules when it comes to big O we remove constants and simplify to just O(n)
+```
+
+**Static vs Dynamic Arrays**
+
+**Implementing An Array**
+
+```js
+class MyArray {
+  constructor() {
+    this.length = 0;
+    this.data = {};
+  }
+
+  get(index) {
+    return this.data[index];
+  }
+
+  push(item) {
+    this.data[this.length] = item;
+    this.length++;
+    return this.length;
+  }
+
+  pop() {
+    const lastItem = this.data[this.length - 1];
+    delete this.data[this.length - 1];
+    this.length--;
+    return lastItem;
+  }
+
+  delete(index) {
+    const item = this.data[index];
+    this.shiftItems(index);
+  }
+
+  shiftItems(index) {
+    for (let i = index; i < this.length - 1; i++) {
+      this.data[i] = this.data[i + 1];
+    }
+    delete this.data[this.length - 1];
+    this.length--;
+  }
+}
+
+const newArray = new MyArray();
+newArray.push('hi');
+newArray.push('you');
+newArray.push('!');
+// newArray.pop();
+newArray.delete(1);
+// for (let i = 1; i < 2; i++) {
+// this.data[1] = this.data[2]
+// }
+console.log(newArray);
+```
+
+**Exercise: Reverse A String**
+
+```js
+//Create a function that reverses a string:
+//'Hi My name is Andrei' should be:
+//'ierdnA si emdn yM iH'
+
+function reverse(str) {
+  // check input
+  if (!str || str.length < 2 || typeof str !== 'string') {
+    return 'that is not good';
+  }
+
+  const backwards = [];
+  const totalItems = str.length - 1;
+  for (let i = totalItems; i >= 0; i--) {
+    backwards.push(str[i]);
+  }
+  console.log(backwards);
+
+  return backwards.join('');
+}
+
+function reverse2(str) {
+  return str.split('').reverse().join('');
+}
+
+const reverse3 = (str) => str.split('').reverse().join('');
+const reverse4 = (str) => [...str].reverse().join('');
+
+reverse('Hi My name is Andrei');
+```
+
+**Exercise: Merge Sorted Arrays**
+
+```js
+// mergeSortedArrays([0,3,4,31], [4,6,30]);
+// [ 0, 3, 4, 4, 6, 30, 31 ]
+
+function mergeSortedArrays(array1, array2) {
+  const mergedArray = [];
+  let array1Item = array1[0];
+  let array2Item = array2[0];
+  let i = 1;
+  let j = 1;
+
+  //Check input
+  if (array1.length === 0) {
+    return array2;
+  }
+  if (array2.length === 0) {
+    return array1;
+  }
+
+  while (array1Item || array2Item) {
+    if (!array2Item || array1Item < array2Item) {
+      mergedArray.push(array1Item);
+      array1Item = array1[i];
+      i++;
+    } else {
+      mergedArray.push(array2Item);
+      array2Item = array2[j];
+      j++;
+    }
+  }
+
+  return mergedArray;
+}
+```
+
+**When you should use array❓**⭐  
+ 😘
+
+- Fast lookups
+- Fast push/pop
+- Ordered
+
+      🤢
+
+- Slow inserts
+- Slow deletes
+- Fixed Size (if using static array)
+
+**Hash Tables (objects in js)**
+
+**Hash Function**  
+hash function is simply a function that generates  
+a value of fixed length for each input that it gets.  
+임의의 길이의 데이터를 고정된 길이의 데이터로 매핑하는 함수이다
+
+idempotent(멱등법칙): 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질
+
+```js
+let user = {
+  age: 54,
+  name: 'kylie',
+  magic: true,
+  scream: function () {
+    console.log('ahhhh');
+  },
+};
+
+user.age; // O(1)
+user.spell = 'abra kadabra'; // O(1)
+user.scream(); // O(1)
+
+// object you can only save the key as a string
+const a = new Map();
+// map allows you to save any data type as the key.
+// And another benefit of map is that it maintains insertion order.
+const b = new Set();
+// The only difference is that it only stroes the keys no values
+```
+
+**Exercise: Implement A Hash Table**
+
+```js
+
+```
+
+---
 
 #### Http, Https, Web APIs, 브라우저좌표
 
