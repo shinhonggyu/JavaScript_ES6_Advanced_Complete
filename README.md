@@ -1537,7 +1537,7 @@ console.log(window.y); // undefined
 
 #### JAVASCRIPT TYPES
 
-_Primitive: number, string, boolean, bigint, symbol, null, undefined_
+**Primitive: number, string, boolean, bigint, symbol, null, undefined** : **define by JS** ⭐
 
 - 원시 값은 불변으로 정의되며 변경할 수 없습니다.(변경이 불가능하다는 뜻은 메모리 영역에서의 변경이 불가능하다는 뜻이다. 재할당은 가능하다)
 - Primitives는 값으로 전달됩니다. 즉, 값이 복사 된 다음 메모리의 다른 곳에 배치됩니다.
@@ -1562,7 +1562,7 @@ console.log(statement); // 'I am an immutable value'
 
 2행에서 Stirng 객체의 slice() 메소드는 statement 변수에 저장된 문자열을 변경하는 것이 아니라 사실은 새로운 문자열을 생성하여 반환하고 있다. 그 이유는 문자열은 변경할 수 없는 immutable value이기 때문이다.
 
-_Object(Non Primitive): function, array....._
+_Object(Non Primitive): function, array....._ **REFERENCE TYPE** ⭐ **define by programmer** ⭐
 
 **객체는 변경 될 수 있으며 해당 속성은 참조로 전달되므로 해당 속성은 메모리에 별도로 저장되지 않습니다.**
 
@@ -3997,3 +3997,52 @@ Improve Time Complexity❓ => Fast Access O(1), tradeoff: more memory O(n)
 #### 렌더링 순서
 
 **HTMLrequest/response->HTML을한줄씩DOM요소로변환,CSS을CSSOM으로변환->RenderTree만들기->layout(요소배치)->paint(레이어단위로 페인트를준비)->composition**
+
+---
+
+#### Intermediate Javascript
+
+```js
+let array = [1, 2, 3];
+
+const newArray = array.map((num) => {
+  num * 2;
+});
+
+// [undefined, undefined, undefined]
+// 리턴 or 한줄로 자동리턴
+```
+
+---
+
+#### ES 8
+
+```js
+let obj = {
+  username0: 'Santa',
+  username1: 'Rudolf',
+  username2: 'Mr.Grinch',
+};
+
+const newObj = Object.keys(obj).forEach((key, index) => {
+  console.log(key, obj[key], index);
+});
+
+Object.values(obj).forEach((value) => {
+  console.log(value);
+});
+
+Object.entries(obj).forEach((value) => {
+  console.log(value);
+});
+
+Object.entries(obj).map((value) => {
+  return value[1] + value[0].replace('username', '');
+});
+
+// 백엔드에서 받아온 data를 가공하기💝
+```
+
+#### ES9 + ES8 Async Await and Asyncronous JavaScript
+
+#### ES10
