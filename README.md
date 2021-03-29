@@ -1874,6 +1874,12 @@ multByTen(5); // 50
 
 #### **Closures** ☕👍
 
+1. function ran
+2. the function excuted.
+3. it's never going to execute again.
+4. BUT is's going remember that there are references to these variable
+5. so the child scope always the access to the parent scope.
+
 **클로저는 함수가 선언 된 스코프를 벗어난 이후에도 둘러싸는 scope 또는 환경에서 변수에접근할수있도록해준다**  
 **중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져**  
 **즉, 클로저를 사용하면 내부 범위(inner scope)에서 외부 함수 범위(outer functions scope)에 액세스 할 수 있습니다.**  
@@ -2643,7 +2649,7 @@ victoria.attack();
 
 ---
 
-#### **FUNCTIONAL PROGRAMMING**
+#### **FUNCTIONAL PROGRAMMING** 👍
 
 1. **Pure Functions**
 2. **Stateless, Immutability**
@@ -3752,8 +3758,9 @@ function mergeSortedArrays(array1, array2) {
 }
 ```
 
-**When you should use array❓**⭐  
- 😘
+**When you should use array❓**⭐
+
+         😘
 
 - Fast lookups
 - Fast push/pop
@@ -3799,16 +3806,159 @@ const b = new Set();
 **Exercise: Implement A Hash Table**
 
 ```js
+class HashTable {
+  constructor(size) {
+    this.data = new Array(size);
+  }
 
+  // That is properties that i can't access outside of this class.
+  _hash(key) {
+    let hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      hash = (hash + key.charCodeAt(i) * i) % this.data.length;
+      // console.log(hash)
+    }
+    return hash;
+  }
+
+  // create set
+  set(key, value) {
+    let address = this._hash(key);
+    if (!this.data[address]) {
+      this.data[address] = [];
+    }
+    this.data[address].push([key, value]);
+    return this.data;
+  }
+
+  get(key) {
+    let address = this._hash(key);
+    const currentBucket = this.data[address];
+    if (currentBucket) {
+      for (let i = 0; i < currentBucket.length; i++) {
+        if (currentBucket[i][0] === key) {
+          return currentBucket[i][1];
+        }
+      }
+    } // O(1)
+    return undefined;
+  }
+
+  keys() {
+    const keysArray = [];
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i]) {
+        keysArray.push(this.data[i][0][0]);
+      }
+    }
+    return keysArray;
+  }
+}
+
+const myHashTable = new HashTable(50);
+myHashTable.set('grapes', 10000);
+myHashTable.set('apples', 54);
+myHashTable.set('oranges', 21);
+myHashTable.keys();
 ```
+
+**Hash Tables vs Arrays**  
+ Arrays
+
+- search O(n)
+- lookup O(1)
+- push O(1)
+- insert O(n)
+- delete O(n)
+
+  Hash Tables
+
+- search O(1)
+- insert O(1)
+- lookup O(1)
+- delete O(1)
+
+**Exercise: First Recurring(되풀이) Character**
+
+```js
+//Google Question
+//Given an array = [2,5,1,2,3,5,1,2,4]:
+//It should return 2
+
+//Given an array = [2,1,1,2,3,5,1,2,4]:
+//It should return 1
+
+//Given an array = [2,3,4,5]:
+//It should return undefined
+
+
+function firstRecurringCharacter(input)
+}
+
+//Bonus... What if we had this:
+// [2,5,5,2,3,5,1,2,4]
+// return 5 because the pairs are before 2,2
+```
+
+**Solution: First Recurring Character**
+
+```js
+function firstRecurringCharacter(input) {
+  for (let i = 0; i < input.length; i++) {
+    for (let j = i + 1; j < input.length; j++) {
+      if (input[i] === input[j]) {
+        return input[i];
+      }
+    }
+  }
+  return undefined;
+} // O(n^2)
+
+// Using hash tables
+function firstRecurringCharacter2(input) {
+  let map = {};
+  for (let i = 0; i < input.length; i++) {
+    if (map[input[i]] !== undefined) {
+      return input[i];
+    } else {
+      map[input[i]] = i;
+    }
+  }
+  return undefined;
+} // O(n)
+
+firstRecurringCharacter2([2, 5, 1, 2, 3, 5, 1, 2, 4]);
+```
+
+**Hash Tables**
+
+          😘
+
+- Fast lookups  
+  (But remember we need a good collision resolution needed.)
+- Fast inserts
+- Flexible Keys
+
+      🤢
+
+- Unordered
+- Slow Key iteration
+
+질문!!! 언제 hash table?  
+**by using hash table to optimize nested loops O(n^2) => O(n)** 👍
+
+**0,1,2같은 숫자인덱스만을 가지는 배열대신에**  
+**map같은 hash tables 타입에따라 flexible keys 가질수있다**
+
+Improve Time Complexity❓ => Fast Access O(1), tradeoff: more memory O(n)
+
+---
 
 ---
 
 #### Http, Https, Web APIs, 브라우저좌표
 
 #### defer, DOMContentLoaded, load, unload
-
-#### **HTMLrequest->DOM,CSSOM->RenderTree->layout->paint(레이어단위로 페인트를준비)->composition**
 
 #### **Bubbling & (capturing) event.stop(Immediate)Propagation ❌** ,
 
@@ -3824,7 +3974,7 @@ const b = new Set();
 
 #### Builder Pattern
 
-#### Modules💘이란 파일안에 코드를 모듈화해서 작성하는것/ 한 모듈 = 한 파일안에 작성되어있는 코드/ 모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌스코프로 측정된다/ export, import 활용
+#### Modules💘이란 파일안에 코드를 모듈화해서 작성하는것/ 한 모듈 = 한 파일안에 작성되어있는 코드/ 모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌��코프로 측정된다/ export, import 활용
 
 ---
 
@@ -3843,3 +3993,7 @@ const b = new Set();
 6. 브라우저는 HTML (이미지, CSS, JavaScript)에 포함 된 추가 개체에 대한 요청을 보내고 3-5 단계를 반복합니다.
 
 7. 페이지가로드되면 브라우저는 필요에 따라 추가 비동기 요청을 보냅니다.
+
+#### 렌더링 순서
+
+**HTMLrequest/response->HTML을한줄씩DOM요소로변환,CSS을CSSOM으로변환->RenderTree만들기->layout(요소배치)->paint(레이어단위로 페인트를준비)->composition**
