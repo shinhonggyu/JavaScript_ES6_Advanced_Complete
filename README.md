@@ -3962,7 +3962,20 @@ Improve Time Complexity❓ => Fast Access O(1), tradeoff: more memory O(n)
 
 #### **Bubbling & (capturing) event.stop(Immediate)Propagation ❌** ,
 
+**부모 컨테이너는 어떤 자식 요소에서 이벤트가 발생하든 모든 이벤트를 다 들을수가 있다** ⭐
+
 #### 이벤트위임
+
+**부모 컨테이너는 어떤 자식 요소에서 이벤트가 발생하든 모든 이벤트를 다 들을수가 있다** ⭐
+
+```js
+const ul = document.querySelector('ul');
+ul.addEventListener('click', (event) => {
+  if (event.target.tagName == 'LI') {
+    event.target.classList.add('selected');
+  }
+});
+```
 
 #### 웹APIs는 TaskQueue(FIFO)에 콜백함수를 넣어준다 -> 이벤트루프가 TaskQueue와 콜스택을 관찰하며 콜스택이 비워지면 콜스택에 TaskQueue에있는 콜백함수를 넣어준다.
 
@@ -3974,25 +3987,7 @@ Improve Time Complexity❓ => Fast Access O(1), tradeoff: more memory O(n)
 
 #### Builder Pattern
 
-#### Modules💘이란 파일안에 코드를 모듈화해서 작성하는것/ 한 모듈 = 한 파일안에 작성되어있는 코드/ 모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌��코프로 측정된다/ export, import 활용
-
 ---
-
-#### What Happens When You Type in a URL ❓
-
-1. 웹 브라우저에 URL을 입력합니다.
-
-2. 브라우저는 DNS를 통해 도메인 이름의 IP 주소를 찾습니다.
-
-3. 브라우저는 서버에 HTTP 요청을 보냅니다.
-
-4. 서버는 HTTP 응답을 다시 보냅니다.
-
-5. 브라우저가 HTML 렌더링을 시작합니다.
-
-6. 브라우저는 HTML (이미지, CSS, JavaScript)에 포함 된 추가 개체에 대한 요청을 보내고 3-5 단계를 반복합니다.
-
-7. 페이지가로드되면 브라우저는 필요에 따라 추가 비동기 요청을 보냅니다.
 
 #### 렌더링 순서
 
@@ -4001,6 +3996,12 @@ Improve Time Complexity❓ => Fast Access O(1), tradeoff: more memory O(n)
 ---
 
 #### Intermediate Javascript
+
+**Advanced Arrays**
+
+```js
+
+```
 
 ```js
 let array = [1, 2, 3];
@@ -4012,8 +4013,6 @@ const newArray = array.map((num) => {
 // [undefined, undefined, undefined]
 // 리턴 or 한줄로 자동리턴
 ```
-
----
 
 #### ES 8
 
@@ -4045,4 +4044,183 @@ Object.entries(obj).map((value) => {
 
 #### ES9 + ES8 Async Await and Asyncronous JavaScript
 
+다시듣기
+
 #### ES10
+
+```js
+const entries = ['bob', 'sally', , , , , , , , 'cindy'];
+entries.flat(n);
+
+entries.flatMap((name) => name + '💝');
+```
+
+```js
+userEmail = '         zowoz8819@gmail.com';
+userEmail2 = 'zowoz8819@gmail.com';
+console.log(userEmail.trimStart());
+console.log(userEmail2.trimEnd());
+```
+
+```js
+const userProfiles = [
+  ['commanderTom', 23],
+  ['derekZlander', 40],
+  ['hansel', 18],
+];
+
+const obj = Object.fromEntries(userProfiles);
+// {commanderTom: 23, derekZlander: 40, hansel: 18}
+
+Object.entries(obj);
+//  [['commanderTom', 23], ['derekZlander', 40], ['hansel', 18]]
+```
+
+```js
+try {
+  bob + 'hi';
+} catch (error) {
+  console.log('you messed up', error);
+}
+```
+
+#### Advanced Loop
+
+```js
+const basket = ['apples', 'oranges', 'grapes'];
+const detailedBasket = {
+  apples: 5,
+  oranges: 10,
+  grapes: 1000,
+};
+
+// 1
+for (let i = 0; i < basket.length; i++) {
+  console.log(basket[i]);
+}
+
+// 2
+basket.forEach((item) => {
+  console.log(item);
+});
+
+// 3. for of
+// Iterating 반복 - arrays, strings
+for (item of basket) {
+  console.log(item);
+}
+
+for (item of 'basket') {
+  console.log(item);
+}
+
+// 4. for in - properties
+// enumerating 열거 - objects
+for (item in detailedBasket) {
+  console.log(item);
+}
+```
+
+#### ES2020(ES11)
+
+- BigInt
+- Optional Chaining Operator:
+  `console.log(person.job?.manager?.name);`
+
+```js
+let andrei_poketmon = {
+  laichu: {
+    species: 'Mouse Poketmon',
+    height: 0.8,
+    weight: 30,
+  },
+};
+
+let weight2 = andrei_poketmon.pikachu.weight;
+console.log('weight:', weight); // Error
+
+if (andrei_poketmon.pikachu && andrei_poketmon.pikachu.weight) {
+  let weight2 = andrei_poketmon.pikachu.weight;
+} else {
+  let weight2 = undefined;
+  console.log('weight:', weight);
+}
+
+let weight3 = andrei_poketmon?.laichu.weight;
+```
+
+- Nullish Coalescing Operator
+
+```js
+{
+  // Logical OR operator
+  // false: false, '', 0, null, undefined, NaN
+  {
+    const name = 'Ellie';
+    const userName = name || 'Guest';
+    console.log(userName) // Ellie
+  }
+
+  {
+    const name = null;
+    const userName = name || 'Guest';
+    console.log(userName) // Guest
+  }
+
+  💥
+  {
+    const name = '';
+    // 아무런 이름도 사용하고싶지않지만 Guest가 할당되는 버그
+    const userName = name || 'Guest';
+    console.log(userName) // Guest
+
+    const num = 0;
+    const message = num || 'undefined';
+    console.log(message) // undefined
+  }
+
+  👍
+  { // null, undefined 체크❗
+    const name = '';
+    const userName = name ?? 'Guest';
+    console.log(userName)
+
+    const num = 0;
+    const message = num ?? 'undefined';
+    console.log(message) // 0
+  }
+}
+
+```
+
+#### Debugging
+
+```js
+const flattened = [
+  [0, 1],
+  [2, 3],
+  [4, 5],
+].reduce((accumulator, array) => {
+  debugger;
+  return accumulator.concat(array);
+}, []);
+```
+
+#### #### Modules
+
+파일안에 코드를 모듈화해서 작성하는것  
+한 모듈 = 한 파일안에 작성되어있는 코드  
+모듈화해서 작성하지않으면 여러가지 파일들이있는경우 모든코드들은 글로벌스코프로 측정된다
+
+#### how internet works
+
+브라우저 -> who is this google.com fellow? -> ISP$ -> DNS(i don't know him personally, but here is his ip address 172.217.7.23)  
+-> ISP -> 브라우저(172.217.7.23 but nothing is showing up yet)
+
+브라우저 -> 172.217.7.23 ip address -> Google Servers -> HTML, CSS, JS to 브라우저
+
+웹사이트 성능 요소?
+
+- Location of Server
+- How Many Trips
+- Size Of Files
