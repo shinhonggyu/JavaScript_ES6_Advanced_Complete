@@ -4219,7 +4219,7 @@ const flattened = [
 
 브라우저 -> 172.217.7.23 ip address -> Google Servers -> HTML, CSS, JS to 브라우저
 
-웹사이트 성능 요소?
+웹사이트 성능 요소
 
 - Location of Server
 - How Many Trips
