@@ -5,6 +5,8 @@ const object1 = { value: 10 };
 const object2 = object1;
 const object3 = { value: 10 };
 
+------------------------------------------------------------------
+
 // context vs scope ❗
 // 'context' tells you, where we are within the object.
 this.alert('hello');
@@ -25,6 +27,8 @@ const object4 = {
 };
 
 object4.a(); // object4
+
+--------------------------------------------------------------------
 
 // instantiation
 // instantiation is when you make a copy of ab object
@@ -63,3 +67,59 @@ const wizard2 = new Wizard('Shawn', 'Dark Magic');
 
 wizard1.play();
 wizard1.introduce();
+
+----------------------------------------------------------------
+
+let obj = {
+  a: 'a',
+  b: 'b',
+  c: {
+    deep: 'try and copy me',
+  },
+};
+
+// This Is Shallow Clone⭐
+let clone = Object.assign({}, obj);
+let clone2 = { ...obj };
+
+obj.c.deep = 'hahaha';
+console.log('obj', obj); // {a: "a", b: "b", c: { deep: 'hahaha' }}
+console.log('clone', clone); // {a: "a", b: "b", c: { deep: 'hahaha' }}
+console.log('clone2', clone2); // {a: "a", b: "b", c: { deep: 'hahaha' }}
+
+------------------------------------------------------------------------
+
+Quiz❗
+//Evaluate these:
+//#1
+[2] === [2] // false
+{} === {} // false
+
+//#2 what is the value of property a for each object.
+const object1 = { a: 5 }; // 4
+const object2 = object1; // 4
+const object3 = object2; // 4
+const object4 = { a: 5}; // 5
+object1.a = 4;
+
+
+//#3 create two classes: an Animal class and a Mamal class. 
+// create a cow that accepts a name, type and color and has a sound method that moo's her name, type and color. 
+class Animal {
+	constructor(name, type, color) {
+		this.name = name;
+		this.color = color;
+		this.type = type;
+	}
+}
+
+class Mamal extends Animal {
+	constructor(name, type, color) {
+		super(name, type, color)
+	}
+	sound() {
+		console.log(`Moooo I'm ${this.name} and I'm a ${this.color} ${this.type}`);
+	}
+}
+
+const cow = new Mamal('Shelly', 'cow', 'brown');

@@ -1,10 +1,14 @@
 // change everything below to the newer Javascript!
 
+---------------------------------------------------
+
 // let + const
 let a = 'test';
 const b = true;
 const c = 789;
 a = 'test2';
+
+---------------------------------------------------
 
 // Destructuring
 const person = {
@@ -16,12 +20,16 @@ const person = {
 
 const { firstName, lastName, age, eyeColor } = person;
 
+------------------------------------------------------
+
 // Object properties
 const a = 'test';
 const b = true;
 const c = 789;
 
 const okObj = { a, b, c };
+
+--------------------------------------------------------
 
 // Template strings
 const message = `Hello ${firstName} have I met you before? I think we met in ${city}. last summer no???`;
