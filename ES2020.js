@@ -49,3 +49,35 @@ console.log(null ?? 'hellooo'); //'hellooo'
 console.log(null || 'hellooo'); //'hellooo'
 console.log((false || null) ?? 'hellooo'); // 'hellooo'
 console.log(null ?? (false || 'hellooo')); // 'hellooo'
+
+----------------------------------------------------------------------------------------
+
+
+
+const promiseOne = new Promise((resolve, reject) => setTimeout(resolve, 6000))
+const promiseTwo = new Promise((resolve, reject) => setTimeout(reject, 3000))
+
+
+Promise.allSettled([promiseOne, promiseTwo]).then(data => console.log(data))
+  .catch(err => console.log('something failed', err))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
