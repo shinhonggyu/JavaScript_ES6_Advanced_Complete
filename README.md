@@ -1,4 +1,26 @@
-#### **자바스크립트 엔진**⭐
+- [자바스크립트 엔진](#자바스크립트-엔진)
+- [자바스크립트 런타임](#JS-런타임)
+- [Garbage Collection](#Garbage-Collection)
+- [최적화 코드 작성하기](#WRITING-OPTIMIZED-CODE)
+- [콜스택 과 메모리힙](<#메모리힙과-콜스택(LIFO)>)
+- [Execution Context](#Execution-Context)
+- [Lexical Environment](#Lexical-Environment)
+- [Scope Chain](#Scope-Chain)
+- [Function and Block Scope](#Function-and-Block-Scope)
+- [This](#This)
+- [스코프](<#스코프(SCOPE)>)
+- [JavaScript Types](#JAVASCRIPT-TYPES)
+- [CLOSURES AND PROTOTYPES](#CLOSURES-AND-PROTOTYPES)
+- [Closures](#Closures)
+- [Prototypes](#Prototypes)
+- [Object Oriented Programming](#Object-Oriented-Programming)
+- [Functional Programming](#Functional-Programming)
+- [Asyncronous JavaScript](#Asyncronous-JavaScript)
+- [Modules](#*MODULES-IN-JAVASCRIPT)
+- [Error Handling](#Error-Handling)
+- [Data Structures In JavaScript](#Data-Structures-In-JavaScript)
+
+#### **자바스크립트 엔진**
 
 - JavaScript 엔진은 JavaScript 코드를 제공하는 컴퓨터 프로그램으로 컴퓨터에 실행 방법을 알려줍니다.
 - 엔진 내부에서는 어떤 일이 발생하는지는 엔진에 달려 있습니다
@@ -16,7 +38,7 @@ V8 엔진은 C ++로 작성되고 Chrome 브라우저에서 사용되며 Node JS
 파서는 Abstrack Syntax Tree(추상 구문 트리) or AST라 불리는 자료구조를 생성합니다  
 AST는 원본 구문의 모든 세부 사항을 표시하지는 않지만 구조적 또는 콘텐츠 관련 세부 사항을 포함하는 소스 코드의 트리 그래프
 
-#### **인터프리터와 컴파일**❗
+#### **인터프리터와 컴파일**
 
 - 인터프리터는 기계 언어 프로그램으로 컴파일 할 필요없이 코드의 각 줄을 한 줄씩 직접 실행합니다.
 - Interpreters는 다양한 전략을 사용하여 성과를 높일 수 있습니다.
@@ -28,7 +50,7 @@ AST는 원본 구문의 모든 세부 사항을 표시하지는 않지만 구조
 
 ---
 
-#### 컴파일러가 최적화하는데 도움이되는 코드 작성하기❗
+#### WRITING OPTIMIZED CODE
 
 1. Memoization
 
@@ -140,7 +162,7 @@ obj2.b = 100;
 
 ---
 
-#### 메모리힙과 콜스택(LIFO)⭐
+#### 메모리힙과 콜스택(LIFO)
 
 JavaScript 엔진은 우리를 위해 많은 일을하지만 가장 큰 작업 중 2 개는 그것을 읽고 실행하는 것입니다.  
 데이터를 저장하고 쓸 장소와 실행중인 항목을 한 줄씩 추적 할 장소가 필요합니다. 이것이 `콜스택`과 `메모리 힙`이 들어오는 곳입니다.
@@ -218,6 +240,10 @@ person = 'Brittney Postma';
 `JavaScript is a single threaded language, meaning only one thing can be executed at a time.`  
 `It only has one call stack and therefore it is a synchronous language`
 
+#### **JS 런타임**
+
+Playground [here](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gcHJpbnRIZWxsbygpIHsNCiAgICBjb25zb2xlLmxvZygnSGVsbG8gZnJvbSBiYXonKTsNCn0NCg0KZnVuY3Rpb24gYmF6KCkgew0KICAgIHNldFRpbWVvdXQocHJpbnRIZWxsbywgMzAwMCk7DQp9DQoNCmZ1bmN0aW9uIGJhcigpIHsNCiAgICBiYXooKTsNCn0NCg0KZnVuY3Rpb24gZm9vKCkgew0KICAgIGJhcigpOw0KfQ0KDQpmb28oKTs%3D!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D)
+
 #### Synchronous
 
 **싱글 스레드 언어의 문제는 무엇입니까❓**  
@@ -274,8 +300,6 @@ console.log('3');
 3. MicroTaskQueue에 콜백함수가있다면 MicroTaskQueue가 빌떄까지 콜백함수를 콜스택으로 가지고와 수행함
 4. TaskQueue(Callback Queue)에서는 한번에 하나의콜백함수만 가지고온다(콜백큐는 호출 스택이 완전히 비워 질 때까지 실행할 수 없습니다.)
 5. 렌더업데이트시간이되면 requestAnimationFrame을 통해 등록된 콜백함수실행 -> RenderTree->layout->paint(레이어단위로 페인트를준비)->composition -> •••
-
-#### JS 런타임⭐ Playground [here](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gcHJpbnRIZWxsbygpIHsNCiAgICBjb25zb2xlLmxvZygnSGVsbG8gZnJvbSBiYXonKTsNCn0NCg0KZnVuY3Rpb24gYmF6KCkgew0KICAgIHNldFRpbWVvdXQocHJpbnRIZWxsbywgMzAwMCk7DQp9DQoNCmZ1bmN0aW9uIGJhcigpIHsNCiAgICBiYXooKTsNCn0NCg0KZnVuY3Rpb24gZm9vKCkgew0KICAgIGJhcigpOw0KfQ0KDQpmb28oKTs%3D!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D)
 
 #### MicroTaskQueue❗
 
@@ -352,7 +376,7 @@ race().then(console.log);
 
 ---
 
-#### 1. EXECUTION CONTEXT ⭐
+#### EXECUTION CONTEXT
 
 실행 컨텍스트(Execution Context)는 scope, hoisting, this, function, closure 등의 동작원리를 담고 있는 자바스크립트의 핵심원리  
 JavaScript의 코드는 항상 일종의 실행 컨텍스트 내에서 실행됩니다  
@@ -711,7 +735,7 @@ ES6의 let으로 선언된 변수는 블록 레벨 스코프를 가지므로 코
 
 ---
 
-#### LEXICAL ENVIRONMENT ❓
+#### LEXICAL ENVIRONMENT
 
 - _lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 scope(범위) 또는 environment(환경)입니다._
 - _중괄호 {}를 사용하면 new lexical environment이 생성되며 중첩 된 괄호 {{...}}도 new lexical environment을 생성합니다._
@@ -835,7 +859,7 @@ doodle(); // Error! because it is enclosed in its own scope.
 
 ---
 
-#### Function And Block scope 💖
+#### **Function And Block scope**
 
 ES5까지 변수를 선언할 수 있는 유일한 방법은 var 키워드를 사용하는 것이었다.  
 var 키워드로 선언된 변수는 아래와 같은 특징이 있다. 이는 다른 언어와는 다른 특징으로 주의를 기울이지 않으면 심각한 문제를 일으킨다.
@@ -1058,7 +1082,7 @@ var와 let, 그리고 const는 다음처럼 사용하는 것을 추천한다.
 
 ---
 
-#### THIS - 1
+#### THIS
 
 **This is the object that the function is a property of** ⭐  
 **JS이외의 다른 OOP언어에서 THIS는 클래스자신이지만 JS에서 THIS란 만들어진객체 자기자신을가리키는것이 아닌 누가부르냐에따라(호출부) 달라진다.  
@@ -1329,7 +1353,7 @@ person4.hi();
 
 ---
 
-#### 스코프(SCOPE)
+#### **스코프(SCOPE)**
 
 **스코프는 우리가접근할수있는 변수, 변수를찾는규칙의집합**  
 _스코프는 참조 대상 식별자(identifier, 변수, 함수의 이름과 같이 어떤 대상을 다른 대상과 구분하여 식별할 수 있는 유일한 이름)를 찾아내기 위한 규칙이다. 자바스크립트는 이 규칙대로 식별자를 찾는다._
@@ -1638,7 +1662,7 @@ falsy값
 
 ---
 
-#### CLOSURES AND PROTOTYPES 🧡
+#### **CLOSURES AND PROTOTYPES**
 
 클로저와 프로토 타입 상속은 JavaScript를 특별하게 만들고 다른 프로그래밍 언어와 다른 두 가지 요소입니다.
 
@@ -1872,7 +1896,7 @@ multByTwo(4); // 8
 multByTen(5); // 50
 ```
 
-#### **Closures** ☕👍
+#### **Closures**
 
 1. function ran
 2. the function excuted.
@@ -2649,7 +2673,7 @@ victoria.attack();
 
 ---
 
-#### **FUNCTIONAL PROGRAMMING** 👍
+#### **FUNCTIONAL PROGRAMMING**
 
 1. **Pure Functions**
 2. **Stateless, Immutability**
@@ -3190,7 +3214,7 @@ React는 class components에서 OOP를 사용하여 상속을 확장 한 다음 
 
 ---
 
-#### **Asyncronous JavaScript** 👍👍
+#### **Asyncronous JavaScript**
 
 ```js
 setTimeout(() => console.log('1'), 0);
@@ -3495,6 +3519,8 @@ err.fix; // please log in
 
 ---
 
+### **Data Structures In JavaScript**
+
 #### **Data Structure**🍕
 
 **a collection of data values**  
@@ -3552,8 +3578,6 @@ Key points❓
 **제일 좋은알고리즘은 제공된 데이터를 정말 작은공간과 빠른시간안에서 효율적(Efficient)으로 처리할수있는것**
 
 ---
-
-### **Data Structures In JavaScript** 💥
 
 ### **목표: 자료구조 이해하고 문제에따른 올바른 자료구조를 고를수있다⭐**
 
