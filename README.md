@@ -19,6 +19,7 @@
 - [Asyncronous JavaScript](#Asyncronous-JavaScript)
 - [Modules](#*MODULES-IN-JAVASCRIPT)
 - [Error Handling](#Error-Handling)
+- [Debugging](#Debugging)
 - [캡쳐링,버블링,이벤트위임](#이벤트위임)
 - [Data Structures In JavaScript](#Data-Structures-In-JavaScript)
 
