@@ -1,5 +1,6 @@
 - [자바스크립트 엔진](#자바스크립트-엔진)
 - [자바스크립트 런타임](#JS-런타임)
+- [브라우저 렌더링 순서](#렌더링순서)
 - [Garbage Collection](#Garbage-Collection)
 - [최적화 코드 작성하기](#WRITING-OPTIMIZED-CODE)
 - [콜스택 과 메모리힙](<#메모리힙과-콜스택(LIFO)>)
@@ -18,6 +19,7 @@
 - [Asyncronous JavaScript](#Asyncronous-JavaScript)
 - [Modules](#*MODULES-IN-JAVASCRIPT)
 - [Error Handling](#Error-Handling)
+- [캡쳐링,버블링,이벤트위임](#이벤트위임)
 - [Data Structures In JavaScript](#Data-Structures-In-JavaScript)
 
 #### **자바스크립트 엔진**
@@ -4013,7 +4015,7 @@ ul.addEventListener('click', (event) => {
 
 ---
 
-#### 렌더링 순서
+#### 렌더링순서
 
 **HTMLrequest/response->HTML을한줄씩DOM요소로변환,CSS을CSSOM으로변환->RenderTree만들기->layout(요소배치)->paint(레이어단위로 페인트를준비)->composition**
 
