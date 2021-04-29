@@ -1901,6 +1901,8 @@ multByTen(5); // 50
 
 #### **Closures**
 
+[MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures)
+
 1. function ran
 2. the function excuted.
 3. it's never going to execute again.
