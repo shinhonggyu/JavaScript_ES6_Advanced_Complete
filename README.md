@@ -386,7 +386,8 @@ JavaScript의 코드는 항상 일종의 실행 컨텍스트 내에서 실행됩
 **실행 컨텍스트(EXECUTION CONTEXT)는 단순히 코드가 실행되는환경 입니다  
 JavaScript에는 Global 또는 Function의 두 가지 유형의 실행 컨텍스트가 있습니다  
 각 컨텍스트에는 생성단계(creation phase) 및 실행단계(executing phase)의 두 단계가 있습니다  
-JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.  
+JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라는 것이 생성됩니다.
+함수호출() 시 함수실행컨텍스트가 생성되고 마지막으로 콜스택에서 global 실행컨택스트가 팝업된다.
 {}이 사용될때 new lexical environment가 생성되고 함수실행컨텍스트는 엔진에게 현재작업중인 lexical environment 알려주고 렉시컬스코프는 접근가능한 변수들을 결정**
 
 ⭐Global Execution Context (this === window :true)
@@ -3167,7 +3168,10 @@ function refundItem(user, item) {
   const refundItem = purchases.splice(item);
   return Object.assign({}, user, { purchases: refundItem });
 }
-const compose = (fn1, fn2) => (...args) => fn1(fn2(...args));
+const compose =
+  (fn1, fn2) =>
+  (...args) =>
+    fn1(fn2(...args));
 
 const purchaseItems = (...fns) => fns.reduce(compose);
 
