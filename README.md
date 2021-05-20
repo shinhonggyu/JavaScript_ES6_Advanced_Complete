@@ -1,6 +1,6 @@
 - [자바스크립트 엔진](#자바스크립트-엔진)
 - [자바스크립트 런타임](#JS-런타임)
-- [브라우저 렌더링 순서](#렌더링순서)
+- [브라우저 렌더링 순서(critical render path)](#렌더링순서)
 - [Garbage Collection](#Garbage-Collection)
 - [최적화 코드 작성하기](#WRITING-OPTIMIZED-CODE)
 - [콜스택 과 메모리힙](<#메모리힙과-콜스택(LIFO)>)
@@ -394,8 +394,8 @@ JavaScript 엔진이 코드를 읽기 시작하면 Global Execution Context라�
 
 - 생성단계 Creation Phase
 
-  1. global object(window) created
-  2. initializes this keyword to global
+  1. global object(window) created❗
+  2. initializes this keyword to global❗
 
 - 실행단계 Executing Phase (actually run your code)
 
