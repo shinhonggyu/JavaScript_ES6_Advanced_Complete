@@ -739,11 +739,14 @@ ES6의 let으로 선언된 변수는 블록 레벨 스코프를 가지므로 코
 
 ---
 
-#### LEXICAL ENVIRONMENT
+#### LEXICAL ENVIRONMENT(우주들⭐ 함수가 어느우주에 쓰여졌나요 ❓)
+
+where did we write the function ? What part of the universe is it?  
+execution context tells you which lexical environment is currently running
 
 - _lexical environment은 기본적으로 엔진이 현재 코드를 읽고있는 scope(범위) 또는 environment(환경)입니다._
 - _중괄호 {}를 사용하면 new lexical environment이 생성되며 중첩 된 괄호 {{...}}도 new lexical environment을 생성합니다._
-- _그러므로 들여쓰기 없는함수의 lexical environment는 global scope_
+- *그러므로 들여쓰기 없는함수의 lexical environment는 global scope*❗
 - _실행 컨텍스트(EXECUTION CONTEXT)는 엔진에게 현재 작업중인 lexical environment을 알려주고 lexical scope는 사용 가능한 변수를 결정합니다._
 - _in Javascript our lexical scope (available data + variables where the function was defined) determines our available variables._
 - _Not where the function is called (dynamic scope), So it doesn't matter where we call our function._
