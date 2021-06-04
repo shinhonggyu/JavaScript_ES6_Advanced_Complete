@@ -1905,6 +1905,16 @@ multByTen(5); // 50
 
 #### **Closures**
 
+Lexical scope : 함수가 정의된곳에 따라 각 함수가 어떤변수에 접근할수있는지 결정한다.
+
+중첩된함수에서 내부함수가 외부함수 변수를 참조하고있다면 내부함수가 생성된 이후에도 외부함수의 변수에 접근가능  
+클로저는 함수와 그함수의 Lexical Environment의 조합  
+함수가 생성될 당시의 외부 변수를기억하고 생성된 이후에도 외부변수에 계속 접근가능
+
+LEXICAL ENVIRONMENT는 엔진이 현재 코드를 읽고있는 scope 또는 환경이다.
+{}가 사용될때 새로운 LEXICAL ENVIRONMENT이 생성되고
+execution context(실행 컨텍스트)는 엔진이 현재 작업중인 LEXICAL ENVIRONMENT을 알려주고 lexical scope는 사용 가능한 변수를 결정합니다.
+
 [MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures)
 
 1. function ran
@@ -1913,12 +1923,10 @@ multByTen(5); // 50
 4. BUT is's going remember that there are references to these variable
 5. so the child scope always the access to the parent scope.
 
-**클로저는 함수가 선언 된 스코프를 벗어난 이후에도 둘러싸는 scope 또는 환경에서 변수에접근할수있도록해준다**  
+**클로저는 중첩된 함수에서 자식함수가 선언 된 스코프를 벗어난 이후에도 둘러싸는 scope 또는 환경에서 변수에접근할수있도록해준다**  
 **중첩된 함수에서 자식의함수가 부모함수에 정의된 변수들에 접근이가능한 것들이 클로져**  
 **즉, 클로저를 사용하면 내부 범위(inner scope)에서 외부 함수 범위(outer functions scope)에 액세스 할 수 있습니다.**  
 **JavaScript 엔진은 변수가 콜스택에서 튀어 나온 후에 "sweeping"하는 대신 ⭐변수를 참조하는 함수 내부에 변수를 보관합니다.⭐**
-
-클로저를 사용하면 함수가 선언된 스코프를 떠난이후에도 주변을둘러싼 스코프또는 환경에서 변수에접근할수있습니다.
 
 클로저가 유익한 두 가지 주요 이유는 **메모리 효율성**과 **캡슐화**입니다.
 
