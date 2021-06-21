@@ -1928,6 +1928,22 @@ console.log(add10(5)); // 15
 console.log(add3(1)); // 4
 ```
 
+```js
+function makeCounter() {
+  let num = 0; // 은닉화
+
+  return function () {
+    return num++;
+  };
+}
+
+let counter = makeCounter();
+
+console.log(counter()); // 0
+console.log(counter()); // 1
+console.log(counter()); // 2
+```
+
 Lexical scope : 함수가 정의된곳에 따라 각 함수가 어떤변수에 접근할수있는지 결정한다.
 
 중첩된함수에서 내부함수가 외부함수 변수를 참조하고있다면 내부함수가 생성된 이후에도 외부함수의 변수에 접근가능  
