@@ -1907,6 +1907,27 @@ multByTen(5); // 50
 
 #### **Closures**
 
+**함수와 렉시컬 환경의 조합**  
+**함수가 생성될 당시의 외부 변수를 기억**  
+**생성 이후에도 계속 접근 가능**
+
+```js
+function makeAdder(x) {
+  return function (y) {
+    return x + y;
+  };
+}
+
+const add3 = makeAdder(3);
+console.log(add3(2)); // 5
+// add3 함수가 생성된 이후에도
+// 상위함수인 makeAdder 의 x에 접근 가능
+
+const add10 = makeAdder(10);
+console.log(add10(5)); // 15
+console.log(add3(1)); // 4
+```
+
 Lexical scope : 함수가 정의된곳에 따라 각 함수가 어떤변수에 접근할수있는지 결정한다.
 
 중첩된함수에서 내부함수가 외부함수 변수를 참조하고있다면 내부함수가 생성된 이후에도 외부함수의 변수에 접근가능  
